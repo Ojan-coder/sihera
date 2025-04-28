@@ -3,6 +3,29 @@
 <?= $this->section('content');
 $level = session()->get('userLevel');
 ?>
+<style>
+    .pdf {
+        width: 100%;
+        aspect-ratio: 4 / 3;
+    }
+
+    .pdf,
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1,
+    h3 {
+        text-align: center;
+    }
+
+    h1 {
+        color: green;
+    }
+</style>
 
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -66,22 +89,36 @@ $level = session()->get('userLevel');
                                             <thead>
                                                 <tr>
                                                     <th style="text-align: center;">No</th>
-                                                    <th>ID Jadwal</th>
-                                                    <th>Nama Pasien</th>
-                                                    <th>Jadwal / Waktu</th>
+                                                    <th>Judul</th>
+                                                    <th>Deskripsi</th>
+                                                    <th>Kategori</th>
+                                                    <th>File</th>
                                                     <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php $no = 0;
                                                 foreach ($datajadwal as $row) : $no++;
-
+                                                    if ($row['kategori'] == 'doc') {
+                                                        $kat = "Kategori";
+                                                    } else {
+                                                        $kat = "Video";
+                                                    }
                                                 ?>
                                                     <tr>
                                                         <td width="8%"><?= $no; ?></td>
-                                                        <td> <?= $row['idjadwal']; ?></td>
-                                                        <td> <?= $row['nama']; ?></td>
-                                                        <td> <?= $row['jadwal'] . ' ' . $row['waktu']; ?></td>
+                                                        <td> <?= $row['topik']; ?></td>
+                                                        <td> <?= $row['deskripsi']; ?></td>
+                                                        <td> <?= $kat ?></td>
+                                                        <td>
+                                                            <?php if ($row['kategori'] == 'doc') { ?>
+                                                                <a class="btn btn-outline-primary" target="_blank" href="<?= base_url('edukasi/') . $row['sumber'] ?>">
+                                                                    <i class="feather icon-eye"></i>
+                                                                </a>
+                                                            <?php } else { ?>
+                                                                <iframe src="<?= base_url('edukasi/') . $row['sumber'] ?>" style="width:400px; height:200px;" frameborder="0"></iframe>
+                                                            <?php } ?>
+                                                        </td>
                                                         <td class="text-center">
                                                             <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['id']; ?>">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -110,7 +147,7 @@ $level = session()->get('userLevel');
     </div>
 </div>
 
-<!-- Form Tambah Data Pasien -->
+<!-- Form Tambah Data Edukasi -->
 
 <form action="<?= base_url('edukasi/save'); ?>" enctype="multipart/form-data" method="post">
     <?= csrf_field(); ?>
@@ -118,13 +155,13 @@ $level = session()->get('userLevel');
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="myModalLabel">Tambah Edukasi</h6>
+                    <h6 class="modal-title" id="myModalLabel">Tambah Edukasi 1</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="form-group" id="datetimepicker1">
+                            <div class="form-group">
                                 <label>Judul</label>
                                 <input type="text" name="topik" value="<?= old('topik') ?>" class="form-control <?= ($validation->hasError('topik')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Judul" required />
                                 <div class="invalid-feedback">
@@ -135,7 +172,7 @@ $level = session()->get('userLevel');
                         <div class="col-lg-12">
                             <div class="form-group" id="datetimepicker1">
                                 <label>Deskripsi</label>
-                                <textarea name="deskripsi" class="form-control" id="summernote"></textarea>
+                                <textarea name="deskripsi" class="form-control"></textarea>
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('deskripsi'); ?>
                                 </div>
@@ -144,34 +181,23 @@ $level = session()->get('userLevel');
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Kategori Sumber</label>
-                                <select name="kategori" id="kategori" class="form-control kategori">
+                                <select name="kategori" id="kategori" class="form-control kategori" required>
                                     <option value="-">-Pilih-</option>
                                     <option value="doc">Document</option>
                                     <option value="video">Video</option>
                                 </select>
                             </div>
                         </div>
-                        <div style="display: none;" id="tampilandoc">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Sumber</label>
-                                    <input type="file" name="sumber" value="<?= old('sumber') ?>" class="form-control <?= ($validation->hasError('sumber')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Sumber" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('sumber'); ?>
-                                    </div>
+                        <div class="col-lg-12">
+                            <!-- <div style="display: block;" id="tampilandoc"> -->
+                            <div class="form-group">
+                                <label>Foto Dokter</label>
+                                <input type="file" name="fotodokter" class="form-control <?= ($validation->hasError('fotodokter')) ? 'is-invalid' : ''; ?>" required />
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('fotodokter'); ?>
                                 </div>
                             </div>
-                        </div>
-                        <div style="display: none;" id="tampilanvideo">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Sumber</label>
-                                    <input type="text" name="sumber" value="<?= old('sumber') ?>" class="form-control <?= ($validation->hasError('sumber')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Sumber" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('sumber'); ?>
-                                    </div>
-                                </div>
-                            </div>
+                            <!-- </div> -->
                         </div>
                     </div>
                 </div>
@@ -193,16 +219,16 @@ $level = session()->get('userLevel');
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Update Jadwal</h6>
+                        <h6 class="modal-title">Update Edukasi</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
                         <input type="hidden" name="kode" id="kode" value="<?= $row['id']; ?>">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="form-group" id="datetimepicker1">
+                                <div class="form-group">
                                     <label>Judul</label>
-                                    <input type="text" name="topik" value="<?= old('topik') ?>" class="form-control <?= ($validation->hasError('topik')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
+                                    <input type="text" name="topik" value="<?= $row['topik'] ?>" class="form-control <?= ($validation->hasError('topik')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Judul" required />
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('topik'); ?>
                                     </div>
@@ -211,20 +237,34 @@ $level = session()->get('userLevel');
                             <div class="col-lg-12">
                                 <div class="form-group" id="datetimepicker1">
                                     <label>Deskripsi</label>
-                                    <textarea name="deskripsi" class="form-control" id="summernote"></textarea>
+                                    <textarea name="deskripsi" class="form-control">
+                                    <?= $row['deskripsi'] ?>
+                                    </textarea>
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('deskripsi'); ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="form-group" id="datetimepicker1">
-                                    <label>Sumber</label>
-                                    <input type="text" name="sumber" value="<?= old('sumber') ?>" class="form-control <?= ($validation->hasError('sumber')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
+                                <div class="form-group">
+                                    <label>Kategori Sumber</label>
+                                    <select name="kategori" id="kategori" class="form-control kategori" required>
+                                        <option value="-">-Pilih-</option>
+                                        <option value="doc" <?= $row['kategori'] == 'doc' ? 'selected' : '' ?>>Document</option>
+                                        <option value="video" <?= $row['kategori'] == 'video' ? 'selected' : '' ?>>Video</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <!-- <div style="display: block;" id="tampilandoc"> -->
+                                <div class="form-group">
+                                    <label>Foto Dokter</label>
+                                    <input type="file" name="fotodokter" class="form-control <?= ($validation->hasError('fotodokter')) ? 'is-invalid' : ''; ?>" required />
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('sumber'); ?>
+                                        <?= $validation->getError('fotodokter'); ?>
                                     </div>
                                 </div>
+                                <!-- </div> -->
                             </div>
                         </div>
                     </div>
@@ -262,23 +302,24 @@ $level = session()->get('userLevel');
 <?php endforeach; ?>
 
 <script>
-    $(document).ready(function() {
-        $(document).on('click', '#kategori', function() {
-            var jn = $('#kategori option:selected').text();
-            var tampilandoc = document.getElementById('tampilandoc');
-            var tampilanvideo = document.getElementById('tampilanvideo');
-            if (jn == "doc") {
-                tampilandoc.style.display = 'block';
-                tampilanvideo.style.display = 'block';
-            } else if (jn == "video") {
-                tampilandoc.style.display = 'none';
-                tampilanvideo.style.display = 'block';
-            } else if (jn == "-") {
-                tampilandoc.style.display = 'none';
-                tampilanvideo.style.display = 'none';
-            }
-        });
-    });
+    // $(document).ready(function() {
+    //     $(document).on('click', '#kategori', function() {
+    //         var jn = $('#kategori option:selected').val();
+    //         console.log(jn);
+    //         var tampilandoc = document.getElementById('tampilandoc');
+    //         var tampilanvideo = document.getElementById('tampilanvideo');
+    //         if (jn == "doc") {
+    //             tampilandoc.style.display = 'block';
+    //             tampilanvideo.style.display = 'none';
+    //         } else if (jn == "video") {
+    //             tampilandoc.style.display = 'none';
+    //             tampilanvideo.style.display = 'block';
+    //         } else if (jn == "-") {
+    //             tampilandoc.style.display = 'none';
+    //             tampilanvideo.style.display = 'none';
+    //         }
+    //     });
+    // });
 </script>
 
 <?= $this->endSection(); ?>

@@ -10,7 +10,7 @@ if (session()->get('userLevel') == 1 || session()->get('userLevel') == 2 || sess
 ?>
 
 <head>
-    <title>Si Hera</title>
+    <title>Si-Reha</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +19,7 @@ if (session()->get('userLevel') == 1 || session()->get('userLevel') == 2 || sess
     <meta name="author" content="#">
     <meta name="csrf-token" content="<?= csrf_token() ?>">
     <!-- Favicon icon -->
-    <link rel="icon" href="<?= base_url(); ?>\frontend\images\logo.png" type="image/x-icon">
+    <link rel="icon" href="<?= base_url('landing'); ?>\images\logo.png" type="image/x-icon">
     <!-- Google font-->
     <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet"> -->
     <!-- Summernote -->
@@ -67,7 +67,7 @@ if (session()->get('userLevel') == 1 || session()->get('userLevel') == 2 || sess
                         </a>
                         <a href="<?= base_url('/Home') ?>">
                             <img class="img-fluid" width="10%" height="10%" src="<?= base_url(); ?>\landing\images\logo.png" alt="Theme-Logo">
-                            <span>Si Hera</span>
+                            <span>Si-Reha</span>
                         </a>
                         <a class="mobile-options">
                             <i class="feather icon-more-horizontal"></i>

@@ -15,6 +15,7 @@ class EdukasiModel extends Model
     protected $allowedFields    = [
         'topik',
         'deskripsi',
+        'kategori',
         'sumber',
         'created_at',
         'updated_at',

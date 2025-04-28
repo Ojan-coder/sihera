@@ -34,10 +34,10 @@ class PasienModel extends Model
         } else if (empty($kode['kodesurat'])) {
             $no = "1";
         }
-        $huruf = "PS";
+        $huruf = "P";
         $tahun = date('dmY');
-        $batas = str_pad($no, 3, "000", STR_PAD_LEFT);
-        $kodeu = $huruf . $tahun . $batas;
+        $batas = str_pad($no, 3, "00", STR_PAD_LEFT);
+        $kodeu = $huruf . $batas;
         return $kodeu;
     }
 }

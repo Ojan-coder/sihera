@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\AktifitasFisikModel;
+use App\Models\JenisAktifitasModel;
+use App\Models\PasienModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class AktifitasController extends BaseController
@@ -11,10 +13,12 @@ class AktifitasController extends BaseController
     public function index()
     {
         $model = new AktifitasFisikModel();
+        $mjenis = new JenisAktifitasModel();
+        $mpasien = new PasienModel();
         $data = [
-            'koderoom' => $model->generateKode(),
-            'dtaktifitas' => $model->findAll(),
-            'dtpasien' => $model->findAll(),
+            'dataaktifitas' => $model->join('tbl_master_aktifitas','fisikjenisaktifitas=idjenis')->join('tbl_pasien','fisikidpasien=id')->findAll(),
+            'jenis' => $mjenis->findAll(),
+            'datapasien' => $mpasien->findAll(),
             'validation' => \Config\Services::validation()
         ];
         echo view('view_aktifitas', $data);
@@ -23,34 +27,10 @@ class AktifitasController extends BaseController
     public function save()
     {
         $rules = [
-            'nama' => [
-                'rules' => 'required|',
-                'errors' => [
-                    'required' => 'Judul dokter harus diisi'
-                ]
-            ],
-            'tgldokter' => [
+            'durasi' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Tanggal Kamar harus diisi'
-                ]
-            ],
-            'tgldokter' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tanggal Kamar harus diisi'
-                ]
-            ],
-            'fotodokter' => [
-                'rules' => 'mime_in[fotodokter,image/jpg,image/jpeg,image/gif,image/png]',
-                'errors' => [
-                    'mime_in' => 'File yang dipilih bukan gambar',
-                ]
-            ],
-            'keterangan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Keterangan harus diisi'
+                    'required' => 'Durasi harus diisi'
                 ]
             ]
         ];
@@ -59,60 +39,30 @@ class AktifitasController extends BaseController
         if ($this->validate($rules)) {
             $model = new AktifitasFisikModel();
 
-            $fileGambar = $this->request->getFile('fotodokter');
-            $fileName = $fileGambar->getRandomName();
-            // Upload image Room
-            $fileGambar->move('dokter/', $fileName);
-
             $data = array(
-                'kodedokter' => $model->generateKode(),
-                'namadokter' => $this->request->getPost('nama'),
-                'tgldokter' => $this->request->getPost('tgldokter'),
-                'tgldokter' => $this->request->getPost('tgldokter'),
-                'ketdokter' => $this->request->getPost('keterangan'),
-                'gambardokter' => $fileName,
+                'idaktifitas' => $model->generateKode(),
+                'fisikidpasien' => $this->request->getPost('idpasien'),
+                'fisikjenisaktifitas' => $this->request->getPost('cbjenis'),
+                'fisikdurasi' => $this->request->getPost('durasi'),
+                'created_at' => date('d-m-y H:i:s')
             );
 
             $model->insert($data);
-            session()->setFlashdata('success', 'Berhasil menyimpan data');
-            return redirect()->to('/dokter');
+            session()->setFlashdata('success', 'Berhasil Menyimpan Data');
+            return redirect()->to('/aktifitas');
         } else {
-            session()->setFlashdata('failed', 'Data gagal disimpan' . $this->validator->listErrors());
-            return redirect()->to('/dokter');
+            session()->setFlashdata('failed', 'Data Gagal Disimpan' . $this->validator->listErrors());
+            return redirect()->to('/aktifitas');
         }
     }
 
     public function edit()
     {
         $rules = [
-            'nama' => [
-                'rules' => 'required|',
-                'errors' => [
-                    'required' => 'Judul dokter harus diisi'
-                ]
-            ],
-            'tgldokter' => [
+            'durasi' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Tanggal Kamar harus diisi'
-                ]
-            ],
-            'tgldokter' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tanggal Kamar harus diisi'
-                ]
-            ],
-            'fotodokter' => [
-                'rules' => 'mime_in[fotodokter,image/jpg,image/jpeg,image/gif,image/png]',
-                'errors' => [
-                    'mime_in' => 'File yang dipilih bukan gambar',
-                ]
-            ],
-            'keterangan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Keterangan harus diisi'
+                    'required' => 'Durasi harus diisi'
                 ]
             ]
         ];
@@ -120,43 +70,19 @@ class AktifitasController extends BaseController
         $id = $this->request->getPost('kode');
         if ($this->validate($rules)) {
             $model = new AktifitasFisikModel();
-            $data = $model->find($id);
-
-            $fileGambar = $this->request->getFile('fotodokter');
-
-            if ($fileGambar != "") {
-                unlink("dokter/" . $data['gambardokter']);
-                $fileName = $fileGambar->getRandomName();
-                // Upload image 
-                $fileGambar->move('dokter/', $fileName);
-                $data = array(
-                    'kodedokter' => $model->generateKode(),
-                    'namadokter' => $this->request->getPost('nama'),
-                    'tgldokter' => $this->request->getPost('tgldokter'),
-                    'tgldokter' => $this->request->getPost('tgldokter'),
-                    'ketdokter' => $this->request->getPost('keterangan'),
-                    'gambardokter' => $fileName,
-                );
-                $model->update($id, $data);
-                // dd($data,$id);
-                session()->setFlashdata('success', 'Berhasil Mengupdate Data dokter');
-                return redirect()->to('/dokter');
-            } else {
-                $data = array(
-                    'kodedokter' => $model->generateKode(),
-                    'namadokter' => $this->request->getPost('nama'),
-                    'tgldokter' => $this->request->getPost('tgldokter'),
-                    'tgldokter' => $this->request->getPost('tgldokter'),
-                    'ketdokter' => $this->request->getPost('keterangan')
-                );
-                $model->update($id, $data);
-                // dd($data,$id);
-                session()->setFlashdata('success', 'Berhasil Mengupdate Data dokter');
-                return redirect()->to('/dokter');
-            }
+            $data = array(
+                'fisikidpasien' => $this->request->getPost('idpasien'),
+                'fisikjenisaktifitas' => $this->request->getPost('cbjenis'),
+                'fisikdurasi' => $this->request->getPost('durasi'),
+                'updated_at' => date('d-m-y H:i:s')
+            );
+            $model->update($id, $data);
+            // dd($data,$id);
+            session()->setFlashdata('success', 'Berhasil Mengupdate Data Aktifitas');
+            return redirect()->to('/aktifitas');
         } else {
-            session()->setFlashdata('failed', 'Data dokter Gagal Di Update' . $this->validator->listErrors());
-            return redirect()->to('/dokter' . $id);
+            session()->setFlashdata('failed', 'Data Aktifitas Gagal Di Update' . $this->validator->listErrors());
+            return redirect()->to('/aktifitas' . $id);
         }
     }
 
@@ -166,7 +92,7 @@ class AktifitasController extends BaseController
         $id = $this->request->getPost('id');
         $data = $model->find($id);
         $model->delete($id);
-        session()->setFlashdata('success', 'Berhasil Menghapus Data Room');
+        session()->setFlashdata('success', 'Berhasil Menghapus Data Aktifitas');
         return redirect()->to('/aktifitas');
     }
 

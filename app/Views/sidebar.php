@@ -56,8 +56,8 @@ $id = $uri->getSegment(1) ?? '';
                 <span class="pcoded-mtext">Konsultasi</span>
             </a>
         </li>
-        <li class="<?= ($id == 'fisik') ? 'active' : '' ?>">
-            <a href="<?= base_url('/fisik'); ?>">
+        <li class="<?= ($id == 'aktifitas') ? 'active' : '' ?>">
+            <a href="<?= base_url('/aktifitas'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                 <span class="pcoded-mtext">Aktifitas Fisik</span>
             </a>
@@ -101,8 +101,8 @@ $id = $uri->getSegment(1) ?? '';
             <span class="pcoded-mtext">Konsultasi</span>
         </a>
     </li>
-    <li class="<?= ($id == 'fisik') ? 'active' : '' ?>">
-        <a href="<?= base_url('/fisik'); ?>">
+    <li class="<?= ($id == 'aktifitas') ? 'active' : '' ?>">
+        <a href="<?= base_url('/aktifitas'); ?>">
             <span class="pcoded-micon"><i class="feather icon-book"></i></span>
             <span class="pcoded-mtext">Aktifitas Fisik</span>
         </a>

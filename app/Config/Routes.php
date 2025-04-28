@@ -58,7 +58,7 @@ $routes->post('/patient/delete', 'PasienController::delete', ['filter' => 'auth'
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
 $routes->get('/patient/report', 'PasienController::report', ['filter' => 'auth']);
 
-// Aktifitas
+// Edukasi
 $routes->get('/edukasi', 'EdukasiController::index', ['filter' => 'auth']);
 $routes->get('/edukasi/add', 'EdukasiController::add', ['filter' => 'auth']);
 $routes->get('/edukasi/update/(:segment)', 'EdukasiController::update/$1', ['filter' => 'auth']);
@@ -77,3 +77,23 @@ $routes->post('/aktifitas/edit', 'AktifitasController::edit', ['filter' => 'auth
 $routes->post('/aktifitas/delete', 'AktifitasController::delete', ['filter' => 'auth']);
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
 $routes->get('/aktifitas/report', 'AktifitasController::report', ['filter' => 'auth']);
+
+// Konsultasi
+$routes->get('/konsultasi', 'KonsultasiController::index', ['filter' => 'auth']);
+$routes->get('/konsultasi/add', 'KonsultasiController::add', ['filter' => 'auth']);
+$routes->get('/konsultasi/update/(:segment)', 'KonsultasiController::update/$1', ['filter' => 'auth']);
+$routes->post('/konsultasi/save', 'KonsultasiController::save', ['filter' => 'auth']);
+$routes->post('/konsultasi/edit', 'KonsultasiController::edit', ['filter' => 'auth']);
+$routes->post('/konsultasi/delete', 'KonsultasiController::delete', ['filter' => 'auth']);
+// $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
+$routes->get('/konsultasi/report', 'KonsultasiController::report', ['filter' => 'auth']);
+
+// Berat Badan
+$routes->get('/bb', 'CatatanBBController::index', ['filter' => 'auth']);
+$routes->get('/bb/add', 'CatatanBBController::add', ['filter' => 'auth']);
+$routes->get('/bb/update/(:segment)', 'CatatanBBController::update/$1', ['filter' => 'auth']);
+$routes->post('/bb/save', 'CatatanBBController::save', ['filter' => 'auth']);
+$routes->post('/bb/edit', 'CatatanBBController::edit', ['filter' => 'auth']);
+$routes->post('/bb/delete', 'CatatanBBController::delete', ['filter' => 'auth']);
+// $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
+$routes->get('/bb/report', 'CatatanBBController::report', ['filter' => 'auth']);

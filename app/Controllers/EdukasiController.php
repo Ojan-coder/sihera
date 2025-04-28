@@ -26,10 +26,9 @@ class EdukasiController extends BaseController
         $mpasien = new EdukasiModel();
         $rules = [
             'topik' => [
-                'rules' => 'required|max_length[100]',
+                'rules' => 'required',
                 'errors' => [
                     'required' => 'Judul harus diisi',
-                    'max_length' => 'Kolom Judul tidak boleh lebih dari 100 karakter'
                 ]
             ],
             'deskripsi' => [
@@ -38,10 +37,10 @@ class EdukasiController extends BaseController
                     'required' => 'Deskripsi harus diisi'
                 ]
             ],
-            'sumber' => [
-                'rules' => 'required',
+            'fotodokter' => [
+                'rules' => 'mime_in[fotodokter,pdf,image/jpg,image/jpeg,image/gif,image/png,video/mp4]',
                 'errors' => [
-                    'required' => 'Sumber Harus Diisi',
+                    'mime_in' => 'File yang dipilih bukan gambar',
                 ]
             ]
         ];
@@ -54,8 +53,9 @@ class EdukasiController extends BaseController
 
             $data = array(
                 'topik' => $this->request->getPost('topik'),
+                'kategori' => $this->request->getPost('kategori'),
                 'deskripsi' => $this->request->getPost('deskripsi'),
-                'sumber' => $fileGambar,
+                'sumber' => $fileName,
             );
             $mpasien->insert($data);
             session()->setFlashdata('success', 'Berhasil menyimpan data');
@@ -96,6 +96,7 @@ class EdukasiController extends BaseController
 
             $data = array(
                 'topik' => $this->request->getPost('topik'),
+                'kategori' => $this->request->getPost('kategori'),
                 'deskripsi' => $this->request->getPost('deskripsi'),
                 'sumber' => $this->request->getPost('sumber'),
             );

@@ -21,30 +21,33 @@ USE `sihera`;
 DROP TABLE IF EXISTS `tbl_aktifitas_fisik`;
 
 CREATE TABLE `tbl_aktifitas_fisik` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `fisikidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `fisikjenisaktifitas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idaktifitas` char(20) NOT NULL,
+  `fisikidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `fisikjenisaktifitas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `fisikdurasi` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`idaktifitas`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_aktifitas_fisik` */
+
+insert  into `tbl_aktifitas_fisik`(`idaktifitas`,`fisikidpasien`,`fisikjenisaktifitas`,`fisikdurasi`,`created_at`,`updated_at`) values 
+('AF001','PS26042025001','1',30,'2028-04-25 17:49:15','2028-04-25 17:53:32');
 
 /*Table structure for table `tbl_catatan_bb` */
 
 DROP TABLE IF EXISTS `tbl_catatan_bb`;
 
 CREATE TABLE `tbl_catatan_bb` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `bbidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idbb` char(20) NOT NULL,
+  `bbidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `bbsebelumhd` int NOT NULL,
   `bbsesudahhd` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`idbb`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_catatan_bb` */
 
@@ -54,7 +57,7 @@ DROP TABLE IF EXISTS `tbl_catatan_diet`;
 
 CREATE TABLE `tbl_catatan_diet` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `dietidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dietidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `diettanggal` date NOT NULL,
   `dietprotein` int NOT NULL,
   `dietnatrium` int NOT NULL,
@@ -62,7 +65,7 @@ CREATE TABLE `tbl_catatan_diet` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_catatan_diet` */
 
@@ -72,16 +75,16 @@ DROP TABLE IF EXISTS `tbl_catatan_urine`;
 
 CREATE TABLE `tbl_catatan_urine` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `urineidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `urineidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `urinetanggal` date NOT NULL,
   `urinevolume` int NOT NULL,
-  `urinefrekuensi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `urinewarna` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `urinekonsistensi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `urinefrekuensi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `urinewarna` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `urinekonsistensi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_catatan_urine` */
 
@@ -108,13 +111,13 @@ DROP TABLE IF EXISTS `tbl_edukasi`;
 
 CREATE TABLE `tbl_edukasi` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `topik` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `deskripsi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `topik` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `deskripsi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_edukasi` */
 
@@ -140,30 +143,33 @@ insert  into `tbl_jadwal_hemodialisa`(`idjadwal`,`idpasien`,`jadwal`,`waktu`) va
 DROP TABLE IF EXISTS `tbl_konsultasi`;
 
 CREATE TABLE `tbl_konsultasi` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-  `namagroup` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `idgroup` varchar(20) NOT NULL,
+  `namagroup` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `anggota` int NOT NULL,
-  `topikdiskusi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `topikdiskusi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  PRIMARY KEY (`idgroup`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_konsultasi` */
+
+insert  into `tbl_konsultasi`(`idgroup`,`namagroup`,`anggota`,`topikdiskusi`,`created_at`,`updated_at`) values 
+('G001','Hidup Sehat dengan CKD',15,'Olahraga Aman untuk Pasien CKD','2028-04-25 18:33:50','2028-04-25 18:34:04');
 
 /*Table structure for table `tbl_master_aktifitas` */
 
 DROP TABLE IF EXISTS `tbl_master_aktifitas`;
 
 CREATE TABLE `tbl_master_aktifitas` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `idjenis` bigint NOT NULL AUTO_INCREMENT,
   `jenisaktifitas` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`idjenis`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_master_aktifitas` */
 
-insert  into `tbl_master_aktifitas`(`id`,`jenisaktifitas`) values 
+insert  into `tbl_master_aktifitas`(`idjenis`,`jenisaktifitas`) values 
 (1,'Jalan kaki'),
 (2,'Stretching'),
 (3,'Relaksasi'),
