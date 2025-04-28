@@ -123,14 +123,17 @@ CREATE TABLE `tbl_edukasi` (
 DROP TABLE IF EXISTS `tbl_jadwal_hemodialisa`;
 
 CREATE TABLE `tbl_jadwal_hemodialisa` (
-  `idjadwal` char(10) NOT NULL,
-  `idpasien` char(10) DEFAULT NULL,
-  `hari` varchar(30) DEFAULT NULL,
+  `idjadwal` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `idpasien` char(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `jadwal` date DEFAULT NULL,
   `waktu` time DEFAULT NULL,
   PRIMARY KEY (`idjadwal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_jadwal_hemodialisa` */
+
+insert  into `tbl_jadwal_hemodialisa`(`idjadwal`,`idpasien`,`jadwal`,`waktu`) values 
+('JH28042025001','PS26042025001','2025-04-29','10:00:00');
 
 /*Table structure for table `tbl_konsultasi` */
 
@@ -187,7 +190,8 @@ CREATE TABLE `tbl_pasien` (
 /*Data for the table `tbl_pasien` */
 
 insert  into `tbl_pasien`(`id`,`nik`,`nama`,`usia`,`tgllahir`,`jenkel`,`beratbadan`,`tinggibadan`,`alamat`,`nohp`) values 
-('PS26042025001','1371033007990004','Sana',25,'04-26-2000','Perempuan','55','165','adasdad','084651');
+('PS26042025001','3333333333333333','Sana',25,'04-26-2000','Perempuan','55','165','adasdad','084651'),
+('PS28042025002','1111111111111111','Boy',28,'1991-01-01','Laki-Laki','55','165','Payakumbuh','+62');
 
 /*Table structure for table `tbl_pembatasan_cairan` */
 
@@ -236,13 +240,14 @@ CREATE TABLE `tbl_user` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
 
 /*Data for the table `tbl_user` */
 
 insert  into `tbl_user`(`id`,`username`,`nama`,`role`,`email`,`password`,`statusakses`,`created_at`,`updated_at`) values 
 (1,'admin','Admin','2','admin@gmail.com','$2y$10$OZeS0QB5ncTzVAjpev0Y1.Ujz4yHZhOjwew3ewO8.RN/jt1BKImmi','Y','2024-07-15 15:07:52',NULL),
-(3,'1371033007990004','Sana','3','sana@gmail.com','$2y$10$3ARupgwus0rLkXr4D3zcaucfcohrcDWIMhnpqkuRzscTJ7TELcLpq','Y',NULL,NULL);
+(3,'PS26042025001','Sana','3','sana@gmail.com','$2y$10$3ARupgwus0rLkXr4D3zcaucfcohrcDWIMhnpqkuRzscTJ7TELcLpq','Y',NULL,NULL),
+(5,'PS28042025002','Boy','3','boy@gmail.com','$2y$10$l4DA46I52uhKfZEg0E7NU.qgbHPIj5lDZFVaZRITHrXNmGaQFKL4e','Y','0000-00-00 00:00:00',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

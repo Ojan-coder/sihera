@@ -243,15 +243,15 @@ if (session()->get('userLevel') == 1 || session()->get('userLevel') == 2 || sess
         $(function() {
             $('#datetimepicker1').datetimepicker();
         });
-        $('#').DataTable({
+        $('#simpletable').DataTable({
             responsive: true
         });
 
-        $('#modal').DataTable({
+        $('#simpletablemodal').DataTable({
             responsive: true
         });
 
-        $('#modaltwo').DataTable({
+        $('#simpletablemodaltwo').DataTable({
             responsive: true
         });
     </script>

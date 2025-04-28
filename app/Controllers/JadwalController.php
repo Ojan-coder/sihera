@@ -13,8 +13,14 @@ class JadwalController extends BaseController
     {
         $model = new JadwalHemodialisaModel();
         $mpasien = new PasienModel();
+        $id = session()->get('userNama');
+        if (session()->get('userLevel') != 3) {
+            $data = $model->join('tbl_pasien', 'id=idpasien')->findAll();
+        } else {
+            $data = $model->join('tbl_pasien', 'id=idpasien')->where('idpasien', $id)->find();
+        }
         $data = [
-            'datajadwal' => $model->join('tbl_pasien','id=idpasien')->findAll(),
+            'datajadwal' => $data,
             'datapasien' => $mpasien->findAll(),
             'validation' => \Config\Services::validation()
         ];
@@ -23,18 +29,9 @@ class JadwalController extends BaseController
 
     public function save()
     {
-       
+
         $mpasien = new JadwalHemodialisaModel();
         $rules = [
-            'nik' => [
-                'rules' => 'required|max_length[16]|min_length[16]|is_unique[tbl_pasien.nik]',
-                'errors' => [
-                    'is_unique' => 'Data Pasien Sudah Ada',
-                    'required' => 'NIK harus diisi',
-                    'min_length' => 'Kolom NIK tidak boleh kurang dari 16 karakter',
-                    'max_length' => 'Kolom NIK tidak boleh lebih dari 16 karakter'
-                ]
-            ],
             'nama' => [
                 'rules' => 'required|max_length[100]',
                 'errors' => [
@@ -42,51 +39,19 @@ class JadwalController extends BaseController
                     'max_length' => 'Kolom nama tidak boleh lebih dari 100 karakter'
                 ]
             ],
-            'umur' => [
+            'jadwal' => [
                 'rules' => 'required|max_length[100]',
                 'errors' => [
                     'required' => 'Umur harus diisi',
                     'max_length' => 'Kolom nama tidak boleh lebih dari 100 karakter'
                 ]
             ],
-            'jenkel' => [
+            'waktu' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Jenis Kelamin harus diisi'
                 ]
             ],
-            'tinggibadan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tinggi Badan harus diisi'
-                ]
-            ],
-            'beratbadan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Berat Badan harus diisi'
-                ]
-            ],
-            'alamat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Alamat harus diisi'
-                ]
-            ],
-            'nohp' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'No.Hp harus diisi'
-                ]
-            ],
-            'password' => [
-                'rules' => 'required|min_length[4]|max_length[100]',
-                'errors' => [
-                    'required' => 'Password harus diisi',
-                    'max_length' => 'Kolom password tidak boleh lebih dari 100 karakter',
-                    'min_length' => 'Kolom password setidaknya terdiri dari 4 karakter'
-                ]
-            ]
         ];
 
         if ($this->validate($rules)) {
@@ -95,6 +60,7 @@ class JadwalController extends BaseController
                 'idjadwal' => $mpasien->generateKode(),
                 'idpasien' => $this->request->getPost('idpasien'),
                 'jadwal' => $this->request->getPost('jadwal'),
+                'waktu' => $this->request->getPost('waktu'),
             );
             $mpasien->insert($data);
             session()->setFlashdata('success', 'Berhasil menyimpan data');
@@ -108,14 +74,6 @@ class JadwalController extends BaseController
     public function edit()
     {
         $rules = [
-            'nik' => [
-                'rules' => 'required|max_length[16]|min_length[16]',
-                'errors' => [
-                    'required' => 'NIK harus diisi',
-                    'min_length' => 'Kolom NIK tidak boleh kurang dari 16 karakter',
-                    'max_length' => 'Kolom NIK tidak boleh lebih dari 16 karakter'
-                ]
-            ],
             'nama' => [
                 'rules' => 'required|max_length[100]',
                 'errors' => [
@@ -123,43 +81,19 @@ class JadwalController extends BaseController
                     'max_length' => 'Kolom nama tidak boleh lebih dari 100 karakter'
                 ]
             ],
-            'umur' => [
+            'jadwal' => [
                 'rules' => 'required|max_length[100]',
                 'errors' => [
                     'required' => 'Umur harus diisi',
                     'max_length' => 'Kolom nama tidak boleh lebih dari 100 karakter'
                 ]
             ],
-            'jenkel' => [
+            'waktu' => [
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Jenis Kelamin harus diisi'
                 ]
             ],
-            'tinggibadan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Tinggi Badan harus diisi'
-                ]
-            ],
-            'beratbadan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Berat Badan harus diisi'
-                ]
-            ],
-            'alamat' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Alamat harus diisi'
-                ]
-            ],
-            'nohp' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'No.Hp harus diisi'
-                ]
-            ]
         ];
 
         $id = $this->request->getPost('kode');
@@ -167,21 +101,15 @@ class JadwalController extends BaseController
         if ($this->validate($rules)) {
 
             $data = array(
-                'nik' => $this->request->getPost('nik'),
-                'nama' => $this->request->getPost('nama'),
-                'usia' => $this->request->getPost('umur'),
-                'tgllahir' => $this->request->getPost('tgllahir'),
-                'jenkel' => $this->request->getPost('jenkel'),
-                'tinggibadan' => $this->request->getPost('tinggibadan'),
-                'beratbadan' => $this->request->getPost('beratbadan'),
-                'alamat' => $this->request->getPost('alamat'),
-                'nohp' => $this->request->getPost('nohp')
+                'idpasien' => $this->request->getPost('idpasien'),
+                'jadwal' => $this->request->getPost('jadwal'),
+                'waktu' => $this->request->getPost('waktu'),
             );
             $model->update($id, $data);
-            session()->setFlashdata('success', 'Berhasil Mengupdate Data dokter');
+            session()->setFlashdata('success', 'Berhasil Mengupdate Data Jadwal');
             return redirect()->to('/jadwal');
         } else {
-            session()->setFlashdata('failed', 'Data dokter Gagal Di Update' . $this->validator->listErrors());
+            session()->setFlashdata('failed', 'Data Jadwal Gagal Di Update' . $this->validator->listErrors());
             return redirect()->to('/jadwal' . $id);
         }
     }
@@ -193,7 +121,7 @@ class JadwalController extends BaseController
         // dd($data);
 
         $model->delete($id);
-        session()->setFlashdata('success', 'Berhasil Menghapus Data Pasien');
+        session()->setFlashdata('success', 'Berhasil Menghapus Data Jadwal');
         return redirect()->to('/jadwal');
     }
 }

@@ -59,6 +59,16 @@ $routes->post('/patient/delete', 'PasienController::delete', ['filter' => 'auth'
 $routes->get('/patient/report', 'PasienController::report', ['filter' => 'auth']);
 
 // Aktifitas
+$routes->get('/edukasi', 'EdukasiController::index', ['filter' => 'auth']);
+$routes->get('/edukasi/add', 'EdukasiController::add', ['filter' => 'auth']);
+$routes->get('/edukasi/update/(:segment)', 'EdukasiController::update/$1', ['filter' => 'auth']);
+$routes->post('/edukasi/save', 'EdukasiController::save', ['filter' => 'auth']);
+$routes->post('/edukasi/edit', 'EdukasiController::edit', ['filter' => 'auth']);
+$routes->post('/edukasi/delete', 'EdukasiController::delete', ['filter' => 'auth']);
+// $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
+$routes->get('/edukasi/report', 'EdukasiController::report', ['filter' => 'auth']);
+
+// Aktifitas
 $routes->get('/aktifitas', 'AktifitasController::index', ['filter' => 'auth']);
 $routes->get('/aktifitas/add', 'AktifitasController::add', ['filter' => 'auth']);
 $routes->get('/aktifitas/update/(:segment)', 'AktifitasController::update/$1', ['filter' => 'auth']);

@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group form-primary">
-                                    <input type="text" name="email" class="form-control" required="" placeholder="Email/Username/ID">
+                                    <input type="text" name="email" class="form-control" required="" placeholder="Email / NIK">
                                 </div>
                                 <div class="form-group form-primary">
                                     <input type="password" name="password" class="form-control" required="" placeholder="Password">

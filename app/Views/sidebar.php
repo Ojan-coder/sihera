@@ -49,39 +49,38 @@ $id = $uri->getSegment(1) ?? '';
                             <span class="pcoded-mtext">Edukasi</span>
                         </a>
                     </li>
-
                 </ul>
-        <li class="<?= ($id == 'coment') ? 'active' : '' ?>">
-            <a href="<?= base_url('/coment'); ?>">
+        <li class="<?= ($id == 'konsultasi') ? 'active' : '' ?>">
+            <a href="<?= base_url('/konsultasi'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
                 <span class="pcoded-mtext">Konsultasi</span>
             </a>
         </li>
-        <li class="<?= ($id == 'coment') ? 'active' : '' ?>">
-            <a href="<?= base_url('/coment'); ?>">
+        <li class="<?= ($id == 'fisik') ? 'active' : '' ?>">
+            <a href="<?= base_url('/fisik'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                 <span class="pcoded-mtext">Aktifitas Fisik</span>
             </a>
         </li>
-        <li class="<?= ($id == 'coment') ? 'active' : '' ?>">
-            <a href="<?= base_url('/coment'); ?>">
+        <li class="<?= ($id == 'bb') ? 'active' : '' ?>">
+            <a href="<?= base_url('/bb'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                 <span class="pcoded-mtext">Catatan Berat Badan</span>
             </a>
         </li>
-        <li class="<?= ($id == 'coment') ? 'active' : '' ?>">
-            <a href="<?= base_url('/coment'); ?>">
+        <li class="<?= ($id == 'diet') ? 'active' : '' ?>">
+            <a href="<?= base_url('/diet'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                 <span class="pcoded-mtext">Catatan Diet</span>
             </a>
         </li>
-        <li class="<?= ($id == 'coment') ? 'active' : '' ?>">
+        <li class="<?= ($id == 'urine') ? 'active' : '' ?>">
             <a href="<?= base_url('/coment'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                 <span class="pcoded-mtext">Catatan Urine</span>
             </a>
         </li>
-        <li class="<?= ($id == 'coment') ? 'active' : '' ?>">
+        <li class="<?= ($id == 'cairan') ? 'active' : '' ?>">
             <a href="<?= base_url('/coment'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
                 <span class="pcoded-mtext">Pembatasan Cairan</span>
@@ -91,9 +90,45 @@ $id = $uri->getSegment(1) ?? '';
     </li>
 <?php } else { ?>
     <li class="<?= ($id == 'jadwal') ? 'active' : '' ?>">
-        <a href="#">
+        <a href="<?= base_url('/jadwal') ?>">
             <span class="pcoded-micon"><i class="feather icon-bell"></i></span>
             <span class="pcoded-mtext">Jadwal Hemodialisa</span>
+        </a>
+    </li>
+    <li class="<?= ($id == 'konsultasi') ? 'active' : '' ?>">
+        <a href="<?= base_url('/konsultasi'); ?>">
+            <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
+            <span class="pcoded-mtext">Konsultasi</span>
+        </a>
+    </li>
+    <li class="<?= ($id == 'fisik') ? 'active' : '' ?>">
+        <a href="<?= base_url('/fisik'); ?>">
+            <span class="pcoded-micon"><i class="feather icon-book"></i></span>
+            <span class="pcoded-mtext">Aktifitas Fisik</span>
+        </a>
+    </li>
+    <li class="<?= ($id == 'bb') ? 'active' : '' ?>">
+        <a href="<?= base_url('/bb'); ?>">
+            <span class="pcoded-micon"><i class="feather icon-book"></i></span>
+            <span class="pcoded-mtext">Catatan Berat Badan</span>
+        </a>
+    </li>
+    <li class="<?= ($id == 'diet') ? 'active' : '' ?>">
+        <a href="<?= base_url('/diet'); ?>">
+            <span class="pcoded-micon"><i class="feather icon-book"></i></span>
+            <span class="pcoded-mtext">Catatan Diet</span>
+        </a>
+    </li>
+    <li class="<?= ($id == 'urine') ? 'active' : '' ?>">
+        <a href="<?= base_url('/coment'); ?>">
+            <span class="pcoded-micon"><i class="feather icon-book"></i></span>
+            <span class="pcoded-mtext">Catatan Urine</span>
+        </a>
+    </li>
+    <li class="<?= ($id == 'cairan') ? 'active' : '' ?>">
+        <a href="<?= base_url('/coment'); ?>">
+            <span class="pcoded-micon"><i class="feather icon-book"></i></span>
+            <span class="pcoded-mtext">Pembatasan Cairan</span>
         </a>
     </li>
     <li class="<?= ($id == 'profile') ? 'active' : '' ?>">

@@ -102,7 +102,7 @@ class PasienController extends BaseController
                 'nohp' => $this->request->getPost('nohp')
             );
             $datauser = [
-                'username' => $$mpasien->generateKode(),
+                'username' => $mpasien->generateKode(),
                 'nama' => $this->request->getPost('nama'),
                 'role' => 3,
                 'email' => $this->request->getPost('email'),

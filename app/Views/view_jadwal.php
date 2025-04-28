@@ -1,6 +1,8 @@
 <?= $this->extend('main'); ?>
 
-<?= $this->section('content'); ?>
+<?= $this->section('content');
+$level = session()->get('userLevel');
+?>
 
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -55,7 +57,9 @@
                                             <?php } ?>
                                         </div>
                                     </div>
-                                    <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Jadwal Hemodialisa</button>
+                                    <?php if ($level != 3) { ?>
+                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Jadwal Hemodialisa</button>
+                                    <?php } ?>
                                     <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
                                 <div class="card-block">
@@ -66,8 +70,10 @@
                                                     <th style="text-align: center;">No</th>
                                                     <th>ID Jadwal</th>
                                                     <th>Nama Pasien</th>
-                                                    <th>Jadwal</th>
-                                                    <th>Aksi</th>
+                                                    <th>Jadwal / Waktu</th>
+                                                    <?php if ($level != 3) { ?>
+                                                        <th>Aksi</th>
+                                                    <?php } ?>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -79,21 +85,22 @@
                                                         <td width="8%"><?= $no; ?></td>
                                                         <td> <?= $row['idjadwal']; ?></td>
                                                         <td> <?= $row['nama']; ?></td>
-                                                        <td> <?= $row['jadwal']; ?></td>
-
-                                                        <td class="text-center">
-                                                            <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['id']; ?>">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                                    <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                                                </svg>
-                                                            </button>
-                                                            <button class="btn btn-danger btn-mini" data-toggle="modal" data-target="#deleteModal<?= $row['id']; ?>">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                                </svg>
-                                                            </button>
-                                                        </td>
+                                                        <td> <?= $row['jadwal'] . ' ' . $row['waktu']; ?></td>
+                                                        <?php if ($level != 3) { ?>
+                                                            <td class="text-center">
+                                                                <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['idjadwal']; ?>">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                                                    </svg>
+                                                                </button>
+                                                                <button class="btn btn-danger btn-mini" data-toggle="modal" data-target="#deleteModal<?= $row['idjadwal']; ?>">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                    </svg>
+                                                                </button>
+                                                            </td>
+                                                        <?php } ?>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -124,18 +131,10 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>ID Jadwal</label>
-                                <input type="text" name="nik" value="<?= old('nik') ?>" class="form-control <?= ($validation->hasError('nik')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('nik'); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
                                 <label for="basic-url">Nama Pasien</label>
                                 <div class="input-group mb-3">
-                                    <input type="text" name="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                    <input type="hidden" name="idpasien" id="idpasien">
+                                    <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
                                             <i class="feather icon-search"></i>
@@ -176,100 +175,47 @@
 <!-- Form Edit dan Delete -->
 <?php foreach ($datajadwal as $row) : ?>
 
-    <form action="<?= base_url('patient/edit'); ?>" enctype="multipart/form-data" method="POST">
+    <form action="<?= base_url('jadwal/edit'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
-        <div class="modal made" tabindex="-1" id="editModal<?= $row['id']; ?>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal made" tabindex="-1" id="editModal<?= $row['idjadwal']; ?>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Update Dokter</h6>
+                        <h6 class="modal-title">Update Jadwal</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="kode" id="kode" value="<?= $row['id']; ?>">
+                        <input type="hidden" name="kode" id="kode" value="<?= $row['idjadwal']; ?>">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>NIK Pasien</label>
-                                    <input type="text" name="nik" value="<?= $row['nik'] ?>" class="form-control <?= ($validation->hasError('nik')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('nik'); ?>
+                                    <label for="basic-url">Nama Pasien</label>
+                                    <div class="input-group mb-3">
+                                        <input type="hidden" value="<?= $row['idpasien'] ?>" name="idpasien" id="idpasien">
+                                        <input type="text" name="nama" value="<?= $row['nama'] ?>" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                                                <i class="feather icon-search"></i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Nama Pasien</label>
-                                    <input type="text" name="nama" value="<?= $row['nama'] ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nama" required />
+                                <div class="form-group" id="datetimepicker1">
+                                    <label>Tanggal</label>
+                                    <input type="date" name="jadwal" value="<?= $row['jadwal'] ?>" class="form-control <?= ($validation->hasError('jadwal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('nama'); ?>
+                                        <?= $validation->getError('jadwal'); ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Usia Pasien</label>
-                                    <input type="number" name="umur" value="<?= $row['usia'] ?>" class="form-control <?= ($validation->hasError('umur')) ? 'is-invalid' : ''; ?>" required />
+                                <div class="form-group" id="datetimepicker1">
+                                    <label>Waktu</label>
+                                    <input type="time" name="waktu" value="<?= $row['waktu'] ?>" class="form-control <?= ($validation->hasError('waktu')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('umur'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Tanggal Lahir</label>
-                                    <input type="date" name="tgllahir" value="<?= $row['tgllahir'] ?>" class="form-control <?= ($validation->hasError('tgllahir')) ? 'is-invalid' : ''; ?>" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('tgllahir'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Jenis Kelamin</label>
-                                    <select name="jenkel" id="" class="form-control">
-                                        <option value="">-Pilih Jenis Kelamin-</option>
-                                        <option value="Laki-Laki" <?= $row['jenkel'] == 'Laki-Laki' ? 'selected' : '' ?>>Laki-Laki</option>
-                                        <option value="Perempuan" <?= $row['jenkel'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
-                                    </select>
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('jenkel'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Berat Badan Pasien</label>
-                                    <input type="number" name="beratbadan" value="<?= $row['beratbadan'] ?>" class="form-control <?= ($validation->hasError('beratbadan')) ? 'is-invalid' : ''; ?>" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('beratbadan'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Tinggi Badan Pasien</label>
-                                    <input type="number" name="tinggibadan" value="<?= $row['tinggibadan'] ?>" class="form-control <?= ($validation->hasError('tinggibadan')) ? 'is-invalid' : ''; ?>" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('tinggibadan'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>No.Hp Pasien</label>
-                                    <input type="text" name="nohp" value="<?= $row['nohp'] ?>" class="form-control <?= ($validation->hasError('nohp')) ? 'is-invalid' : ''; ?>" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('nohp'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Alamat Pasien</label>
-                                    <input type="text" name="alamat" value="<?= $row['alamat'] ?>" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : ''; ?>" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('alamat'); ?>
+                                        <?= $validation->getError('waktu'); ?>
                                     </div>
                                 </div>
                             </div>
@@ -284,17 +230,17 @@
         </div>
     </form>
 
-    <form action="<?= base_url('patient/delete'); ?>" enctype="multipart/form-data" method="POST">
+    <form action="<?= base_url('jadwal/delete'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
-        <div class="modal" tabindex="-1" id="deleteModal<?= $row['id']; ?>">
+        <div class="modal" tabindex="-1" id="deleteModal<?= $row['idjadwal']; ?>">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Hapus galeri</h6>
+                        <h6 class="modal-title">Hapus Jadwal</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="id" required value="<?= $row['id']; ?>" />
+                        <input type="hidden" name="id" required value="<?= $row['idjadwal']; ?>" />
                         <h6>Yakin hapus data?</h6>
                     </div>
                     <div class="modal-footer">
@@ -345,16 +291,8 @@
                                 <td> <?= $row['usia']; ?></td>
 
                                 <td class="text-center">
-                                    <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['id']; ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                        </svg>
-                                    </button>
-                                    <button class="btn btn-danger btn-mini" data-toggle="modal" data-target="#deleteModal<?= $row['id']; ?>">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                        </svg>
+                                    <button class="btn btn-outline-primary btn-mini" data-toggle="modal" onclick="return pilih('<?= $row['id'] ?>','<?= $row['nama'] ?>')">
+                                        <i class="feather icon-check"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -364,10 +302,16 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
 </div>
 
+<script>
+    function pilih(kode, nm) {
+        $('#idpasien').val(kode);
+        $('#nama').val(nm);
+        $('#exampleModal').modal('hide');
+    }
+</script>
 <?= $this->endSection(); ?>
