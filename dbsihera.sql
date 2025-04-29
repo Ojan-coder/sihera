@@ -51,12 +51,15 @@ CREATE TABLE `tbl_catatan_bb` (
 
 /*Data for the table `tbl_catatan_bb` */
 
+insert  into `tbl_catatan_bb`(`idbb`,`bbidpasien`,`bbsebelumhd`,`bbsesudahhd`,`created_at`,`updated_at`) values 
+('BB001','PS26042025001',55,50,'2029-04-25 15:33:06',NULL);
+
 /*Table structure for table `tbl_catatan_diet` */
 
 DROP TABLE IF EXISTS `tbl_catatan_diet`;
 
 CREATE TABLE `tbl_catatan_diet` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `iddiet` varchar(20) NOT NULL,
   `dietidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `diettanggal` date NOT NULL,
   `dietprotein` int NOT NULL,
@@ -64,10 +67,13 @@ CREATE TABLE `tbl_catatan_diet` (
   `dietkalsium` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`iddiet`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_catatan_diet` */
+
+insert  into `tbl_catatan_diet`(`iddiet`,`dietidpasien`,`diettanggal`,`dietprotein`,`dietnatrium`,`dietkalsium`,`created_at`,`updated_at`) values 
+('D001','PS26042025001','2025-04-29',70,1800,2500,'2029-04-25 15:32:28',NULL);
 
 /*Table structure for table `tbl_catatan_urine` */
 

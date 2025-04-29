@@ -44,7 +44,7 @@ class CatatanBBController extends BaseController
 
             $data = array(
                 'idbb' => $model->generateKode(),
-                'bbpasien' => $this->request->getPost('namagroup'),
+                'bbidpasien' => $this->request->getPost('idpasien'),
                 'bbsebelumhd' => $this->request->getPost('bbsebelumhd'),
                 'bbsesudahhd' => $this->request->getPost('bbsesudahhd'),
                 'created_at' => date('d-m-y H:i:s')
@@ -80,7 +80,7 @@ class CatatanBBController extends BaseController
         if ($this->validate($rules)) {
             $model = new CatatanBBModel();
             $data = array(
-                'bbpasien' => $this->request->getPost('namagroup'),
+                'bbidpasien' => $this->request->getPost('idpasien'),
                 'bbsebelumhd' => $this->request->getPost('bbsebelumhd'),
                 'bbsesudahhd' => $this->request->getPost('bbsesudahhd'),
                 'updated_at' => date('d-m-y H:i:s')

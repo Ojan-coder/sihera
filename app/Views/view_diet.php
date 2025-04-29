@@ -13,8 +13,8 @@ $level = session()->get('userLevel');
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Catatan Berat Badan</h4>
-                                    <span>This page is for managing "Catatan Berat Badan".</span>
+                                    <h4>Data Catatan Diet</h4>
+                                    <span>This page is for managing "Catatan Diet".</span>
                                 </div>
                             </div>
                         </div>
@@ -26,7 +26,7 @@ $level = session()->get('userLevel');
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Catatan Berat Badan</a>
+                                    <li class="breadcrumb-item"><a href="#!">Catatan Diet</a>
                                     </li>
                                 </ul>
                             </div>
@@ -58,7 +58,7 @@ $level = session()->get('userLevel');
                                         </div>
                                     </div>
                                     <?php if ($level != 3) { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Berat Badan</button>
+                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Diet</button>
                                     <?php } ?>
                                     <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
@@ -70,8 +70,9 @@ $level = session()->get('userLevel');
                                                     <th style="text-align: center;">No</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Tanggal</th>
-                                                    <th>Berat Badan Sebelum HD (kg)</th>
-                                                    <th>Berat Badan Sesudah HD (kg)</th>
+                                                    <th>Diet Protein</th>
+                                                    <th>Diet Natrium</th>
+                                                    <th>Diet Kalium</th>
                                                     <?php if ($level != 3) { ?>
                                                         <th>Aksi</th>
                                                     <?php } ?>
@@ -85,17 +86,18 @@ $level = session()->get('userLevel');
                                                     <tr>
                                                         <td width="8%"><?= $no; ?></td>
                                                         <td> <?= $row['nama']; ?></td>
-                                                        <td> <?= date('Y-m-d', strtotime($row['created_at']));  ?></td>
-                                                        <td> <?= $row['bbsebelumhd']; ?></td>
-                                                        <td> <?= $row['bbsesudahhd']; ?></td>
+                                                        <td> <?= date('Y-m-d', strtotime($row['diettanggal']));  ?></td>
+                                                        <td> <?= $row['dietprotein']; ?></td>
+                                                        <td> <?= $row['dietnatrium']; ?></td>
+                                                        <td> <?= $row['dietkalsium']; ?></td>
                                                         <?php if ($level != 3) { ?>
                                                             <td class="text-center">
-                                                                <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['idbb']; ?>">
+                                                                <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['iddiet']; ?>">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                                         <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
                                                                     </svg>
                                                                 </button>
-                                                                <button class="btn btn-danger btn-mini" data-toggle="modal" data-target="#deleteModal<?= $row['idbb']; ?>">
+                                                                <button class="btn btn-danger btn-mini" data-toggle="modal" data-target="#deleteModal<?= $row['iddiet']; ?>">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                                                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                                                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
@@ -120,13 +122,13 @@ $level = session()->get('userLevel');
 
 <!-- Form Tambah Data Pasien -->
 
-<form action="<?= base_url('bb/save'); ?>" enctype="multipart/form-data" method="post">
+<form action="<?= base_url('diet/save'); ?>" enctype="multipart/form-data" method="post">
     <?= csrf_field(); ?>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Berat Badan</h6>
+                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Diet</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
@@ -156,19 +158,28 @@ $level = session()->get('userLevel');
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Berat Badan Sebelum HD (Kg)</label>
-                                <input type="text" name="bbsebelumhd" id="bbsebelumhd" class="form-control">
+                                <label>Diet Protein (g)</label>
+                                <input type="text" name="protein" id="protein" class="form-control">
                                 <div class="invalid-feedback">
-                                    <?= $validation->getError('bbsebelumhd'); ?>
+                                    <?= $validation->getError('protein'); ?>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Berat Badan Sesudah HD (Kg)</label>
-                                <input type="text" name="bbsesudahhd" id="bbsesudahhd" class="form-control">
+                                <label>Diet Natrium (mg)</label>
+                                <input type="text" name="natrium" id="natrium" class="form-control">
                                 <div class="invalid-feedback">
-                                    <?= $validation->getError('bbsesudahhd'); ?>
+                                    <?= $validation->getError('natrium'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Diet Kalium (mg)</label>
+                                <input type="text" name="kalsium" id="kalsium" class="form-control">
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('kalsium'); ?>
                                 </div>
                             </div>
                         </div>
@@ -186,9 +197,9 @@ $level = session()->get('userLevel');
 <!-- Form Edit dan Delete -->
 <?php foreach ($databb as $row) : ?>
 
-    <form action="<?= base_url('bb/edit'); ?>" enctype="multipart/form-data" method="POST">
+    <form action="<?= base_url('diet/edit'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
-        <div class="modal made" tabindex="-1" id="editModal<?= $row['idbb']; ?>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal made" tabindex="-1" id="editModal<?= $row['iddiet']; ?>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -196,14 +207,14 @@ $level = session()->get('userLevel');
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="kode" id="kode" value="<?= $row['idbb']; ?>">
+                        <input type="hidden" name="kode" id="kode" value="<?= $row['iddiet']; ?>">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="basic-url">Nama Pasien</label>
                                     <div class="input-group mb-3">
-                                        <input type="hidden" value="<?= $row['bbidpasien'] ?>" name="idpasien" id="idpasien">
-                                        <input type="text" name="nama" value="<?= $row['nama'] ?>" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                        <input type="hidden" value="<?= $row['dietidpasien'] ?>" name="idpasien" id="idpasien">
+                                        <input type="text" name="nama" value="<?= $row['nama'] ?>" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" readonly />
                                         <div class="input-group-append">
                                             <!-- <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
                                                 <i class="feather icon-search"></i>
@@ -215,27 +226,36 @@ $level = session()->get('userLevel');
                             <div class="col-lg-12">
                                 <div class="form-group" id="datetimepicker1">
                                     <label>Tanggal</label>
-                                    <input type="date" name="jadwal" value="<?= date('Y-m-d', strtotime($row['created_at'])); ?>" class="form-control <?= ($validation->hasError('jadwal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
+                                    <input type="date" name="tanggal" value="<?= date('Y-m-d', strtotime($row['diettanggal'])); ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('jadwal'); ?>
+                                        <?= $validation->getError('tanggal'); ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Berat Badan Sebelum HD (Kg)</label>
-                                    <input type="text" name="bbsebelumhd" id="bbsebelumhd" value="<?= $row['bbsebelumhd'] ?>" class="form-control">
+                                    <label>Diet Protein (g)</label>
+                                    <input type="text" value="<?= $row['dietprotein'] ?>" name="protein" id="protein" class="form-control">
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('bbsebelumhd'); ?>
+                                        <?= $validation->getError('protein'); ?>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Berat Badan Sesudah HD (Kg)</label>
-                                    <input type="text" name="bbsesudahhd" value="<?= $row['bbsesudahhd'] ?>" id="bbsesudahhd" class="form-control">
+                                    <label>Diet Natrium (mg)</label>
+                                    <input type="text" value="<?= $row['dietnatrium'] ?>" name="natrium" id="natrium" class="form-control">
                                     <div class="invalid-feedback">
-                                        <?= $validation->getError('bbsesudahhd'); ?>
+                                        <?= $validation->getError('natrium'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Diet Kalium (mg)</label>
+                                    <input type="text" value="<?= $row['dietkalsium'] ?>" name="kalsium" id="kalsium" class="form-control">
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('kalsium'); ?>
                                     </div>
                                 </div>
                             </div>
@@ -250,17 +270,17 @@ $level = session()->get('userLevel');
         </div>
     </form>
 
-    <form action="<?= base_url('bb/delete'); ?>" enctype="multipart/form-data" method="POST">
+    <form action="<?= base_url('diet/delete'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
-        <div class="modal" tabindex="-1" id="deleteModal<?= $row['idbb']; ?>">
+        <div class="modal" tabindex="-1" id="deleteModal<?= $row['iddiet']; ?>">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Hapus Catatan Berat Badan</h6>
+                        <h6 class="modal-title">Hapus Catatan Diet</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <input type="hidden" name="id" required value="<?= $row['idbb']; ?>" />
+                        <input type="hidden" name="id" required value="<?= $row['iddiet']; ?>" />
                         <h6>Yakin hapus data?</h6>
                     </div>
                     <div class="modal-footer">

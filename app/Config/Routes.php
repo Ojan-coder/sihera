@@ -97,3 +97,13 @@ $routes->post('/bb/edit', 'CatatanBBController::edit', ['filter' => 'auth']);
 $routes->post('/bb/delete', 'CatatanBBController::delete', ['filter' => 'auth']);
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
 $routes->get('/bb/report', 'CatatanBBController::report', ['filter' => 'auth']);
+
+// Catatan Diet
+$routes->get('/diet', 'CatatanDietController::index', ['filter' => 'auth']);
+$routes->get('/diet/add', 'CatatanDietController::add', ['filter' => 'auth']);
+$routes->get('/diet/update/(:segment)', 'CatatanDietController::update/$1', ['filter' => 'auth']);
+$routes->post('/diet/save', 'CatatanDietController::save', ['filter' => 'auth']);
+$routes->post('/diet/edit', 'CatatanDietController::edit', ['filter' => 'auth']);
+$routes->post('/diet/delete', 'CatatanDietController::delete', ['filter' => 'auth']);
+// $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
+$routes->get('/diet/report', 'CatatanDietController::report', ['filter' => 'auth']);

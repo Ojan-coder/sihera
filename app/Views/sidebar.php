@@ -120,13 +120,13 @@ $id = $uri->getSegment(1) ?? '';
         </a>
     </li>
     <li class="<?= ($id == 'urine') ? 'active' : '' ?>">
-        <a href="<?= base_url('/coment'); ?>">
+        <a href="<?= base_url('/urine'); ?>">
             <span class="pcoded-micon"><i class="feather icon-book"></i></span>
             <span class="pcoded-mtext">Catatan Urine</span>
         </a>
     </li>
     <li class="<?= ($id == 'cairan') ? 'active' : '' ?>">
-        <a href="<?= base_url('/coment'); ?>">
+        <a href="<?= base_url('/cairan'); ?>">
             <span class="pcoded-micon"><i class="feather icon-book"></i></span>
             <span class="pcoded-mtext">Pembatasan Cairan</span>
         </a>

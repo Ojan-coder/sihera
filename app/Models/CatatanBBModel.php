@@ -10,7 +10,7 @@ class CatatanBBModel extends Model
     protected $primaryKey       = 'idbb';
     protected $allowedFields    = [
         'idbb',
-        'bbpasien',
+        'bbidpasien',
         'bbsebelumhd',
         'bbsesudahhd',
         'created_at',
