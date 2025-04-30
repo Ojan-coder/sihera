@@ -74,7 +74,7 @@ class DokterController extends BaseController
                 'tgllahirdokter' => $this->request->getPost('tgllahir'),
                 'alamatdokter' => $this->request->getPost('alamat'),
                 'spesialisdokter' => $this->request->getPost('spesialis'),
-                'nohpdokter' => $this->request->getPost('spesialis'),
+                'nohpdokter' => $this->request->getPost('nohp'),
                 'gambardokter' => $fileName,
             );
 
@@ -140,7 +140,7 @@ class DokterController extends BaseController
                     'tgllahirdokter' => $this->request->getPost('tgllahir'),
                     'alamatdokter' => $this->request->getPost('alamat'),
                     'spesialisdokter' => $this->request->getPost('spesialis'),
-                    'nohpdokter' => $this->request->getPost('spesialis'),
+                    'nohpdokter' => $this->request->getPost('nohp'),
                     'gambardokter' => $fileName,
                 );
                 $model->update($id, $data);
@@ -153,7 +153,7 @@ class DokterController extends BaseController
                     'tgllahirdokter' => $this->request->getPost('tgllahir'),
                     'alamatdokter' => $this->request->getPost('alamat'),
                     'spesialisdokter' => $this->request->getPost('spesialis'),
-                    'nohpdokter' => $this->request->getPost('spesialis')
+                    'nohpdokter' => $this->request->getPost('nohp')
                 );
                 $model->update($id, $data);
                 // dd($data,$id);

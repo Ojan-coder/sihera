@@ -80,16 +80,16 @@ insert  into `tbl_catatan_diet`(`iddiet`,`dietidpasien`,`diettanggal`,`dietprote
 DROP TABLE IF EXISTS `tbl_catatan_urine`;
 
 CREATE TABLE `tbl_catatan_urine` (
-  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `idurine` char(20) NOT NULL,
   `urineidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `urinetanggal` date NOT NULL,
   `urinevolume` int NOT NULL,
   `urinefrekuensi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `urinewarna` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `urinekonsistensi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  `created_at` date DEFAULT NULL,
+  `updated_at` date DEFAULT NULL,
+  PRIMARY KEY (`idurine`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_catatan_urine` */
@@ -110,6 +110,10 @@ CREATE TABLE `tbl_dokter` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_dokter` */
+
+insert  into `tbl_dokter`(`iddokter`,`namadokter`,`tgllahirdokter`,`alamatdokter`,`spesialisdokter`,`gambardokter`,`nohpdokter`) values 
+('ID30042025001','Fauzan','1995-01-01','Padang','Ahli Bedah Tangan','1745983494_e76d704ec308eddfefef.png','+628116653442'),
+('ID30042025002','Bayu','1996-02-02','Padang','Ahli Jantung','1745985479_9fccf40416fa304180ca.png','+6283181005832');
 
 /*Table structure for table `tbl_edukasi` */
 

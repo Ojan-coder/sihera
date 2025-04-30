@@ -107,3 +107,13 @@ $routes->post('/diet/edit', 'CatatanDietController::edit', ['filter' => 'auth'])
 $routes->post('/diet/delete', 'CatatanDietController::delete', ['filter' => 'auth']);
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
 $routes->get('/diet/report', 'CatatanDietController::report', ['filter' => 'auth']);
+
+// Catatan Urine
+$routes->get('/urine', 'CatatanUrineController::index', ['filter' => 'auth']);
+$routes->get('/urine/add', 'CatatanUrineController::add', ['filter' => 'auth']);
+$routes->get('/urine/update/(:segment)', 'CatatanUrineController::update/$1', ['filter' => 'auth']);
+$routes->post('/urine/save', 'CatatanUrineController::save', ['filter' => 'auth']);
+$routes->post('/urine/edit', 'CatatanUrineController::edit', ['filter' => 'auth']);
+$routes->post('/urine/delete', 'CatatanUrineController::delete', ['filter' => 'auth']);
+// $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
+$routes->get('/urine/report', 'CatatanUrineController::report', ['filter' => 'auth']);

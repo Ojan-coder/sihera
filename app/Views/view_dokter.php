@@ -65,6 +65,7 @@
                                                 <tr>
                                                     <th style="text-align: center;">No</th>
                                                     <th>Nama Dokter</th>
+                                                    <th>Spesialis</th>
                                                     <th>Alamat Dokter</th>
                                                     <th>No.Hp Dokter</th>
                                                     <th>Gambar</th>
@@ -79,6 +80,7 @@
                                                     <tr>
                                                         <td width="8%"><?= $no; ?></td>
                                                         <td> <?= $row['namadokter']; ?></td>
+                                                        <td> <?= $row['spesialisdokter']; ?></td>
                                                         <td> <?= $row['alamatdokter']; ?></td>
                                                         <td> <?= $row['nohpdokter']; ?></td>
                                                         <td> <img src="<?= base_url('dokter/') . $row['gambardokter'] ?>" alt="" width="50px" height="50px"></td>
