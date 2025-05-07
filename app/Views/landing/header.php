@@ -5,13 +5,13 @@
                 <a href="">
                     <i class="fa fa-phone" aria-hidden="true"></i>
                     <span>
-                        Call : +01 123455678990
+                        Call : +62 81328173365
                     </span>
                 </a>
                 <a href="">
                     <i class="fa fa-envelope" aria-hidden="true"></i>
                     <span>
-                        Email : demo@gmail.com
+                        Email : sireha@gmail.com
                     </span>
                 </a>
                 <a href="">

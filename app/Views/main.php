@@ -42,14 +42,16 @@ if (session()->get('userLevel') == 1 || session()->get('userLevel') == 2 || sess
     <!-- owl carousel css -->
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>\bower_components\owl.carousel\css\owl.carousel.css">
     <link rel="stylesheet" type="text/css" href="<?= base_url() ?>\bower_components\owl.carousel\css\owl.theme.default.css">
+    <link rel="stylesheet" href="<?= base_url() ?>assets\sweetalert2\dist\sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!-- TinyMCE Textarea Editor -->
-    <script src="https://cdn.tiny.cloud/1/puxzj2mry7rl9e0ej58dphtu7zhazgwqn37arh75k9jzhxx9/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <!-- <script src="https://cdn.tiny.cloud/1/puxzj2mry7rl9e0ej58dphtu7zhazgwqn37arh75k9jzhxx9/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <script>
         tinymce.init({
             selector: 'textarea#editor'
         });
-    </script>
+    </script> -->
 </head>
 
 <body>
@@ -223,6 +225,8 @@ if (session()->get('userLevel') == 1 || session()->get('userLevel') == 2 || sess
     <!-- owl carousel 2 js -->
     <script type="text/javascript" src="<?= base_url() ?>\bower_components\owl.carousel\js\owl.carousel.min.js"></script>
     <script type="text/javascript" src="<?= base_url() ?>\assets\js\owl-custom.js"></script>
+    <!-- <script src="<?= base_url() ?>assets\sweetalert2\dist\sweetalert2.all.min.js"></script> -->
+    
 
     <script>
         $(function() {
@@ -240,9 +244,6 @@ if (session()->get('userLevel') == 1 || session()->get('userLevel') == 2 || sess
     </script>
 
     <script>
-        $(function() {
-            $('#datetimepicker1').datetimepicker();
-        });
         $('#simpletable').DataTable({
             responsive: true
         });

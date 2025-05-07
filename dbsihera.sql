@@ -32,9 +32,6 @@ CREATE TABLE `tbl_aktifitas_fisik` (
 
 /*Data for the table `tbl_aktifitas_fisik` */
 
-insert  into `tbl_aktifitas_fisik`(`idaktifitas`,`fisikidpasien`,`fisikjenisaktifitas`,`fisikdurasi`,`created_at`,`updated_at`) values 
-('AF001','PS26042025001','1',30,'2028-04-25 17:49:15','2028-04-25 17:53:32');
-
 /*Table structure for table `tbl_catatan_bb` */
 
 DROP TABLE IF EXISTS `tbl_catatan_bb`;
@@ -50,9 +47,6 @@ CREATE TABLE `tbl_catatan_bb` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_catatan_bb` */
-
-insert  into `tbl_catatan_bb`(`idbb`,`bbidpasien`,`bbsebelumhd`,`bbsesudahhd`,`created_at`,`updated_at`) values 
-('BB001','PS26042025001',55,50,'2029-04-25 15:33:06',NULL);
 
 /*Table structure for table `tbl_catatan_diet` */
 
@@ -72,9 +66,6 @@ CREATE TABLE `tbl_catatan_diet` (
 
 /*Data for the table `tbl_catatan_diet` */
 
-insert  into `tbl_catatan_diet`(`iddiet`,`dietidpasien`,`diettanggal`,`dietprotein`,`dietnatrium`,`dietkalsium`,`created_at`,`updated_at`) values 
-('D001','PS26042025001','2025-04-29',70,1800,2500,'2029-04-25 15:32:28',NULL);
-
 /*Table structure for table `tbl_catatan_urine` */
 
 DROP TABLE IF EXISTS `tbl_catatan_urine`;
@@ -93,6 +84,10 @@ CREATE TABLE `tbl_catatan_urine` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_catatan_urine` */
+
+insert  into `tbl_catatan_urine`(`idurine`,`urineidpasien`,`urinetanggal`,`urinevolume`,`urinefrekuensi`,`urinewarna`,`urinekonsistensi`,`created_at`,`updated_at`) values 
+('UR30042025001','P004','2025-04-30',60,'2','Normal','Normal','2030-04-25',NULL),
+('UR30042025002','P002','2025-04-30',200,'3','Normal','Normal','2030-04-25',NULL);
 
 /*Table structure for table `tbl_dokter` */
 
@@ -146,7 +141,7 @@ CREATE TABLE `tbl_jadwal_hemodialisa` (
 /*Data for the table `tbl_jadwal_hemodialisa` */
 
 insert  into `tbl_jadwal_hemodialisa`(`idjadwal`,`idpasien`,`jadwal`,`waktu`) values 
-('JH28042025001','PS26042025001','2025-04-29','10:00:00');
+('JH01052025002','P001','2025-05-07','11:00:00');
 
 /*Table structure for table `tbl_konsultasi` */
 
@@ -194,7 +189,7 @@ CREATE TABLE `tbl_pasien` (
   `nik` char(20) DEFAULT NULL,
   `nama` varchar(50) DEFAULT NULL,
   `usia` int DEFAULT NULL,
-  `tgllahir` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `tgllahir` date DEFAULT NULL,
   `jenkel` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `beratbadan` char(10) DEFAULT NULL,
   `tinggibadan` char(10) DEFAULT NULL,
@@ -206,8 +201,10 @@ CREATE TABLE `tbl_pasien` (
 /*Data for the table `tbl_pasien` */
 
 insert  into `tbl_pasien`(`id`,`nik`,`nama`,`usia`,`tgllahir`,`jenkel`,`beratbadan`,`tinggibadan`,`alamat`,`nohp`) values 
-('PS26042025001','3333333333333333','Sana',25,'04-26-2000','Perempuan','55','165','adasdad','084651'),
-('PS28042025002','1111111111111111','Boy',28,'1991-01-01','Laki-Laki','55','165','Payakumbuh','+62');
+('P001','1111111111111111','Novi',25,'2000-04-04','Perempuan','55','160','Sijunjung','+62831810058'),
+('P002','2222222222222222','Ojan',26,'1999-07-30','Laki-Laki','60','167','Padang','+62811665344'),
+('P003','3333333333333333','Ilhamsyah',28,'1997-09-30','Laki-Laki','66','158','Padang','+62838473784'),
+('P004','4444444444444444','Sana',25,'2000-04-30','Perempuan','50','165','Padang','+62812660534');
 
 /*Table structure for table `tbl_pembatasan_cairan` */
 
@@ -215,7 +212,7 @@ DROP TABLE IF EXISTS `tbl_pembatasan_cairan`;
 
 CREATE TABLE `tbl_pembatasan_cairan` (
   `idpembatasan` char(10) NOT NULL,
-  `idpasienpembatasan` char(10) DEFAULT NULL,
+  `idpasienpembatasan` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `tglpembatasan` date DEFAULT NULL,
   `asupancairan` char(10) DEFAULT NULL,
   `targetmaksimal` char(10) DEFAULT NULL,
@@ -256,14 +253,16 @@ CREATE TABLE `tbl_user` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb3;
 
 /*Data for the table `tbl_user` */
 
 insert  into `tbl_user`(`id`,`username`,`nama`,`role`,`email`,`password`,`statusakses`,`created_at`,`updated_at`) values 
-(1,'admin','Admin','2','admin@gmail.com','$2y$10$OZeS0QB5ncTzVAjpev0Y1.Ujz4yHZhOjwew3ewO8.RN/jt1BKImmi','Y','2024-07-15 15:07:52',NULL),
-(3,'PS26042025001','Sana','3','sana@gmail.com','$2y$10$3ARupgwus0rLkXr4D3zcaucfcohrcDWIMhnpqkuRzscTJ7TELcLpq','Y',NULL,NULL),
-(5,'PS28042025002','Boy','3','boy@gmail.com','$2y$10$l4DA46I52uhKfZEg0E7NU.qgbHPIj5lDZFVaZRITHrXNmGaQFKL4e','Y','0000-00-00 00:00:00',NULL);
+(1,'admin','Admin','2','admin@gmail.com','$2y$10$OZeS0QB5ncTzVAjpev0Y1.Ujz4yHZhOjwew3ewO8.RN/jt1BKImmi','Y','2025-04-30 21:40:00',NULL),
+(7,'P001','Novi','3','novi@gmail.com','$2y$10$7ch6ql47G9YifAazM1nYiuwuLMBAULj/JN7eO3CW.BSfS1yxejzHa','Y','2025-04-30 21:40:11',NULL),
+(8,'P002','Ojan','3','fauzan@gmail.com','$2y$10$c2EJK4vVTi7WzYXTNewFYuqnzKVEBjl/SR0ia9ScE2Fw9R7id2DqW','Y','2025-04-30 21:40:13',NULL),
+(9,'P003','Ilhamsyah','3','ilham@gmail.com','$2y$10$UA2JOBOsZTSeuCzYVNG/6.3cCMzuJsAHL/EH7iZfOO0z/iM4GFU02','Y','2025-04-30 21:42:44',NULL),
+(13,'P004','Sana','3','sana@gmail.com','$2y$10$S.oWe0dx5aUf6HHbiDz0zOJsA31SbcIv3UiewQwKVWxQM3rv6p7Pq','Y','2025-04-30 21:55:14',NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

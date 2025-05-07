@@ -117,3 +117,14 @@ $routes->post('/urine/edit', 'CatatanUrineController::edit', ['filter' => 'auth'
 $routes->post('/urine/delete', 'CatatanUrineController::delete', ['filter' => 'auth']);
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
 $routes->get('/urine/report', 'CatatanUrineController::report', ['filter' => 'auth']);
+
+
+// Catatan Urine
+$routes->get('/cairan', 'PembatasanCairanController::index', ['filter' => 'auth']);
+$routes->get('/cairan/add', 'PembatasanCairanController::add', ['filter' => 'auth']);
+$routes->get('/cairan/update/(:segment)', 'PembatasanCairanController::update/$1', ['filter' => 'auth']);
+$routes->post('/cairan/save', 'PembatasanCairanController::save', ['filter' => 'auth']);
+$routes->post('/cairan/edit', 'PembatasanCairanController::edit', ['filter' => 'auth']);
+$routes->post('/cairan/delete', 'PembatasanCairanController::delete', ['filter' => 'auth']);
+// $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
+$routes->get('/cairan/report', 'PembatasanCairanController::report', ['filter' => 'auth']);

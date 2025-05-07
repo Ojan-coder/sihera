@@ -56,17 +56,14 @@ $this->extend('landing/index') ?>
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="inputDoctorName">Umur Pasien</label>
-                            <input type="number" maxlength="3" class="form-control" value="<?= old('umur') ?>" name="umur" id="inputUmurPasien" placeholder="">
+                            <input type="text" maxlength="3" class="form-control" value="<?= old('umur') ?>" name="umur" id="inputUmurPasien" placeholder="">
                         </div>
                     </div>
                     <div class="form-row ">
                         <div class="form-group col-lg-4">
                             <label for="inputDate">Tanggal Lahir Pasien </label>
-                            <div class="input-group date" id="inputDate" data-date-format="mm-dd-yyyy">
-                                <input type="text" name="tgllahir" value="<?= old('tgllahir') ?>" class="form-control">
-                                <span class="input-group-addon date_icon">
-                                    <i class="fa fa-calendar" aria-hidden="true"></i>
-                                </span>
+                            <div class="input-group date" data-date-format="mm-dd-yyyy">
+                                <input type="date" name="tgllahir" value="<?= old('tgllahir') ?>" class="form-control">
                             </div>
                         </div>
                         <div class="form-group col-lg-4">
@@ -79,13 +76,13 @@ $this->extend('landing/index') ?>
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="inputPhone">Tinggi Badan Pasien (Cm)</label>
-                            <input type="number" class="form-control" value="<?= old('tinggibadan') ?>" name="tinggibadan" placeholder="">
+                            <input type="text" class="form-control" value="<?= old('tinggibadan') ?>" name="tinggibadan" placeholder="">
                         </div>
                     </div>
                     <div class="form-row ">
                         <div class="form-group col-lg-4">
                             <label for="inputPhone">Berat Badan Pasien</label>
-                            <input type="number" class="form-control" name="beratbadan" value="<?= old('beratbadan') ?>" id="inputPhone">
+                            <input type="text" class="form-control" name="beratbadan" value="<?= old('beratbadan') ?>" id="inputPhone">
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="inputSymptoms">Alamat Pasien</label>
@@ -93,7 +90,7 @@ $this->extend('landing/index') ?>
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="inputPhone">No.Hp Pasien</label>
-                            <input type="number" class="form-control" name="nohp" value="<?= old('nohp') ?>" id="inputPhone">
+                            <input type="text" class="form-control" name="nohp" value="+62<?= old('nohp') ?>" id="inputPhone">
                         </div>
                     </div>
                     <div class="form-row ">

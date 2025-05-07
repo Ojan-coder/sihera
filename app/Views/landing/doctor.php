@@ -17,7 +17,7 @@
           <div class="item">
             <div class="box">
               <div class="img-box">
-                <img src="<?= base_url('dokter/').$r['gambardokter'] ?>" alt="" />
+                <img src="<?= base_url('dokter/') . $r['gambardokter'] ?>" width="50" height="300" />
               </div>
               <div class="detail-box">
                 <h5>
@@ -26,11 +26,13 @@
                 <h6>
                   <?= $r['spesialisdokter'] ?>
                 </h6>
-                <div class="social_box">
-                  <a href="https://api.whatsapp.com/send/?phone=%2B<?= $r['nohpdokter'] ?>&text=Halo%2C+Saya+Ingin+Konsultasi+Dengan+Dokter+%3F&type=phone_number&app_absent=0">
-                    <i class="fa fa-whatsapp" aria-hidden="true"></i>
+                <p>
+                  <a href="https://api.whatsapp.com/send/?phone=%2B<?= $r['nohpdokter'] ?>&text=Halo%2C+Saya+Ingin+Konsultasi+Dengan+Dokter+%3F&type=phone_number&app_absent=0" class="btn btn-outline-success btn-sm">
+                    <i class="fa fa-whatsapp" aria-hidden="true"></i> Konsultasi
                   </a>
-                  <a href="">
+                </p>
+                <div class="social_box">
+                  <!-- <a href="">
                     <i class="fa fa-twitter" aria-hidden="true"></i>
                   </a>
                   <a href="">
@@ -38,7 +40,7 @@
                   </a>
                   <a href="">
                     <i class="fa fa-instagram" aria-hidden="true"></i>
-                  </a>
+                  </a> -->
                 </div>
               </div>
             </div>

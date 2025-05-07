@@ -3,15 +3,24 @@
 namespace App\Controllers;
 
 use App\Models\DocterModel;
+use App\Models\JadwalHemodialisaModel;
 use App\Models\UserModel;
 
 class HomeController extends BaseController
 {
     public function index()
     {
-        $modelGalery = new DocterModel();
+        $model = new JadwalHemodialisaModel();
+        $level = session()->get('userLevel');
+        $id = session()->get('userNama');
+        if ($level == 3) {
+            $datanotif = $model->where('idpasien', $id)->orderBy('idjadwal','DESC')->find();
+        } else {
+            $datanotif = $model->findAll();
+        }
+        // dd($datanotif);
         $data = [
-            'datagalery' => $modelGalery->findAll(),
+            'datajadwal' => $datanotif,
             'date' => date('h:i'),
         ];
         // 1Sampai9!@
@@ -24,7 +33,7 @@ class HomeController extends BaseController
 
         $model = new UserModel();
         $data = array(
-            'user_name' => $this->request->getPost('nama')
+            'username' => $this->request->getPost('nama')
         );
         $model->updateUser($data, $id);
         session()->setFlashdata('success', 'Berhasil update profile');

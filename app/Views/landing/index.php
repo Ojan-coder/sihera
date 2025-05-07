@@ -12,7 +12,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
 
-  <title>Rumah Sakit</title>
+  <title>Si-Reha</title>
   <link rel="icon" href="<?= base_url(); ?>\landing\images\logo.png" type="image/x-icon">
 
 
@@ -62,7 +62,7 @@
                       </button>
                     </div>
                     <h1>
-                      Mico <br>
+                      ALMIRA <br>
                       <span>
                         Hospital
                       </span>
@@ -94,7 +94,7 @@
                       </button>
                     </div>
                     <h1>
-                      Mico <br>
+                      ALMIRA <br>
                       <span>
                         Hospital
                       </span>
@@ -126,7 +126,7 @@
                       </button>
                     </div>
                     <h1>
-                      Mico <br>
+                      ALMIRA <br>
                       <span>
                         Hospital
                       </span>
@@ -141,7 +141,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="images/slider-img.jpg" alt="">
+                    <img src="<?= base_url('landing/') ?>images/slider-img.jpg" alt="">
                   </div>
                 </div>
               </div>
@@ -200,7 +200,7 @@
               <a href="">
                 <i class="fa fa-envelope"></i>
                 <span>
-                  demo@gmail.com
+                  sireha@gmail.com
                 </span>
               </a>
             </div>

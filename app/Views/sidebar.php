@@ -131,10 +131,10 @@ $id = $uri->getSegment(1) ?? '';
             <span class="pcoded-mtext">Pembatasan Cairan</span>
         </a>
     </li>
-    <li class="<?= ($id == 'profile') ? 'active' : '' ?>">
-        <a href="#">
-            <span class="pcoded-micon"><i class="feather icon-user"></i></span>
-            <span class="pcoded-mtext">Profile</span>
+    <li class="<?= ($id == 'logout') ? 'active' : '' ?>">
+        <a href="<?= base_url('/logout') ?>">
+            <span class="pcoded-micon"><i class="feather icon-log-out"></i></span>
+            <span class="pcoded-mtext">Logout</span>
         </a>
     </li>
 <?php } ?>

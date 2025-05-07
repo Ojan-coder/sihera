@@ -2,6 +2,7 @@
 
 <?= $this->section('content');
 $level = session()->get('userLevel');
+$session = \Config\Services::session();
 ?>
 
 <div class="pcoded-content">
@@ -41,19 +42,23 @@ $level = session()->get('userLevel');
                                     <div class="row justify-content-end">
                                         <div class="col-lg-12">
                                             <?php if (session()->getFlashdata('success')) { ?>
-                                                <div class="alert alert-success border-success">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <i class="icofont icofont-close-line-circled"></i>
-                                                    </button>
-                                                    <strong>Success!</strong> <?php echo session()->getFlashdata('success'); ?>
-                                                </div>
+                                                <script>
+                                                    Swal.fire({
+                                                        icon: 'success',
+                                                        title: 'Berhasil',
+                                                        text: "<?= session()->getFlashdata('success') ?>",
+                                                        confirmButtonColor: '#3085d6',
+                                                        confirmButtonText: 'OK'
+                                                    });
+                                                </script>
                                             <?php } else if (session()->getFlashdata('failed')) { ?>
-                                                <div class="alert alert-warning border-warning">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <i class="icofont icofont-close-line-circled"></i>
-                                                    </button>
-                                                    <strong>Error!</strong> <?php echo session()->getFlashdata('failed'); ?>
-                                                </div>
+                                                <script>
+                                                    Swal.fire({
+                                                        icon: 'error',
+                                                        title: 'Gagal',
+                                                        text: "<?= session()->getFlashdata('failed') ?>"
+                                                    });
+                                                </script>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -70,10 +75,10 @@ $level = session()->get('userLevel');
                                                     <th style="text-align: center;">No</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Tanggal</th>
-                                                    <th>Urine Volume</th>
-                                                    <th>Urine Frekuensi</th>
-                                                    <th>Urine Warna</th>
-                                                    <th>Urine Konsistensi</th>
+                                                    <th>Volume Urine (ml)</th>
+                                                    <th>Frekuensi (Kali/Hari)</th>
+                                                    <th>Warna</th>
+                                                    <th>Konsistensi</th>
                                                     <?php if ($level != 3) { ?>
                                                         <th>Aksi</th>
                                                     <?php } ?>
@@ -140,7 +145,7 @@ $level = session()->get('userLevel');
                                 <label for="basic-url">Nama Pasien</label>
                                 <div class="input-group mb-3">
                                     <input type="hidden" name="idpasien" id="idpasien">
-                                    <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                    <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama"/>
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
                                             <i class="feather icon-search"></i>
@@ -152,7 +157,7 @@ $level = session()->get('userLevel');
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Tanggal</label>
-                                <input type="date" name="tanggal" value="<?= old('tanggal') ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
+                                <input type="date" name="tanggal" value="<?= old('tanggal') ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" />
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('tanggal'); ?>
                                 </div>
@@ -161,9 +166,9 @@ $level = session()->get('userLevel');
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Urine Volume</label>
-                                <input type="text" name="urinevolume" id="urinevolume" class="form-control">
+                                <input type="text" name="urinevolume" id="urinevolume" class="form-control <?= $session->getFlashdata('error_urinevolume') ? 'is-invalid' : ''; ?>">
                                 <div class="invalid-feedback">
-                                    <?= $validation->getError('urinevolume'); ?>
+                                    <?= $session->getFlashdata('error_urinevolume'); ?>
                                 </div>
                             </div>
                         </div>

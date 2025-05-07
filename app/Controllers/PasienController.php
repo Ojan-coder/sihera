@@ -94,7 +94,7 @@ class PasienController extends BaseController
                 'nik' => $this->request->getPost('nik'),
                 'nama' => $this->request->getPost('nama'),
                 'usia' => $this->request->getPost('umur'),
-                'tgllahir' => $this->request->getPost('tgllahir'),
+                'tgllahir' => date('Y-m-d', strtotime($this->request->getPost('tgllahir'))),
                 'jenkel' => $this->request->getPost('jenkel'),
                 'tinggibadan' => $this->request->getPost('tinggibadan'),
                 'beratbadan' => $this->request->getPost('beratbadan'),
@@ -108,7 +108,7 @@ class PasienController extends BaseController
                 'email' => $this->request->getPost('email'),
                 'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
                 'statusakses' => 'Y',
-                'created_at' => date('yyyy-mm-dd H:i:s'),
+                'created_at' => date('Y-m-d H:i:s'),
             ];
             $muser->insert($datauser);
             $mpasien->insert($data);
@@ -185,7 +185,7 @@ class PasienController extends BaseController
                 'nik' => $this->request->getPost('nik'),
                 'nama' => $this->request->getPost('nama'),
                 'usia' => $this->request->getPost('umur'),
-                'tgllahir' => $this->request->getPost('tgllahir'),
+                'tgllahir' => date('Y-m-d', strtotime($this->request->getPost('tgllahir'))),
                 'jenkel' => $this->request->getPost('jenkel'),
                 'tinggibadan' => $this->request->getPost('tinggibadan'),
                 'beratbadan' => $this->request->getPost('beratbadan'),
@@ -206,7 +206,7 @@ class PasienController extends BaseController
         $model = new PasienModel();
         $muser = new UserModel();
         $id = $this->request->getPost('id');
-        $data = $muser->where('username',$id)->find();
+        $data = $muser->where('username', $id)->find();
         // dd($data);
 
         $model->delete($id);
@@ -298,7 +298,7 @@ class PasienController extends BaseController
                 'nik' => $this->request->getPost('nik'),
                 'nama' => $this->request->getPost('nama'),
                 'usia' => $this->request->getPost('umur'),
-                'tgllahir' => $this->request->getPost('tgllahir'),
+                'tgllahir' => date('Y-m-d', strtotime($this->request->getPost('tgllahir'))),
                 'jenkel' => $this->request->getPost('jenkel'),
                 'tinggibadan' => $this->request->getPost('tinggibadan'),
                 'beratbadan' => $this->request->getPost('beratbadan'),
@@ -314,7 +314,7 @@ class PasienController extends BaseController
                 'email' => $this->request->getPost('email'),
                 'password' => password_hash($this->request->getVar('password'), PASSWORD_DEFAULT),
                 'statusakses' => 'Y',
-                'created_at' => date('yyyy-mm-dd H:i:s'),
+                'created_at' => date('Y-m-d H:i:s'),
             ];
             $muser->insert($datauser);
             $mpasien->insert($data);

@@ -39,19 +39,25 @@
                                     <div class="row justify-content-end">
                                         <div class="col-lg-12">
                                             <?php if (session()->getFlashdata('success')) { ?>
-                                                <div class="alert alert-success border-success">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <i class="icofont icofont-close-line-circled"></i>
-                                                    </button>
-                                                    <strong>Success!</strong> <?php echo session()->getFlashdata('success'); ?>
-                                                </div>
+                                                <script>
+                                                    Swal.fire({
+                                                        icon: 'success',
+                                                        title: 'Berhasil',
+                                                        text: "<?= session()->getFlashdata('success') ?>",
+                                                        confirmButtonColor: '#3085d6',
+                                                        confirmButtonText: 'OK'
+                                                    });
+                                                </script>
                                             <?php } else if (session()->getFlashdata('failed')) { ?>
-                                                <div class="alert alert-warning border-warning">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <i class="icofont icofont-close-line-circled"></i>
-                                                    </button>
-                                                    <strong>Error!</strong> <?php echo session()->getFlashdata('failed'); ?>
-                                                </div>
+                                                <script>
+                                                    Swal.fire({
+                                                        icon: 'failed',
+                                                        title: 'Gagal',
+                                                        text: "<?= session()->getFlashdata('failed') ?>",
+                                                        confirmButtonColor: '#3085d6',
+                                                        confirmButtonText: 'OK'
+                                                    });
+                                                </script>
                                             <?php } ?>
                                         </div>
                                     </div>
@@ -86,7 +92,7 @@
                                                         <td> <?= $row['nik']; ?></td>
                                                         <td> <?= $row['nama']; ?></td>
                                                         <td> <?= $row['usia']; ?></td>
-                                                        <td> <?= $row['tgllahir']; ?></td>
+                                                        <td> <?= date('d-m-Y', strtotime($row['tgllahir'])); ?></td>
                                                         <td> <?= $row['jenkel']; ?></td>
                                                         <td> <?= $row['beratbadan']; ?></td>
                                                         <td> <?= $row['tinggibadan']; ?></td>
@@ -204,7 +210,7 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>No.Hp Pasien</label>
-                                <input type="text" name="nohp"value="+62<?= old('') ?>" class="form-control <?= ($validation->hasError('nohp')) ? 'is-invalid' : ''; ?>" required />
+                                <input type="text" name="nohp" value="+62<?= old('') ?>" class="form-control <?= ($validation->hasError('nohp')) ? 'is-invalid' : ''; ?>" required />
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('nohp'); ?>
                                 </div>
@@ -293,7 +299,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Tanggal Lahir</label>
-                                    <input type="date" name="tgllahir" value="<?= $row['tgllahir'] ?>" class="form-control <?= ($validation->hasError('tgllahir')) ? 'is-invalid' : ''; ?>" required />
+                                    <input type="date" name="tgllahir" value="<?= date('Y-m-d', strtotime($row['tgllahir'])) ?>" class="form-control <?= ($validation->hasError('tgllahir')) ? 'is-invalid' : ''; ?>" required />
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('tgllahir'); ?>
                                     </div>
@@ -304,7 +310,7 @@
                                     <label>Jenis Kelamin</label>
                                     <select name="jenkel" id="" class="form-control">
                                         <option value="">-Pilih Jenis Kelamin-</option>
-                                        <option value="Laki-Laki" <?=$row['jenkel'] == 'Laki-Laki' ? 'selected' : '' ?>>Laki-Laki</option>
+                                        <option value="Laki-Laki" <?= $row['jenkel'] == 'Laki-Laki' ? 'selected' : '' ?>>Laki-Laki</option>
                                         <option value="Perempuan" <?= $row['jenkel'] == 'Perempuan' ? 'selected' : '' ?>>Perempuan</option>
                                     </select>
                                     <div class="invalid-feedback">

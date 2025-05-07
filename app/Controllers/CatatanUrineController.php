@@ -23,6 +23,7 @@ class CatatanUrineController extends BaseController
 
     public function save()
     {
+        $validation = \Config\Services::validation();
         $rules = [
             'urinevolume' => [
                 'rules' => 'required',
@@ -69,8 +70,12 @@ class CatatanUrineController extends BaseController
             session()->setFlashdata('success', 'Berhasil Menyimpan Data');
             return redirect()->to('/urine');
         } else {
-            session()->setFlashdata('failed', 'Data Gagal Disimpan' . $this->validator->listErrors());
-            return redirect()->to('/urine');
+            $session_error = [
+                'error_urinevolume' => $validation->getError('urinevolume'),
+                'error_urinefrekuensi' => $validation->getError('urinefrekuensi')
+            ];
+            session()->setFlashdata('failed', 'Data Gagal Disimpan, Periksa Data Input Kembali',$session_error);
+            return redirect()->to('/urine')->withInput();
         }
     }
 

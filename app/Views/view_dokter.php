@@ -39,19 +39,25 @@
                                     <div class="row justify-content-end">
                                         <div class="col-lg-12">
                                             <?php if (session()->getFlashdata('success')) { ?>
-                                                <div class="alert alert-success border-success">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <i class="icofont icofont-close-line-circled"></i>
-                                                    </button>
-                                                    <strong>Success!</strong> <?php echo session()->getFlashdata('success'); ?>
-                                                </div>
+                                                <script>
+                                                    Swal.fire({
+                                                        icon: 'success',
+                                                        title: 'Berhasil',
+                                                        text: "<?= session()->getFlashdata('success') ?>",
+                                                        confirmButtonColor: '#3085d6',
+                                                        confirmButtonText: 'OK'
+                                                    });
+                                                </script>
                                             <?php } else if (session()->getFlashdata('failed')) { ?>
-                                                <div class="alert alert-warning border-warning">
-                                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                        <i class="icofont icofont-close-line-circled"></i>
-                                                    </button>
-                                                    <strong>Error!</strong> <?php echo session()->getFlashdata('failed'); ?>
-                                                </div>
+                                                <script>
+                                                    Swal.fire({
+                                                        icon: 'failed',
+                                                        title: 'Gagal',
+                                                        text: "<?= session()->getFlashdata('failed') ?>",
+                                                        confirmButtonColor: '#3085d6',
+                                                        confirmButtonText: 'OK'
+                                                    });
+                                                </script>
                                             <?php } ?>
                                         </div>
                                     </div>
