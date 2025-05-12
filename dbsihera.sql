@@ -89,6 +89,25 @@ insert  into `tbl_catatan_urine`(`idurine`,`urineidpasien`,`urinetanggal`,`urine
 ('UR30042025001','P004','2025-04-30',60,'2','Normal','Normal','2030-04-25',NULL),
 ('UR30042025002','P002','2025-04-30',200,'3','Normal','Normal','2030-04-25',NULL);
 
+/*Table structure for table `tbl_detail_pembatasan_cairan` */
+
+DROP TABLE IF EXISTS `tbl_detail_pembatasan_cairan`;
+
+CREATE TABLE `tbl_detail_pembatasan_cairan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `detail_idpembatasan` varchar(20) DEFAULT NULL,
+  `detail_tanggal` date DEFAULT NULL,
+  `detail_pasien` varchar(20) DEFAULT NULL,
+  `detail_asupanhari` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `tbl_detail_pembatasan_cairan` */
+
+insert  into `tbl_detail_pembatasan_cairan`(`id`,`detail_idpembatasan`,`detail_tanggal`,`detail_pasien`,`detail_asupanhari`) values 
+(1,'PC001','2025-05-12','P002',100),
+(2,'PC001','2025-05-12','P002',50);
+
 /*Table structure for table `tbl_dokter` */
 
 DROP TABLE IF EXISTS `tbl_dokter`;
@@ -141,7 +160,8 @@ CREATE TABLE `tbl_jadwal_hemodialisa` (
 /*Data for the table `tbl_jadwal_hemodialisa` */
 
 insert  into `tbl_jadwal_hemodialisa`(`idjadwal`,`idpasien`,`jadwal`,`waktu`) values 
-('JH01052025002','P001','2025-05-07','11:00:00');
+('JH01052025002','P001','2025-05-07','11:00:00'),
+('JH12052025003','P001','2025-05-14','08:00:00');
 
 /*Table structure for table `tbl_konsultasi` */
 
@@ -214,12 +234,14 @@ CREATE TABLE `tbl_pembatasan_cairan` (
   `idpembatasan` char(10) NOT NULL,
   `idpasienpembatasan` char(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `tglpembatasan` date DEFAULT NULL,
-  `asupancairan` char(10) DEFAULT NULL,
   `targetmaksimal` char(10) DEFAULT NULL,
   PRIMARY KEY (`idpembatasan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_pembatasan_cairan` */
+
+insert  into `tbl_pembatasan_cairan`(`idpembatasan`,`idpasienpembatasan`,`tglpembatasan`,`targetmaksimal`) values 
+('PC001','P002','2025-05-12','500');
 
 /*Table structure for table `tbl_role` */
 
