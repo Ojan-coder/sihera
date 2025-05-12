@@ -13,8 +13,8 @@ $level = session()->get('userLevel');
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Catatan Pembatasan Cairan</h4>
-                                    <span>This page is for managing "Catatan Pembatasan Cairan".</span>
+                                    <h4>Data Catatan Asupan Cairan</h4>
+                                    <span>This page is for managing "Catatan Asupan Cairan".</span>
                                 </div>
                             </div>
                         </div>
@@ -26,7 +26,7 @@ $level = session()->get('userLevel');
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Catatan Pembatasan Cairan</a>
+                                    <li class="breadcrumb-item"><a href="#!">Catatan Asupan Cairan</a>
                                     </li>
                                 </ul>
                             </div>
@@ -64,7 +64,9 @@ $level = session()->get('userLevel');
                                         </div>
                                     </div>
                                     <?php if ($level != 3) { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Pembatasan Cairan</button>
+                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal"> Tambah</button>
+                                    <?php } else { ?>
+                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myDetail">Tambah</button>
                                     <?php } ?>
                                     <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
@@ -76,7 +78,7 @@ $level = session()->get('userLevel');
                                                     <th style="text-align: center;">No</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Tanggal</th>
-                                                    <th>Asupan Cairan (ml)</th>
+                                                    <!-- <th>Asupan Cairan (ml)</th> -->
                                                     <th>Target Maksimal (ml)</th>
                                                     <?php if ($level != 3) { ?>
                                                         <th>Aksi</th>
@@ -92,7 +94,7 @@ $level = session()->get('userLevel');
                                                         <td width="8%"><?= $no; ?></td>
                                                         <td> <?= $row['nama']; ?></td>
                                                         <td> <?= date('Y-m-d', strtotime($row['tglpembatasan']));  ?></td>
-                                                        <td> <?= $row['asupancairan']; ?></td>
+
                                                         <td> <?= $row['targetmaksimal']; ?></td>
                                                         <?php if ($level != 3) { ?>
                                                             <td class="text-center">
@@ -132,7 +134,7 @@ $level = session()->get('userLevel');
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Pembatasan Cairan</h6>
+                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Asupan Cairan</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
@@ -162,19 +164,65 @@ $level = session()->get('userLevel');
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Asupan Cairan</label>
-                                <input type="text" name="asupan" id="asupan" class="form-control">
+                                <label>Target Maksimal Cairan</label>
+                                <input type="text" name="target" id="target" class="form-control">
                                 <div class="invalid-feedback">
-                                    <?= $validation->getError('asupan'); ?>
+                                    <?= $validation->getError('target'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-inverse btn-sm">Tambah</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form action="<?= base_url('cairan/detailsave'); ?>" enctype="multipart/form-data" method="post">
+    <?= csrf_field(); ?>
+    <div class="modal fade" id="myDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Asupan Cairan</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="basic-url">Nama Pasien</label>
+                                <div class="input-group mb-3">
+                                    <input type="hidden" name="idpembatasan" id="idpembatasan">
+                                    <input type="hidden" name="idp" id="idp">
+                                    <input type="text" name="namaa" id="namaa" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#detail">
+                                            <i class="feather icon-search"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Target Maksimal Cairan</label>
-                                <input type="text" name="target" id="target" class="form-control">
+                                <label>Tanggal</label>
+                                <input type="date" name="tanggal" value="<?= old('tanggal') ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
                                 <div class="invalid-feedback">
-                                    <?= $validation->getError('target'); ?>
+                                    <?= $validation->getError('tanggal'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Asupan Cairan</label>
+                                <input type="text" name="asupan" id="asupan" class="form-control">
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('asupan'); ?>
                                 </div>
                             </div>
                         </div>
@@ -230,7 +278,7 @@ $level = session()->get('userLevel');
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Asupan Cairan</label>
-                                    <input type="text" name="asupan" value="<?= $row['asupancairan'] ?>" id="asupan" class="form-control">
+                                    <input type="text" name="asupan" value="" id="asupan" class="form-control">
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('asupan'); ?>
                                     </div>
@@ -262,7 +310,7 @@ $level = session()->get('userLevel');
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Hapus Catatan Pembatasan Cairan</h6>
+                        <h6 class="modal-title">Hapus Catatan Asupan Cairan</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -314,10 +362,60 @@ $level = session()->get('userLevel');
                                 <td> <?= $row['nik']; ?></td>
                                 <td> <?= $row['nama']; ?></td>
                                 <td> <?= $row['usia']; ?></td>
-                                <td> <?= $row['usia']; ?></td>
+                                <td> <?= $row['alamat'] . ' / ' . $row['nohp']; ?></td>
 
                                 <td class="text-center">
                                     <button class="btn btn-outline-primary btn-mini" data-toggle="modal" onclick="return pilih('<?= $row['id'] ?>','<?= $row['nama'] ?>')">
+                                        <i class="feather icon-check"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Data Target Asupan  -->
+
+<div class="modal fade bd-example-modal-lg" id="detail" tabindex="-1" role="dialog" aria-labelledby="detail" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Data Asupan</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <table id="simpletablemodaltwo" width="100%" class="table table-striped table-bordered nowrap">
+                    <thead>
+                        <tr>
+                            <th style="text-align: center;">No</th>
+                            <th>ID Pasien</th>
+                            <th>Nama Pasien</th>
+                            <th>Target</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php $no = 0;
+                        foreach ($datapasien as $row) : $no++;
+
+                        ?>
+                            <tr>
+                                <td width="8%"><?= $no; ?></td>
+                                <td> <?= $row['nik']; ?></td>
+                                <td> <?= $row['nama']; ?></td>
+                                <td> <?= $row['targetmaksimal']; ?></td>
+
+                                <td class="text-center">
+                                    <button class="btn btn-outline-primary btn-mini" data-toggle="modal" onclick="return pilihdetail('<?= $row['idpembatasan'] ?>','<?= $row['id'] ?>','<?= $row['nama'] ?>')">
                                         <i class="feather icon-check"></i>
                                     </button>
                                 </td>
@@ -338,6 +436,13 @@ $level = session()->get('userLevel');
         $('#idpasien').val(kode);
         $('#nama').val(nm);
         $('#exampleModal').modal('hide');
+    }
+
+    function pilihdetail(id, kodee, nma) {
+        $('#idpembatasan').val(id);
+        $('#idp').val(kodee);
+        $('#namaa').val(nma);
+        $('#detail').modal('hide');
     }
 </script>
 <?= $this->endSection(); ?>

@@ -15,8 +15,10 @@ class AktifitasController extends BaseController
         $model = new AktifitasFisikModel();
         $mjenis = new JenisAktifitasModel();
         $mpasien = new PasienModel();
+        $id = session()->get('userNama');
         $data = [
-            'dataaktifitas' => $model->join('tbl_master_aktifitas','fisikjenisaktifitas=idjenis')->join('tbl_pasien','fisikidpasien=id')->findAll(),
+            'dataaktifitas' => $model->join('tbl_master_aktifitas', 'fisikjenisaktifitas=idjenis')
+                ->join('tbl_pasien', 'fisikidpasien=id')->findAll(),
             'jenis' => $mjenis->findAll(),
             'datapasien' => $mpasien->findAll(),
             'validation' => \Config\Services::validation()

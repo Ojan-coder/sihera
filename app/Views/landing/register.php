@@ -7,7 +7,7 @@ $this->extend('landing/index') ?>
         <div class="row">
             <div class="col">
                 <?php csrf_field() ?>
-                <form method="POST" action="<?= base_url('pasien/regis') ?>" enctype="multipart/form-data">
+                <form method="POST" action="<?= base_url('pasien/regis') ?>">
                     <h4>
                         REGISTER <span> PASIEN</span>
                     </h4>
@@ -48,15 +48,16 @@ $this->extend('landing/index') ?>
                     <div class="form-row ">
                         <div class="form-group col-lg-4">
                             <label for="inputPatientName">NIK Pasien </label>
-                            <input type="text" maxlength="16" class="form-control" value="<?= old('nik') ?>" name="nik" id="inputNikPasien" placeholder="">
+                            <input type="text" maxlength="16" class="form-control" value="<?= old('nik') ?>" name="nik" placeholder="">
                         </div>
                         <div class="form-group col-lg-4">
                             <label for="inputPatientName">Nama Pasien </label>
-                            <input type="text" class="form-control" name="nama" value="<?= old('nama') ?>" id="inputPatientName" placeholder="">
+                            <input type="text" class="form-control" name="nama" value="<?= old('nama') ?>" placeholder="">
                         </div>
                         <div class="form-group col-lg-4">
-                            <label for="inputDoctorName">Umur Pasien</label>
-                            <input type="text" maxlength="3" class="form-control" value="<?= old('umur') ?>" name="umur" id="inputUmurPasien" placeholder="">
+                            <label for="inputUmurPasien">Umur Pasien</label>
+                            <input type="text" class="form-control" name="umur" value="<?= old('umur') ?>" placeholder="">
+                            <!--<input type="number" class="form-control" value="<?= old('umur') ?>" name="umur" placeholder="Inputkan Umur Disini" id="inputUmurPasien">-->
                         </div>
                     </div>
                     <div class="form-row ">

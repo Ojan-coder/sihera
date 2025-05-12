@@ -23,11 +23,11 @@
             </div>
         </div>
     </div>
-    <div class="header_bottom">
+    <div style="background-color : #0772bf;" class="header_bottom">
         <div class="container-fluid">
             <nav class="navbar navbar-expand-lg custom_nav-container ">
                 <a class="navbar-brand" href="<?= base_url() ?>">
-                    <img src="<?= base_url('landing/') ?>images/logo.png" alt="">
+                    <img src="<?= base_url() ?>\assets\images\logo-sireha.png" alt="">
                 </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,14 +47,14 @@
                                 <a class="nav-link" href="<?= base_url('treatment') ?>">Edukasi</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('doktor') ?>">Doctors</a>
+                                <a class="nav-link" href="<?= base_url('doktor') ?>">Teams</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('testimonial') ?>">Testimonial</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="<?= base_url('contact') ?>">Contact Us</a>
-                            </li>
+                            <!--<li class="nav-item">-->
+                            <!--    <a class="nav-link" href="<?= base_url('testimonial') ?>">Testimonial</a>-->
+                            <!--</li>-->
+                            <!--<li class="nav-item">-->
+                            <!--    <a class="nav-link" href="<?= base_url('contact') ?>">Contact Us</a>-->
+                            <!--</li>-->
                         </ul>
                     </div>
                     <div class="quote_btn-container">

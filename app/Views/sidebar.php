@@ -18,7 +18,7 @@ $id = $uri->getSegment(1) ?? '';
         </a>
     </li>
     <?php if (session()->get('userLevel') != 3) { ?>
-        <li class="pcoded-hasmenu <?= ($id == 'jadwal' | $id == 'patient' | $id == 'docter' | $id == 'edukasi') ? 'active' : '' ?> pcoded-trigger">
+        <li class="pcoded-hasmenu <?= ($id == 'jadwal' | $id == 'patient' | $id == 'docter' | $id == 'education') ? 'active' : '' ?> pcoded-trigger">
             <a href="javascript:void(0)">
                 <span class="pcoded-micon"><i class="feather icon-layers"></i></span>
                 <span class="pcoded-mtext">Master</span>
@@ -40,22 +40,22 @@ $id = $uri->getSegment(1) ?? '';
                     <li class="<?= ($id == 'docter') ? 'active' : '' ?>">
                         <a href="<?= base_url('/docter'); ?>">
                             <span class="pcoded-micon"><i class="feather icon-doctor"></i></span>
-                            <span class="pcoded-mtext">Dokter</span>
+                            <span class="pcoded-mtext">Team</span>
                         </a>
                     </li>
-                    <li class="<?= ($id == 'edukasi') ? 'active' : '' ?>">
-                        <a href="<?= base_url('/edukasi'); ?>">
+                    <li class="<?= ($id == 'education') ? 'active' : '' ?>">
+                        <a href="<?= base_url('/education'); ?>">
                             <span class="pcoded-micon"><i class="feather icon-calendar"></i></span>
                             <span class="pcoded-mtext">Edukasi</span>
                         </a>
                     </li>
                 </ul>
-        <li class="<?= ($id == 'konsultasi') ? 'active' : '' ?>">
-            <a href="<?= base_url('/konsultasi'); ?>">
-                <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
-                <span class="pcoded-mtext">Konsultasi</span>
-            </a>
-        </li>
+        <!--<li class="<?= ($id == 'konsultasi') ? 'active' : '' ?>">-->
+        <!--    <a href="<?= base_url('/konsultasi'); ?>">-->
+        <!--        <span class="pcoded-micon"><i class="feather icon-activity"></i></span>-->
+        <!--        <span class="pcoded-mtext">Konsultasi</span>-->
+        <!--    </a>-->
+        <!--</li>-->
         <li class="<?= ($id == 'aktifitas') ? 'active' : '' ?>">
             <a href="<?= base_url('/aktifitas'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
@@ -83,7 +83,7 @@ $id = $uri->getSegment(1) ?? '';
         <li class="<?= ($id == 'cairan') ? 'active' : '' ?>">
             <a href="<?= base_url('/cairan'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
-                <span class="pcoded-mtext">Pembatasan Cairan</span>
+                <span class="pcoded-mtext">Asupan Cairan Harian</span>
             </a>
         </li>
     <?php } ?>
@@ -95,12 +95,12 @@ $id = $uri->getSegment(1) ?? '';
             <span class="pcoded-mtext">Jadwal Hemodialisa</span>
         </a>
     </li>
-    <li class="<?= ($id == 'konsultasi') ? 'active' : '' ?>">
-        <a href="<?= base_url('/konsultasi'); ?>">
-            <span class="pcoded-micon"><i class="feather icon-activity"></i></span>
-            <span class="pcoded-mtext">Konsultasi</span>
-        </a>
-    </li>
+    <!--<li class="<?= ($id == 'konsultasi') ? 'active' : '' ?>">-->
+    <!--    <a href="<?= base_url('/konsultasi'); ?>">-->
+    <!--        <span class="pcoded-micon"><i class="feather icon-activity"></i></span>-->
+    <!--        <span class="pcoded-mtext">Konsultasi</span>-->
+    <!--    </a>-->
+    <!--</li>-->
     <li class="<?= ($id == 'aktifitas') ? 'active' : '' ?>">
         <a href="<?= base_url('/aktifitas'); ?>">
             <span class="pcoded-micon"><i class="feather icon-book"></i></span>
@@ -128,7 +128,7 @@ $id = $uri->getSegment(1) ?? '';
     <li class="<?= ($id == 'cairan') ? 'active' : '' ?>">
         <a href="<?= base_url('/cairan'); ?>">
             <span class="pcoded-micon"><i class="feather icon-book"></i></span>
-            <span class="pcoded-mtext">Pembatasan Cairan</span>
+            <span class="pcoded-mtext">Asupan Cairan Harian</span>
         </a>
     </li>
     <li class="<?= ($id == 'logout') ? 'active' : '' ?>">

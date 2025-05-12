@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class PembatasanCairanModel extends Model
+class DetailPembatasanCairanModel extends Model
 {
-    protected $table            = 'tbl_pembatasan_cairan';
-    protected $primaryKey       = 'idpembatasan';
+    protected $table            = 'tbl_detail_pembatasan_cairan';
+    protected $primaryKey       = 'id';
     protected $allowedFields    = [
-        'idpembatasan',
-        'idpasienpembatasan',
-        'tglpembatasan',
-        'targetmaksimal'
+        'detail_idpembatasan',
+        'detail_tanggal',
+        'detail_pasien',
+        'detail_asupanhari'
     ];
 
     public function generateKode()

@@ -9,7 +9,6 @@ class JadwalHemodialisaModel extends Model
     protected $table            = 'tbl_jadwal_hemodialisa';
     protected $primaryKey       = 'idjadwal';
     protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
     protected $allowedFields    = [
@@ -37,5 +36,12 @@ class JadwalHemodialisaModel extends Model
         $batas = str_pad($no, 3, "000", STR_PAD_LEFT);
         $kodeu = $huruf . $tahun . $batas;
         return $kodeu;
+    }
+
+    public function getNotifikasi()
+    {
+        return $this->db->table($this->table)
+                        ->get()
+                        ->getResult(); // return data sebagai objek
     }
 }

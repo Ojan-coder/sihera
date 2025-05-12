@@ -11,7 +11,7 @@
     <meta name="author" content="#">
     <!-- Favicon icon -->
 
-    <link rel="icon" href="<?= base_url(); ?>\landing\images\logo.png" type="image/x-icon">
+    <link rel="icon" href="<?= base_url(); ?>\assets\images\logo-sireha.png" type="image/x-icon">
     <!-- Google font-->
     <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet"> -->
     <!-- Required Fremwork -->
@@ -68,8 +68,8 @@
                                     <div class="col-md-12">
 
                                         <div class="text-center">
-                                            <img src="<?= base_url(); ?>\landing\images\logo.png" width="90" height="90" alt="Logo" class="logo">
-                                            <h3 class="sub-title" style="font-size: 20px;">Login SIHERA</h3>
+                                            <img src="<?= base_url(); ?>\assets\images\logo-sireha.png" width="90" height="90" alt="Logo" class="logo">
+                                            <h3 class="sub-title" style="font-size: 20px;"></h3>
                                             <?php
                                             if (session()->getFlashdata('message')) { ?>
                                                 <div class="alert alert-danger m-2">

@@ -14,16 +14,14 @@ class HomeController extends BaseController
         $level = session()->get('userLevel');
         $id = session()->get('userNama');
         if ($level == 3) {
-            $datanotif = $model->where('idpasien', $id)->orderBy('idjadwal','DESC')->find();
+            $datanotif = $model->where('idpasien', $id)->orderBy('idjadwal','DESC')->limit(1)->find();
         } else {
             $datanotif = $model->findAll();
         }
-        // dd($datanotif);
         $data = [
             'datajadwal' => $datanotif,
             'date' => date('h:i'),
         ];
-        // 1Sampai9!@
         return view('view_home', $data);
     }
 

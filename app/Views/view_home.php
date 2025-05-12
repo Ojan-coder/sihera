@@ -30,32 +30,45 @@
                 <div class="page-body">
                     <div class="row">
                         <div class="col-sm-12 mb-5">
-                            <?php
-                            $days7 = date('Y-m-d', strtotime('+7 days'));
-                            foreach ($datajadwal as $r) {
-                                if ($r['idpasien'] != '') {
-                            ?>
-                                    <script>
-                                        Swal.fire({
-                                            icon: 'info',
-                                            title: 'Jadwal Control',
-                                            html: "Hari : <?= date('d-m-Y', strtotime($r['jadwal'])) ?> <br> Waktu : <?= $r['waktu'] ?>",
-                                            confirmButtonColor: '#3085d6',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    </script>
-                                <?php } else { ?>
-                                    <script>
-                                        Swal.fire({
-                                            icon: 'info',
-                                            title: 'Jadwal Control',
-                                            html: "Hari : - <br> Waktu : -",
-                                            confirmButtonColor: '#3085d6',
-                                            confirmButtonText: 'OK'
-                                        });
-                                    </script>
-                            <?php }
-                            } ?>
+                            <?php if (!empty($datajadwal)) { ?>
+                                <?php
+                                foreach ($datajadwal as $datajadwal) {
+                                    $hari_ini = new DateTime(date('Y-m-d'));
+                                    $jadwal = new DateTime($datajadwal['jadwal']);
+                                    $selisih = (int)$hari_ini->diff($jadwal)->format('%r%a');
+                                    if ( session()->get('userLevel') == 3 && $selisih == 0) { ?>
+                                        <script>
+                                            Swal.fire({
+                                                icon: 'info',
+                                                title: 'Jadwal Control Hari Ini',
+                                                html: "Hari : <?= date('d-m-Y', strtotime($datajadwal['jadwal'])) ?> <br> Waktu : <?= $datajadwal['waktu'] ?>",
+                                                confirmButtonColor: '#3085d6',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        </script>
+                                    <?php } else if (session()->get('userLevel') == 3 && $selisih >= 0) { ?>
+                                        <script>
+                                            Swal.fire({
+                                                icon: 'info',
+                                                title: 'Pengingat Jadwal',
+                                                html: "Hari : <?= date('d-m-Y', strtotime($datajadwal['jadwal'])) ?> <br> Waktu : <?= $datajadwal['waktu'] ?>",
+                                                confirmButtonColor: '#3085d6',
+                                                confirmButtonText: 'OK'
+                                            });
+                                        </script>
+                                <?php }
+                                } ?>
+                            <?php } else {  ?>
+                                <script>
+                                    Swal.fire({
+                                        icon: 'info',
+                                        title: 'Jadwal Control Belum Tersedia',
+                                        html: "Hari : - <br> Waktu : -",
+                                        confirmButtonColor: '#3085d6',
+                                        confirmButtonText: 'OK'
+                                    });
+                                </script>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>

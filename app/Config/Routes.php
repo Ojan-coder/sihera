@@ -59,14 +59,14 @@ $routes->post('/patient/delete', 'PasienController::delete', ['filter' => 'auth'
 $routes->get('/patient/report', 'PasienController::report', ['filter' => 'auth']);
 
 // Edukasi
-$routes->get('/edukasi', 'EdukasiController::index', ['filter' => 'auth']);
-$routes->get('/edukasi/add', 'EdukasiController::add', ['filter' => 'auth']);
-$routes->get('/edukasi/update/(:segment)', 'EdukasiController::update/$1', ['filter' => 'auth']);
-$routes->post('/edukasi/save', 'EdukasiController::save', ['filter' => 'auth']);
-$routes->post('/edukasi/edit', 'EdukasiController::edit', ['filter' => 'auth']);
-$routes->post('/edukasi/delete', 'EdukasiController::delete', ['filter' => 'auth']);
+$routes->get('/education', 'EdukasiController::index', ['filter' => 'auth']);
+$routes->get('/education/add', 'EdukasiController::add', ['filter' => 'auth']);
+$routes->get('/education/update/(:segment)', 'EdukasiController::update/$1', ['filter' => 'auth']);
+$routes->post('/education/save', 'EdukasiController::save', ['filter' => 'auth']);
+$routes->post('/education/edit', 'EdukasiController::edit', ['filter' => 'auth']);
+$routes->post('/education/delete', 'EdukasiController::delete', ['filter' => 'auth']);
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
-$routes->get('/edukasi/report', 'EdukasiController::report', ['filter' => 'auth']);
+$routes->get('/education/report', 'EdukasiController::report', ['filter' => 'auth']);
 
 // Aktifitas
 $routes->get('/aktifitas', 'AktifitasController::index', ['filter' => 'auth']);
@@ -124,6 +124,7 @@ $routes->get('/cairan', 'PembatasanCairanController::index', ['filter' => 'auth'
 $routes->get('/cairan/add', 'PembatasanCairanController::add', ['filter' => 'auth']);
 $routes->get('/cairan/update/(:segment)', 'PembatasanCairanController::update/$1', ['filter' => 'auth']);
 $routes->post('/cairan/save', 'PembatasanCairanController::save', ['filter' => 'auth']);
+$routes->post('/cairan/detailsave', 'PembatasanCairanController::savedetail', ['filter' => 'auth']);
 $routes->post('/cairan/edit', 'PembatasanCairanController::edit', ['filter' => 'auth']);
 $routes->post('/cairan/delete', 'PembatasanCairanController::delete', ['filter' => 'auth']);
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');

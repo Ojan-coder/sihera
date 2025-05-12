@@ -58,7 +58,7 @@ $level = session()->get('userLevel'); ?>
                                     </div>
                                     <?php if ($level != 3) { ?>
                                         <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Konsultasi</button>
-                                        <a class="btn btn-mat btn-sm btn-success" href="<?= base_url('konsultasi/report'); ?>" target="__blank">Laporan Konsultasi</a>
+                                        <!-- <a class="btn btn-mat btn-sm btn-success" href="<?= base_url('konsultasi/report'); ?>" target="__blank">Laporan Konsultasi</a> -->
                                     <?php } ?>
                                 </div>
                                 <div class="card-block">

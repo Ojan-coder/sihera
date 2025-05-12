@@ -11,8 +11,8 @@
                         <div class="col-lg-8">
                             <div class="page-header-title">
                                 <div class="d-inline">
-                                    <h4>Data Dokter</h4>
-                                    <span>This page is for managing "Dokter".</span>
+                                    <h4>Data Team</h4>
+                                    <span>This page is for managing "Team".</span>
                                 </div>
                             </div>
                         </div>
@@ -24,7 +24,7 @@
                                     </li>
                                     <li class="breadcrumb-item"><a href="#!">Master</a>
                                     </li>
-                                    <li class="breadcrumb-item"><a href="#!">Dokter</a>
+                                    <li class="breadcrumb-item"><a href="#!">Team</a>
                                     </li>
                                 </ul>
                             </div>
@@ -61,8 +61,8 @@
                                             <?php } ?>
                                         </div>
                                     </div>
-                                    <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Dokter</button>
-                                    <a class="btn btn-mat btn-sm btn-success" href="<?= base_url('docter/report'); ?>" target="__blank">Laporan Dokter</a>
+                                    <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah</button>
+                                    <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('docter/report'); ?>" target="__blank">Laporan Team</a>-->
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
@@ -70,10 +70,10 @@
                                             <thead>
                                                 <tr>
                                                     <th style="text-align: center;">No</th>
-                                                    <th>Nama Dokter</th>
+                                                    <th>Nama</th>
                                                     <th>Spesialis</th>
-                                                    <th>Alamat Dokter</th>
-                                                    <th>No.Hp Dokter</th>
+                                                    <th>Alamat</th>
+                                                    <th>No.Hp</th>
                                                     <th>Gambar</th>
                                                     <th>Aksi</th>
                                                 </tr>
@@ -126,14 +126,14 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="myModalLabel">Tambah Dokter</h6>
+                    <h6 class="modal-title" id="myModalLabel">Tambah Team</h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Nama Dokter</label>
+                                <label>Nama Team</label>
                                 <input type="text" name="nama" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nama" required />
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('nama'); ?>
@@ -142,7 +142,7 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Spesialis Dokter</label>
+                                <label>Spesialis Team</label>
                                 <input type="text" name="spesialis" class="form-control <?= ($validation->hasError('spesialis')) ? 'is-invalid' : ''; ?>" required />
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('spesialis'); ?>
@@ -160,7 +160,7 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>No.Hp Dokter</label>
+                                <label>No.Hp Team</label>
                                 <input type="text" name="nohp" value="+62" class="form-control <?= ($validation->hasError('nohp')) ? 'is-invalid' : ''; ?>" required />
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('nohp'); ?>
@@ -169,7 +169,7 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Alamat Dokter</label>
+                                <label>Alamat Team</label>
                                 <input type="text" name="alamat" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : ''; ?>" required />
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('alamat'); ?>
@@ -178,7 +178,7 @@
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label>Foto Dokter</label>
+                                <label>Foto Team</label>
                                 <input type="file" name="fotodokter" class="form-control <?= ($validation->hasError('fotodokter')) ? 'is-invalid' : ''; ?>" required />
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('fotodokter'); ?>
@@ -205,7 +205,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Update Dokter</h6>
+                        <h6 class="modal-title">Update Team</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -213,7 +213,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Nama Dokter</label>
+                                    <label>Nama Team</label>
                                     <input type="text" name="nama" value="<?= $row['namadokter'] ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nama" required />
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('nama'); ?>
@@ -222,7 +222,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Spesialis Dokter</label>
+                                    <label>Spesialis Team</label>
                                     <input type="text" name="spesialis" value="<?= $row['spesialisdokter'] ?>" class="form-control <?= ($validation->hasError('spesialis')) ? 'is-invalid' : ''; ?>" required />
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('spesialis'); ?>
@@ -240,7 +240,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>No.Hp Dokter</label>
+                                    <label>No.Hp Team</label>
                                     <input type="text" name="nohp" value="<?= $row['nohpdokter'] ?>" class="form-control <?= ($validation->hasError('nohp')) ? 'is-invalid' : ''; ?>" required />
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('nohp'); ?>
@@ -249,7 +249,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Alamat Dokter</label>
+                                    <label>Alamat Team</label>
                                     <input type="text" name="alamat" value="<?= $row['alamatdokter'] ?>" class="form-control <?= ($validation->hasError('alamat')) ? 'is-invalid' : ''; ?>" required />
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('alamat'); ?>
@@ -258,7 +258,7 @@
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Foto Dokter</label>
+                                    <label>Foto Team</label>
                                     <input type="file" name="fotodokter" class="form-control <?= ($validation->hasError('fotodokter')) ? 'is-invalid' : ''; ?>" />
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('fotodokter'); ?>
@@ -282,7 +282,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Hapus Dokter</h6>
+                        <h6 class="modal-title">Hapus Team</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">

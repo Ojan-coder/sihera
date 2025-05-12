@@ -8,7 +8,7 @@
   <div class="container">
     <div class="heading_container heading_center">
       <h2>
-        Our <span>Doctors</span>
+        Our <span>Teams</span>
       </h2>
     </div>
     <div class="carousel-wrap ">

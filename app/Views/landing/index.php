@@ -13,14 +13,14 @@
   <meta name="author" content="" />
 
   <title>Si-Reha</title>
-  <link rel="icon" href="<?= base_url(); ?>\landing\images\logo.png" type="image/x-icon">
+  <link rel="icon" href="<?= base_url(); ?>\assets\images\logo-sireha.png" type="image/x-icon">
 
 
   <!-- bootstrap core css -->
   <link rel="stylesheet" type="text/css" href="<?= base_url('landing/') ?>css/bootstrap.css" />
 
   <!-- fonts style -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet"> -->
 
   <!--owl slider stylesheet -->
   <link rel="stylesheet" type="text/css" href="<?= base_url('landing/') ?>owl.carousel.min.css" />
@@ -28,7 +28,7 @@
   <!-- font awesome style -->
   <link href="<?= base_url('landing/') ?>css/font-awesome.min.css" rel="stylesheet" />
   <!-- nice select -->
-  <link rel="stylesheet" href="<?= base_url('landing/') ?>nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" />
+  <!-- <link rel="stylesheet" href="<?= base_url('landing/') ?>nice-select.min.css" integrity="sha256-mLBIhmBvigTFWPSCtvdu6a76T+3Xyt+K571hupeFLg4=" crossorigin="anonymous" /> -->
   <!-- datepicker -->
   <link rel="stylesheet" href="<?= base_url('landing/') ?>datepicker.css">
   <!-- Custom styles for this template -->
@@ -62,9 +62,9 @@
                       </button>
                     </div>
                     <h1>
-                      ALMIRA <br>
+                      Si
                       <span>
-                        Hospital
+                        Reha
                       </span>
                     </h1>
                     <p>
@@ -94,9 +94,9 @@
                       </button>
                     </div>
                     <h1>
-                      ALMIRA <br>
+                      Si
                       <span>
-                        Hospital
+                        Reha
                       </span>
                     </h1>
                     <p>
@@ -120,7 +120,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <div class="detail-box">
-                    <div class="play_btn">
+                    <div style="background-color : #0772bf;" class="play_btn">
                       <button>
                         <i class="fa fa-play" aria-hidden="true"></i>
                       </button>
@@ -175,124 +175,65 @@
           </a>
         </div>
         <div class="info_form">
-          
+
         </div>
       </div>
       <div class="info_bottom layout_padding2">
         <div class="row info_main_row">
           <div class="col-md-6 col-lg-3">
-            <h5>
-              Address
-            </h5>
-            <div class="info_contact">
-              <a href="">
-                <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span>
-                  Location
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>
-                  Call +01 1234567890
-                </span>
-              </a>
-              <a href="">
-                <i class="fa fa-envelope"></i>
-                <span>
-                  sireha@gmail.com
-                </span>
-              </a>
-            </div>
-            <div class="social_box">
-              <a href="">
-                <i class="fa fa-facebook" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-twitter" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-linkedin" aria-hidden="true"></i>
-              </a>
-              <a href="">
-                <i class="fa fa-instagram" aria-hidden="true"></i>
-              </a>
+            <div class="info_links">
+              <div class="social_box">
+                <a href="">
+                  <i class="fa fa-facebook" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-twitter" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-linkedin" aria-hidden="true"></i>
+                </a>
+                <a href="">
+                  <i class="fa fa-instagram" aria-hidden="true"></i>
+                </a>
+              </div>
             </div>
           </div>
           <div class="col-md-6 col-lg-3">
             <div class="info_links">
-              <h5>
-                Useful link
-              </h5>
-              <div class="info_links_menu">
-                <a class="active" href="<?= base_url() ?>">
-                  Home
-                </a>
-                <a href="<?= base_url('about') ?>">
-                  About
-                </a>
-                <a href="<?= base_url('treatment') ?>">
-                  Treatment
-                </a>
-                <a href="<?= base_url('dokter') ?>">
-                  Doctors
-                </a>
-                <a href="<?= base_url('testimonial') ?>">
-                  Testimonial
-                </a>
-                <a href="contact.html">
-                  Contact us
+
+              <div class="info_contact">
+                <a href="">
+                  <i class="fa fa-phone" aria-hidden="true"></i>
+                  <span>
+                    Call +01 1234567890
+                  </span>
                 </a>
               </div>
             </div>
           </div>
           <div class="col-md-6 col-lg-3">
             <div class="info_post">
-              <h5>
-                LATEST POSTS
-              </h5>
-              <div class="post_box">
-                <div class="img-box">
-                  <img src="<?= base_url('landing/') ?>images/post1.jpg" alt="">
-                </div>
-                <p>
-                  Normal
-                  distribution
-                </p>
-              </div>
-              <div class="post_box">
-                <div class="img-box">
-                  <img src="<?= base_url('landing/') ?>images/post2.jpg" alt="">
-                </div>
-                <p>
-                  Normal
-                  distribution
-                </p>
+
+              <div class="info_contact">
+                <a>
+                  <i class="fa fa-envelope"></i>
+                  <span>
+                    sireha@gmail.com
+                  </span>
+                </a>
               </div>
             </div>
           </div>
           <div class="col-md-6 col-lg-3">
             <div class="info_post">
-              <h5>
-                News
-              </h5>
-              <div class="post_box">
-                <div class="img-box">
-                  <img src="<?= base_url('landing/') ?>images/post3.jpg" alt="">
-                </div>
-                <p>
-                  Normal
-                  distribution
-                </p>
-              </div>
-              <div class="post_box">
-                <div class="img-box">
-                  <img src="<?= base_url('landing/') ?>images/post4.png" alt="">
-                </div>
-                <p>
-                  Normal
-                  distribution
-                </p>
+
+              <div class="info_contact">
+                <a>
+                  <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  <span>
+                    Location
+                  </span>
+                </a>
               </div>
             </div>
           </div>
@@ -306,7 +247,7 @@
     <div class="container">
       <p>
         &copy; <span id="displayYear"></span> All Rights Reserved By
-        <a href="#">Rumah Sakit</a>
+        <a href="#">Si Reha</a>
       </p>
     </div>
   </footer>
