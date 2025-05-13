@@ -13,6 +13,8 @@ class CatatanBBController extends BaseController
     {
         $model = new CatatanBBModel();
         $mpasien = new PasienModel();
+        $idpasien = session()->get('userNama');
+        $level = session()->get('userLevel');
         $data = [
             'databb' => $model->join('tbl_pasien', 'bbidpasien=id')->findAll(),
             'datapasien' => $mpasien->findAll(),

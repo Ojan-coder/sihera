@@ -34,4 +34,14 @@ class PembatasanCairanModel extends Model
         $kodeu = $huruf . $batas;
         return $kodeu;
     }
+
+    public function getTargetMax($idpasien){
+        $date = date('Y-m-d');
+        $query = $this->db->table($this->table)
+        ->select('targetmaksimal')
+        ->where('idpasienpembatasan',$idpasien)
+        ->where('tglpembatasan','2025-05-13')
+        ->get()->getResultArray();
+        return $query;
+    }
 }

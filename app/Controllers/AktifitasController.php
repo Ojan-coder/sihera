@@ -15,7 +15,8 @@ class AktifitasController extends BaseController
         $model = new AktifitasFisikModel();
         $mjenis = new JenisAktifitasModel();
         $mpasien = new PasienModel();
-        $id = session()->get('userNama');
+        $idpasien = session()->get('userNama');
+        $level = session()->get('userLevel');
         $data = [
             'dataaktifitas' => $model->join('tbl_master_aktifitas', 'fisikjenisaktifitas=idjenis')
                 ->join('tbl_pasien', 'fisikidpasien=id')->findAll(),

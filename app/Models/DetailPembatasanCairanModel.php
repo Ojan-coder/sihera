@@ -34,4 +34,16 @@ class DetailPembatasanCairanModel extends Model
         $kodeu = $huruf . $batas;
         return $kodeu;
     }
+
+    public function getSumAsupanHari($idpasien)
+    {
+        $date = date('Y-m-d');
+        $query = $this->db->table($this->table)
+        ->selectSum('detail_asupanhari','asupan')
+        ->where('detail_pasien',$idpasien)
+        ->where('detail_tanggal','2025-05-13')
+        ->groupBy('detail_idpembatasan')
+        ->get()->getResultArray();
+        return $query;
+    }
 }

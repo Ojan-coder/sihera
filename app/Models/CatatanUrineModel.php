@@ -12,10 +12,6 @@ class CatatanUrineModel extends Model
         'idurine',
         'urineidpasien',
         'urinetanggal',
-        'urinevolume',
-        'urinefrekuensi',
-        'urinewarna',
-        'urinekonsistensi',
         'created_at',
         'updated_at',
     ];
@@ -38,5 +34,8 @@ class CatatanUrineModel extends Model
         $batas = str_pad($no, 3, "000", STR_PAD_LEFT);
         $kodeu = $huruf . $tahun . $batas;
         return $kodeu;
+    }
+    public function masterurine(){
+        return $this->db->table('tbl_master_urine')->get()->getResultArray();
     }
 }

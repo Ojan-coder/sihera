@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CatatanUrineModel;
+use App\Models\DetailCatatanUrineModel;
 use App\Models\PasienModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -13,11 +14,26 @@ class CatatanUrineController extends BaseController
     {
         $model = new CatatanUrineModel();
         $mpasien = new PasienModel();
-        $data = [
-            'dataurine' => $model->join('tbl_pasien', 'urineidpasien=id')->findAll(),
-            'datapasien' => $mpasien->findAll(),
-            'validation' => \Config\Services::validation()
-        ];
+        $idpasien = session()->get('userNama');
+        $level = session()->get('userLevel');
+        $datanotif = $model->where('urineidpasien', $idpasien)->where('urinetanggal', date('Y-m-d'))->find();
+        if ($level == 3) {
+            $data = [
+                'dataurine' => $model->join('tbl_pasien', 'urineidpasien=id')->where('urineidpasien', $idpasien)->where('urinetanggal', date('Y-m-d'))->findAll(),
+                'checkdata' => $datanotif,
+                'masterurine' => $model->masterurine(),
+                'datapasien' => $mpasien->findAll(),
+                'validation' => \Config\Services::validation()
+            ];
+        } else {
+            $data = [
+                'dataurine' => $model->join('tbl_pasien', 'urineidpasien=id')->where('urinetanggal',date('Y-m-d'))->findAll(),
+                'datapasien' => $mpasien->findAll(),
+                'masterurine' => $model->masterurine(),
+                'validation' => \Config\Services::validation()
+            ];
+        }
+        // dd($datanotif);
         echo view('view_urine', $data);
     }
 
@@ -29,12 +45,6 @@ class CatatanUrineController extends BaseController
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Urine Volume harus diisi'
-                ]
-            ],
-            'urinefrekuensi' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Urine Frekuensi harus diisi'
                 ]
             ],
             'urinewarna' => [
@@ -54,27 +64,50 @@ class CatatanUrineController extends BaseController
 
         if ($this->validate($rules)) {
             $model = new CatatanUrineModel();
+            $detail = new DetailCatatanUrineModel();
+            //check data
+            $check = $model->where('urineidpasien', $this->request->getPost('idpasien'))->where('urinetanggal', date('Y-m-d'))->find();
+            // dd($check);
+            if (empty($check)) {
+                //insert data master dan detail
+                $datadetail = array(
+                    'detail_idurine' => $model->generateKode(),
+                    'detail_idpasien' => $this->request->getPost('idpasien'),
+                    'detail_urinetanggal' => $this->request->getPost('tanggal'),
+                    'detail_urinevolume' => $this->request->getPost('urinevolume'),
+                    'detail_urinewarna' => $this->request->getPost('urinewarna'),
+                );
 
-            $data = array(
-                'idurine' => $model->generateKode(),
-                'urineidpasien' => $this->request->getPost('idpasien'),
-                'urinetanggal' => $this->request->getPost('tanggal'),
-                'urinevolume' => $this->request->getPost('urinevolume'),
-                'urinefrekuensi' => $this->request->getPost('urinefrekuensi'),
-                'urinewarna' => $this->request->getPost('urinewarna'),
-                'urinekonsistensi' => $this->request->getPost('urinekonsistensi'),
-                'created_at' => date('d-m-y H:i:s')
-            );
+                $data = array(
+                    'idurine' => $model->generateKode(),
+                    'urineidpasien' => $this->request->getPost('idpasien'),
+                    'urinetanggal' => $this->request->getPost('tanggal'),
+                    'created_at' => date('d-m-y H:i:s')
+                );
+                $detail->insert($datadetail);
+                $model->insert($data);
+                session()->setFlashdata('success', 'Berhasil Menyimpan Data');
+                return redirect()->to('/urine');
+            } else {
+                //insert data detail
+                $datadetail = array(
+                    'detail_idurine' => $check['idurine'],
+                    'detail_idpasien' => $this->request->getPost('idpasien'),
+                    'detail_urinetanggal' => $this->request->getPost('tanggal'),
+                    'detail_urinevolume' => $this->request->getPost('urinevolume'),
+                    'detail_urinewarna' => $this->request->getPost('urinewarna'),
+                );
 
-            $model->insert($data);
-            session()->setFlashdata('success', 'Berhasil Menyimpan Data');
-            return redirect()->to('/urine');
+                $detail->insert($datadetail);
+                session()->setFlashdata('success', 'Berhasil Menyimpan Data');
+                return redirect()->to('/urine');
+            }
         } else {
             $session_error = [
                 'error_urinevolume' => $validation->getError('urinevolume'),
                 'error_urinefrekuensi' => $validation->getError('urinefrekuensi')
             ];
-            session()->setFlashdata('failed', 'Data Gagal Disimpan, Periksa Data Input Kembali',$session_error);
+            session()->setFlashdata('failed', 'Data Gagal Disimpan, Periksa Data Input Kembali', $session_error);
             return redirect()->to('/urine')->withInput();
         }
     }
@@ -137,6 +170,43 @@ class CatatanUrineController extends BaseController
         $model->delete($id);
         session()->setFlashdata('success', 'Berhasil Menghapus Data Catatan Urine');
         return redirect()->to('/urine');
+    }
+
+    //function save dari pasien
+    public function savep()
+    {
+        $validation = \Config\Services::validation();
+        $rules = [
+            'urinevolume' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Urine Volume harus diisi'
+                ]
+            ]
+        ];
+
+
+        if ($this->validate($rules)) {
+            $detail = new DetailCatatanUrineModel();
+            $model = new CatatanUrineModel();
+            $check = $model->where('urineidpasien', $this->request->getPost('idpasien'))->where('urinetanggal', date('Y-m-d'))->find();
+            // dd($check[0]['idurine']);
+            $datadetail = array(
+                'detail_idurine' => $check[0]['idurine'],
+                'detail_idpasien' => $this->request->getPost('idpasien'),
+                'detail_urinetanggal' => $this->request->getPost('tanggal'),
+                'detail_urinevolume' => $this->request->getPost('urinevolume'),
+                'detail_urinewarna' => $this->request->getPost('urinewarna'),
+            );
+
+            $detail->insert($datadetail);
+            session()->setFlashdata('success', 'Berhasil Menyimpan Data');
+            return redirect()->to('/urine');
+        } else {
+            
+            session()->setFlashdata('failed', 'Data Gagal Disimpan, Periksa Data Input Kembali');
+            return redirect()->to('/urine')->withInput();
+        }
     }
 
     public function report()

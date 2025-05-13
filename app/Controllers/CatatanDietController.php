@@ -13,6 +13,8 @@ class CatatanDietController extends BaseController
     {
         $model = new CatatanDietModel();
         $mpasien = new PasienModel();
+        $idpasien = session()->get('userNama');
+        $level = session()->get('userLevel');
         $data = [
             'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->findAll(),
             'datapasien' => $mpasien->findAll(),

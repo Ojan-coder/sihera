@@ -2,8 +2,36 @@
 
 <?= $this->section('content');
 $level = session()->get('userLevel');
-?>
+if ($level == 3) { ?>
+    <?php if (!empty($datanotif)) { ?>
+        <?php if ($asupanperhari < $max) {  ?>
+            <script>
+                Swal.fire({
+                    title: "Asupan Cairan Belum Tercukupi !",
+                    html: "Asupan Cairan Anda Hari ini : <strong> <?= $asupanperhari ?> </strong>",
+                    icon: "warning"
+                });
+            </script>
+        <?php } else if ($asupanperhari >= $max) { ?>
+            <script>
+                Swal.fire({
+                    title: "Success",
+                    html: "Asupan Cairan Anda Hari Ini Terpenuhi <strong><?= $asupanperhari ?></strong>",
+                    icon: "success"
+                });
+            </script>
+        <?php } ?>
 
+    <?php } else { ?>
+        <script>
+            Swal.fire({
+                title: "Info",
+                text: "Hari ini anda belum menginputkan Catatan",
+                icon: "warning"
+            });
+        </script>
+<?php }
+} ?>
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <div class="main-body">
@@ -188,7 +216,7 @@ $level = session()->get('userLevel');
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Asupan Cairan</h6>
+                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Asupan Cairan <?= $asupanperhari ?></h6>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 </div>
                 <div class="modal-body">
@@ -382,7 +410,7 @@ $level = session()->get('userLevel');
 </div>
 
 <!-- Modal Data Target Asupan  -->
-
+<?php if ($level == 3): ?>
 <div class="modal fade bd-example-modal-lg" id="detail" tabindex="-1" role="dialog" aria-labelledby="detail" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -406,7 +434,6 @@ $level = session()->get('userLevel');
                     <tbody>
                         <?php $no = 0;
                         foreach ($datapasien as $row) : $no++;
-
                         ?>
                             <tr>
                                 <td width="8%"><?= $no; ?></td>
@@ -430,7 +457,7 @@ $level = session()->get('userLevel');
         </div>
     </div>
 </div>
-
+<?php endif; ?>
 <script>
     function pilih(kode, nm) {
         $('#idpasien').val(kode);

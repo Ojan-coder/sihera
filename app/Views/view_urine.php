@@ -4,7 +4,6 @@
 $level = session()->get('userLevel');
 $session = \Config\Services::session();
 ?>
-
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <div class="main-body">
@@ -75,13 +74,7 @@ $session = \Config\Services::session();
                                                     <th style="text-align: center;">No</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Tanggal</th>
-                                                    <th>Volume Urine (ml)</th>
-                                                    <th>Frekuensi (Kali/Hari)</th>
-                                                    <th>Warna</th>
-                                                    <th>Konsistensi</th>
-                                                    <?php if ($level != 3) { ?>
-                                                        <th>Aksi</th>
-                                                    <?php } ?>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -93,12 +86,8 @@ $session = \Config\Services::session();
                                                         <td width="8%"><?= $no; ?></td>
                                                         <td> <?= $row['nama']; ?></td>
                                                         <td> <?= date('Y-m-d', strtotime($row['created_at']));  ?></td>
-                                                        <td> <?= $row['urinevolume']; ?></td>
-                                                        <td> <?= $row['urinefrekuensi']; ?></td>
-                                                        <td> <?= $row['urinewarna']; ?></td>
-                                                        <td> <?= $row['urinekonsistensi']; ?></td>
-                                                        <?php if ($level != 3) { ?>
-                                                            <td class="text-center">
+                                                        <td class="text-center">
+                                                            <?php if ($level != 3) { ?>
                                                                 <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['idurine']; ?>">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                                         <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
@@ -110,8 +99,14 @@ $session = \Config\Services::session();
                                                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                                                                     </svg>
                                                                 </button>
-                                                            </td>
-                                                        <?php } ?>
+                                                            <?php } ?>
+                                                            <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#showModal<?= $row['idurine']; ?>">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
+                                                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
+                                                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
+                                                                </svg>
+                                                            </button>
+                                                        </td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -127,7 +122,7 @@ $session = \Config\Services::session();
     </div>
 </div>
 
-<!-- Form Tambah Data Pasien -->
+<!-- Form Tambah Data -->
 
 <form action="<?= base_url('urine/save'); ?>" enctype="multipart/form-data" method="post">
     <?= csrf_field(); ?>
@@ -145,7 +140,7 @@ $session = \Config\Services::session();
                                 <label for="basic-url">Nama Pasien</label>
                                 <div class="input-group mb-3">
                                     <input type="hidden" name="idpasien" id="idpasien">
-                                    <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama"/>
+                                    <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" />
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
                                             <i class="feather icon-search"></i>
@@ -184,10 +179,12 @@ $session = \Config\Services::session();
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label>Urine Warna</label>
-                                <input type="text" name="urinewarna" id="urinewarna" class="form-control">
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('urinewarna'); ?>
-                                </div>
+                                <select name="urinewarna" id="urinewarna" class="form-control">
+                                    <option value="">-Pilih Warna Urine-</option>
+                                    <?php foreach ($masterurine as $r): ?>
+                                        <option value="<?= $r['id'] ?>"><?= $r['jenisurine'] ?></option>
+                                    <?php endforeach ?>
+                                </select>
                             </div>
                         </div>
                         <div class="col-lg-12">
@@ -210,90 +207,12 @@ $session = \Config\Services::session();
     </div>
 </form>
 
+
+
 <!-- Form Edit dan Delete -->
 <?php foreach ($dataurine as $row) : ?>
 
-    <form action="<?= base_url('urine/edit'); ?>" enctype="multipart/form-data" method="POST">
-        <?= csrf_field(); ?>
-        <div class="modal made" tabindex="-1" id="editModal<?= $row['idurine']; ?>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Update Catatan Urine</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="kode" id="kode" value="<?= $row['idurine']; ?>">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label for="basic-url">Nama Pasien</label>
-                                    <div class="input-group mb-3">
-                                        <input type="hidden" value="<?= $row['urineidpasien'] ?>" name="idpasien" id="idpasien">
-                                        <input type="text" name="nama" value="<?= $row['nama'] ?>" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
-                                        <div class="input-group-append">
-                                            <!-- <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                                                <i class="feather icon-search"></i>
-                                            </button> -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group" id="datetimepicker1">
-                                    <label>Tanggal</label>
-                                    <input type="date" name="jadwal" value="<?= date('Y-m-d', strtotime($row['created_at'])); ?>" class="form-control <?= ($validation->hasError('jadwal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('jadwal'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Urine Volume</label>
-                                    <input type="text" name="urinevolume" id="urinevolume" value="<?= $row['urinevolume'] ?>" class="form-control">
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('urinevolume'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Urine Frekuensi</label>
-                                    <input type="text" name="urinefrekuensi" value="<?= $row['urinefrekuensi'] ?>" id="urinefrekuensi" class="form-control">
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('urinefrekuensi'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Urine Warna</label>
-                                    <input type="text" name="urinewarna" value="<?= $row['urinewarna'] ?>" id="urinewarna" class="form-control">
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('urinewarna'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Urine Konsistensi</label>
-                                    <input type="text" name="urinekonsistensi" value="<?= $row['urinekonsistensi'] ?>" id="urinekonsistensi" class="form-control">
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('urinekonsistensi'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
-                        <button type="submit" class="btn btn-inverse btn-sm">Update</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </form>
+
 
     <form action="<?= base_url('urine/delete'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
@@ -316,6 +235,102 @@ $session = \Config\Services::session();
             </div>
         </div>
     </form>
+
+    <!-- Form Detail Untuk Tambah Data Urine Pasien -->
+    <?php if ($level == 3) :
+        if ($level == 3) {
+            $id = session()->get('userNama');
+            $nama = session()->get('nama');
+        } else {
+            $id = '';
+            $nama = '';
+        }
+    ?>
+        <form action="<?= base_url('urine/savepasien'); ?>" enctype="multipart/form-data" method="POST">
+            <?= csrf_field() ?>
+            <div class="modal" tabindex="-1" id="showModal<?= $row['idurine']; ?>">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="myModalLabel">Tambah Catatan Urine</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label for="basic-url">Nama Pasien</label>
+                                        <div class="input-group mb-3">
+                                            <input type="hidden" name="idpasien" value="<?= $id ?>" id="idpasien">
+                                            <input type="text" name="nama" id="nama" value="<?= $nama ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" />
+                                            <?php if ($level != 3): ?>
+                                                <div class="input-group-append">
+                                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                                                        <i class="feather icon-search"></i>
+                                                    </button>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Tanggal</label>
+                                        <input type="date" name="tanggal" value="<?= old('tanggal') ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" />
+                                        <div class="invalid-feedback">
+                                            <?= $validation->getError('tanggal'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Urine Volume</label>
+                                        <input type="text" name="urinevolume" id="urinevolume" class="form-control <?= $session->getFlashdata('error_urinevolume') ? 'is-invalid' : ''; ?>">
+                                        <div class="invalid-feedback">
+                                            <?= $session->getFlashdata('error_urinevolume'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Urine Frekuensi</label>
+                                        <input type="text" name="urinefrekuensi" id="urinefrekuensi" class="form-control">
+                                        <div class="invalid-feedback">
+                                            <?= $validation->getError('urinefrekuensi'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Urine Warna</label>
+                                        <select name="urinewarna" id="urinewarna" class="form-control">
+                                            <option value="">-Pilih Warna Urine-</option>
+                                            <?php foreach ($masterurine as $r): ?>
+                                                <option value="<?= $r['id'] ?>"><?= $r['jenisurine'] ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group">
+                                        <label>Urine Konsistensi</label>
+                                        <input type="text" name="urinekonsistensi" id="urinekonsistensi" class="form-control">
+                                        <div class="invalid-feedback">
+                                            <?= $validation->getError('urinekonsistensi'); ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
+                            <button type="submit" class="btn btn-inverse btn-sm">Tambah</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    <?php endif; ?>
 
 <?php endforeach; ?>
 
@@ -371,6 +386,15 @@ $session = \Config\Services::session();
         </div>
     </div>
 </div>
+<?php if ($level == 3 && empty($checkdata)): ?>
+    <script>
+        Swal.fire({
+            title: "Asupan Cairan Belum Tercukupi !",
+            html: "Asupan Cairan Anda Hari ini : <strong>  </strong>",
+            icon: "warning"
+        });
+    </script>
+<?php endif ?>
 
 <script>
     function pilih(kode, nm) {

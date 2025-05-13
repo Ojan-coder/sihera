@@ -13,23 +13,42 @@ class PembatasanCairanController extends BaseController
     public function index()
     {
         $model = new PembatasanCairanModel();
+        $detail = new DetailPembatasanCairanModel();
         $mpasien = new PasienModel();
         $idpasien = session()->get('userNama');
+        $asupan = $detail->getSumAsupanHari($idpasien);
+        $max = $model->getTargetMax($idpasien);
         $level = session()->get('userLevel');
+        if(empty($asupan)){
+            $dataasupan='0';
+        }else{
+            $dataasupan = $asupan[0]['asupan'];
+        }
+        if(empty($max)){
+            $datamax = '0';
+        }else{
+            $datamax = $max[0]['targetmaksimal'];
+        }
         if ($level == 3) {
             $data = [
-                'databb' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('id',$idpasien)->findAll(),
-                'datanotif' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->findAll(),
-                'datapasien' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('id',$idpasien)->findAll(),
+                'databb' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('id', $idpasien)->findAll(),
+                'datanotif' => $detail->where('detail_pasien',$idpasien)->where('detail_tanggal',date('Y-m-d'))->find(),
+                'datapasien' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('tglpembatasan',date('Y-m-d'))->where('id', $idpasien)->findAll(),
+                'asupanperhari' => $dataasupan,
+                'max' => $datamax,
                 'validation' => \Config\Services::validation()
             ];
         } else {
             $data = [
                 'databb' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->findAll(),
                 'datapasien' => $mpasien->findAll(),
+                'asupanperhari' => $dataasupan,
+                'max' => $datamax,
+                'datanotif' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->findAll(),
                 'validation' => \Config\Services::validation()
             ];
         }
+        // dd(array($asupan,$max,$idpasien,date('Y-m-d')));
         echo view('view_pembatasan', $data);
     }
 
