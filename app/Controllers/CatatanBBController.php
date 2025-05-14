@@ -15,11 +15,23 @@ class CatatanBBController extends BaseController
         $mpasien = new PasienModel();
         $idpasien = session()->get('userNama');
         $level = session()->get('userLevel');
-        $data = [
-            'databb' => $model->join('tbl_pasien', 'bbidpasien=id')->findAll(),
-            'datapasien' => $mpasien->findAll(),
-            'validation' => \Config\Services::validation()
-        ];
+        $check = $model->where('bbidpasien', $idpasien)->find();
+        // dd($check);
+        if ($level == 3) {
+            $data = [
+                'databb' => $model->join('tbl_pasien', 'bbidpasien=id')->where('bbidpasien', $idpasien)->where('DATE(created_at)', date('Y-m-d h:i:s'))->findAll(),
+                'datapasien' => $mpasien->findAll(),
+                'check' => $check,
+                'validation' => \Config\Services::validation()
+            ];
+        } else {
+            $data = [
+                'databb' => $model->join('tbl_pasien', 'bbidpasien=id')->findAll(),
+                'datapasien' => $mpasien->findAll(),
+                'validation' => \Config\Services::validation()
+            ];
+        }
+
         echo view('view_bb', $data);
     }
 

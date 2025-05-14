@@ -65,8 +65,9 @@ $level = session()->get('userLevel');
                                     </div>
                                     <?php if ($level != 3) { ?>
                                         <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Berat Badan</button>
+                                    <?php } else { ?>
+                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModalP">Tambah Catatan </button>
                                     <?php } ?>
-                                    <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
@@ -332,6 +333,83 @@ $level = session()->get('userLevel');
         </div>
     </div>
 </div>
+
+<!-- Modal Tambah Data Level Pasien -->
+<form action="<?= base_url('bb/save'); ?>" enctype="multipart/form-data" method="post">
+    <?= csrf_field(); ?>
+    <div class="modal fade" id="myModalP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Berat Badan</h6>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="basic-url">Nama Pasien</label>
+                                <div class="input-group mb-3">
+                                    <input type="hidden" value="<?= session()->get('userNama') ?>" name="idpasien" id="idpasien">
+                                    <input type="text" name="nama" id="nama" value="<?= session()->get('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Tanggal</label>
+                                <input type="date" name="tanggal" value="<?= old('tanggal') ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('tanggal'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Berat Badan Sebelum HD (Kg)</label>
+                                <input type="text" name="bbsebelumhd" id="bbsebelumhd" class="form-control">
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('bbsebelumhd'); ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label>Berat Badan Sesudah HD (Kg)</label>
+                                <input type="text" name="bbsesudahhd" id="bbsesudahhd" class="form-control">
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('bbsesudahhd'); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
+                    <button type="submit" class="btn btn-inverse btn-sm">Tambah</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<?php if ($level == 3 && empty($checkdata)) { ?>
+    <script>
+        Swal.fire({
+            title: "Catatan Berat Badan",
+            html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Catatan Berat Badan Hari Ini !",
+            icon: "warning"
+        });
+    </script>
+<?php } else { ?>
+    <script>
+        Swal.fire({
+            title: "Catatan Berat Badan",
+            html: "<strong><?= session()->get('nama') ?></strong> Terimakasih Telah Menginputkan Catatan Berat Badan Hari Ini !",
+            icon: "success"
+        });
+    </script>
+<?php } ?>
 
 <script>
     function pilih(kode, nm) {

@@ -38,4 +38,9 @@ class CatatanDietModel extends Model
         $kodeu = $huruf . $batas;
         return $kodeu;
     }
+
+    public function getMasterMakanan()
+    {
+        return $this->db->table('tbl_master_makanan')->get()->getResultArray();
+    }
 }

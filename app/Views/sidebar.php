@@ -50,12 +50,12 @@ $id = $uri->getSegment(1) ?? '';
                         </a>
                     </li>
                 </ul>
-        <!--<li class="<?= ($id == 'konsultasi') ? 'active' : '' ?>">-->
-        <!--    <a href="<?= base_url('/konsultasi'); ?>">-->
-        <!--        <span class="pcoded-micon"><i class="feather icon-activity"></i></span>-->
-        <!--        <span class="pcoded-mtext">Konsultasi</span>-->
-        <!--    </a>-->
-        <!--</li>-->
+                <!--<li class="<?= ($id == 'konsultasi') ? 'active' : '' ?>">-->
+                <!--    <a href="<?= base_url('/konsultasi'); ?>">-->
+                <!--        <span class="pcoded-micon"><i class="feather icon-activity"></i></span>-->
+                <!--        <span class="pcoded-mtext">Konsultasi</span>-->
+                <!--    </a>-->
+                <!--</li>-->
         <li class="<?= ($id == 'aktifitas') ? 'active' : '' ?>">
             <a href="<?= base_url('/aktifitas'); ?>">
                 <span class="pcoded-micon"><i class="feather icon-book"></i></span>
@@ -131,11 +131,11 @@ $id = $uri->getSegment(1) ?? '';
             <span class="pcoded-mtext">Asupan Cairan Harian</span>
         </a>
     </li>
-    <li class="<?= ($id == 'logout') ? 'active' : '' ?>">
-        <a href="<?= base_url('/logout') ?>">
-            <span class="pcoded-micon"><i class="feather icon-log-out"></i></span>
-            <span class="pcoded-mtext">Logout</span>
-        </a>
-    </li>
 <?php } ?>
+<li class="<?= ($id == 'logout') ? 'active' : '' ?>">
+    <a href="<?= base_url('/logout') ?>">
+        <span class="pcoded-micon"><i class="feather icon-log-out"></i></span>
+        <span class="pcoded-mtext">Logout</span>
+    </a>
+</li>
 </ul>

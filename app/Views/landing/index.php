@@ -77,7 +77,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="<?= base_url('landing/') ?>images/slider-img.jpg" alt="">
+                    <img width="100px" height="600px" src="<?= base_url('landing/') ?>images/sireha_bersama_keluarga_1.png" alt="">
                   </div>
                 </div>
               </div>
@@ -109,7 +109,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="<?= base_url('landing/') ?>images/slider-img.jpg" alt="">
+                    <img width="100px" height="600px" src="<?= base_url('landing/') ?>images/gambar_yang_buat_gantungan_kunci.png" alt="">
                   </div>
                 </div>
               </div>
@@ -126,9 +126,9 @@
                       </button>
                     </div>
                     <h1>
-                      ALMIRA <br>
+                      Si
                       <span>
-                        Hospital
+                        Reha
                       </span>
                     </h1>
                     <p>
@@ -141,7 +141,7 @@
                 </div>
                 <div class="col-md-6">
                   <div class="img-box">
-                    <img src="<?= base_url('landing/') ?>images/slider-img.jpg" alt="">
+                    <img width="100px" height="600px" src="<?= base_url('landing/') ?>images/pasien_hd.png" alt="">
                   </div>
                 </div>
               </div>
