@@ -63,54 +63,88 @@ $session = \Config\Services::session();
                                     </div>
                                     <?php if ($level != 3) { ?>
                                         <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Urine</button>
+                                    <?php } else { ?>
+                                        <button class="btn btn-mat btn-sm btn-success" data-toggle="modal" data-target="#showModal">
+                                            Tambah Catatan
+                                        </button>
                                     <?php } ?>
                                     <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
-                                        <table id="simpletable" width="100%" class="table table-striped table-bordered nowrap">
-                                            <thead>
-                                                <tr>
-                                                    <th style="text-align: center;">No</th>
-                                                    <th>Nama Pasien</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Aksi</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php $no = 0;
-                                                foreach ($dataurine as $row) : $no++;
-
-                                                ?>
+                                        <?php if ($level == 3) { ?>
+                                            <!-- Data Untuk Pasien -->
+                                            <table id="simpletable" width="100%" class="table table-striped table-bordered nowrap">
+                                                <thead>
                                                     <tr>
-                                                        <td width="8%"><?= $no; ?></td>
-                                                        <td> <?= $row['nama']; ?></td>
-                                                        <td> <?= date('Y-m-d', strtotime($row['created_at']));  ?></td>
-                                                        <td class="text-center">
-                                                            <?php if ($level != 3) { ?>
-                                                                <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['idurine']; ?>">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
-                                                                    </svg>
-                                                                </button>
-                                                                <button class="btn btn-danger btn-mini" data-toggle="modal" data-target="#deleteModal<?= $row['idurine']; ?>">
-                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
-                                                                        <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                                                                        <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                                                                    </svg>
-                                                                </button>
-                                                            <?php } ?>
-                                                            <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#showModal<?= $row['idurine']; ?>">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
-                                                                    <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                                                                    <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                                                                </svg>
-                                                            </button>
-                                                        </td>
+                                                        <th style="text-align: center;">No</th>
+                                                        <th>Nama Pasien</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Volume</th>
+                                                        <th>Warna</th>
                                                     </tr>
-                                                <?php endforeach; ?>
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $no = 0;
+                                                    foreach ($dataurinedetail as $row) : $no++;
+                                                    ?>
+                                                        <tr>
+                                                            <td width="8%"><?= $no; ?></td>
+                                                            <td> <?= $row['nama']; ?></td>
+                                                            <td> <?= date('Y-m-d', strtotime($row['detail_urinetanggal']));  ?></td>
+                                                            <td class="text-center"><?= $row['detail_urinevolume'] ?></td>
+                                                            <td class="text-center"><?= $row['jenisurine'] ?></td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        <?php } else { ?>
+                                            <!-- Data Admin HD -->
+                                            <table id="simpletable" width="100%" class="table table-striped table-bordered nowrap">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="text-align: center;">No</th>
+                                                        <th>Nama Pasien</th>
+                                                        <th>Tanggal</th>
+                                                        <th>Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php $no = 0;
+                                                    foreach ($dataurine as $row) : $no++;
+
+                                                    ?>
+                                                        <tr>
+                                                            <td width="8%"><?= $no; ?></td>
+                                                            <td> <?= $row['nama']; ?></td>
+                                                            <td> <?= date('Y-m-d', strtotime($row['created_at']));  ?></td>
+                                                            <td class="text-center">
+                                                                <?php if ($level != 3) { ?>
+                                                                    <button class="btn btn-warning btn-mini" data-toggle="modal" data-target="#editModal<?= $row['idurine']; ?>">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                                            <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                    <button class="btn btn-danger btn-mini" data-toggle="modal" data-target="#deleteModal<?= $row['idurine']; ?>">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                                            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                                            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                                                        </svg>
+                                                                    </button>
+                                                                <?php } ?>
+                                                                <?php if ($level == 3): ?>
+                                                                    <button class="btn btn-success btn-mini" data-toggle="modal" data-target="#showModal<?= $row['idurine']; ?>">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                                                        </svg>
+                                                                    </button>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                        </tr>
+                                                    <?php endforeach; ?>
+                                                </tbody>
+                                            </table>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </div>
@@ -187,15 +221,6 @@ $session = \Config\Services::session();
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Urine Konsistensi</label>
-                                <input type="text" name="urinekonsistensi" id="urinekonsistensi" class="form-control">
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('urinekonsistensi'); ?>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -210,34 +235,42 @@ $session = \Config\Services::session();
 
 
 <!-- Form Edit dan Delete -->
-<?php foreach ($dataurine as $row) : ?>
 
-
-
-    <form action="<?= base_url('urine/delete'); ?>" enctype="multipart/form-data" method="POST">
-        <?= csrf_field(); ?>
-        <div class="modal" tabindex="-1" id="deleteModal<?= $row['idurine']; ?>">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h6 class="modal-title">Hapus Catatan Urine</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    </div>
-                    <div class="modal-body">
-                        <input type="hidden" name="id" required value="<?= $row['idurine']; ?>" />
-                        <h6>Yakin hapus data?</h6>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-inverse btn-sm">Ya</button>
+<?php
+if ($level != 3):
+    foreach ($dataurine as $row) :
+?>
+        <form action="<?= base_url('urine/delete'); ?>" enctype="multipart/form-data" method="POST">
+            <?= csrf_field(); ?>
+            <div class="modal" tabindex="-1" id="deleteModal<?= $row['idurine']; ?>">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title">Hapus Catatan Urine</h6>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" name="id" required value="<?= $row['idurine']; ?>" />
+                            <h6>Yakin hapus data?</h6>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tidak</button>
+                            <button type="submit" class="btn btn-inverse btn-sm">Ya</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
 
-    <!-- Form Detail Untuk Tambah Data Urine Pasien -->
-    <?php if ($level == 3) :
+<?php
+    endforeach;
+endif;
+?>
+
+<!-- Form Detail Untuk Tambah Data Urine Pasien -->
+<?php
+foreach ($dataurinedetail as $row):
+    if ($level == 3) :
         if ($level == 3) {
             $id = session()->get('userNama');
             $nama = session()->get('nama');
@@ -245,10 +278,10 @@ $session = \Config\Services::session();
             $id = '';
             $nama = '';
         }
-    ?>
+?>
         <form action="<?= base_url('urine/savepasien'); ?>" enctype="multipart/form-data" method="POST">
             <?= csrf_field() ?>
-            <div class="modal" tabindex="-1" id="showModal<?= $row['idurine']; ?>">
+            <div class="modal" tabindex="-1" id="showModal">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -311,15 +344,6 @@ $session = \Config\Services::session();
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Urine Konsistensi</label>
-                                        <input type="text" name="urinekonsistensi" id="urinekonsistensi" class="form-control">
-                                        <div class="invalid-feedback">
-                                            <?= $validation->getError('urinekonsistensi'); ?>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="modal-footer">
@@ -330,10 +354,10 @@ $session = \Config\Services::session();
                 </div>
             </div>
         </form>
-    <?php endif; ?>
-
-<?php endforeach; ?>
-
+<?php
+    endif;
+endforeach;
+?>
 
 <!-- Modal Data Pasien  -->
 
@@ -389,8 +413,8 @@ $session = \Config\Services::session();
 <?php if ($level == 3 && empty($checkdata)): ?>
     <script>
         Swal.fire({
-            title: "Asupan Cairan Belum Tercukupi !",
-            html: "Asupan Cairan Anda Hari ini : <strong>  </strong>",
+            title: "Catatan Urine",
+            html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Catatan Urine Hari Ini !",
             icon: "warning"
         });
     </script>

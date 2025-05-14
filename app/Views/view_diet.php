@@ -353,6 +353,16 @@ $level = session()->get('userLevel');
     </div>
 </div>
 
+<?php if ($level == 3 && empty($notif)): ?>
+    <script>
+        Swal.fire({
+            title: "Catatan Diet",
+            html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Catatan Diet Hari Ini !",
+            icon: "warning"
+        });
+    </script>
+<?php endif ?>
+
 <script>
     function pilih(kode, nm) {
         $('#idpasien').val(kode);

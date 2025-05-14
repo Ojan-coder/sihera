@@ -12,6 +12,7 @@ class CatatanUrineController extends BaseController
 {
     public function index()
     {
+        $detail = new DetailCatatanUrineModel();
         $model = new CatatanUrineModel();
         $mpasien = new PasienModel();
         $idpasien = session()->get('userNama');
@@ -19,7 +20,7 @@ class CatatanUrineController extends BaseController
         $datanotif = $model->where('urineidpasien', $idpasien)->where('urinetanggal', date('Y-m-d'))->find();
         if ($level == 3) {
             $data = [
-                'dataurine' => $model->join('tbl_pasien', 'urineidpasien=id')->where('urineidpasien', $idpasien)->where('urinetanggal', date('Y-m-d'))->findAll(),
+                'dataurinedetail' => $detail->join('tbl_master_urine', 'detail_urinewarna=tbl_master_urine.id')->join('tbl_pasien', 'detail_idpasien=tbl_pasien.id')->where('detail_idpasien', $idpasien)->where('detail_urinetanggal', date('Y-m-d'))->findAll(),
                 'checkdata' => $datanotif,
                 'masterurine' => $model->masterurine(),
                 'datapasien' => $mpasien->findAll(),
@@ -27,7 +28,8 @@ class CatatanUrineController extends BaseController
             ];
         } else {
             $data = [
-                'dataurine' => $model->join('tbl_pasien', 'urineidpasien=id')->where('urinetanggal',date('Y-m-d'))->findAll(),
+                'dataurine' => $model->join('tbl_pasien', 'urineidpasien=id')->where('urinetanggal', date('Y-m-d'))->findAll(),
+                'dataurinedetail' => $detail->join('tbl_master_urine', 'detail_urinewarna=tbl_master_urine.id')->join('tbl_pasien', 'detail_idpasien=tbl_pasien.id')->where('detail_idpasien', $idpasien)->where('detail_urinetanggal', date('Y-m-d'))->findAll(),
                 'datapasien' => $mpasien->findAll(),
                 'masterurine' => $model->masterurine(),
                 'validation' => \Config\Services::validation()
@@ -51,12 +53,6 @@ class CatatanUrineController extends BaseController
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Urine Warna harus diisi'
-                ]
-            ],
-            'urinekonsistensi' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Urine Konsistensi harus diisi'
                 ]
             ]
         ];
@@ -203,7 +199,7 @@ class CatatanUrineController extends BaseController
             session()->setFlashdata('success', 'Berhasil Menyimpan Data');
             return redirect()->to('/urine');
         } else {
-            
+
             session()->setFlashdata('failed', 'Data Gagal Disimpan, Periksa Data Input Kembali');
             return redirect()->to('/urine')->withInput();
         }

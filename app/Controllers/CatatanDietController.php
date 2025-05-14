@@ -15,11 +15,22 @@ class CatatanDietController extends BaseController
         $mpasien = new PasienModel();
         $idpasien = session()->get('userNama');
         $level = session()->get('userLevel');
-        $data = [
-            'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->findAll(),
-            'datapasien' => $mpasien->findAll(),
-            'validation' => \Config\Services::validation()
-        ];
+        $check = $model->where('dietidpasien', $idpasien)->where('diettanggal', date('Y-m-d'))->find();
+        if ($level == 3) {
+            $data = [
+                'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->where('dietidpasien', $idpasien)->findAll(),
+                'notif' => $check,
+                'datapasien' => $mpasien->findAll(),
+                'validation' => \Config\Services::validation()
+            ];
+        } else {
+            $data = [
+                'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->findAll(),
+                'datapasien' => $mpasien->findAll(),
+                'validation' => \Config\Services::validation()
+            ];
+        }
+
         echo view('view_diet', $data);
     }
 
