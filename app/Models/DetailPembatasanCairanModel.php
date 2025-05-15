@@ -41,7 +41,7 @@ class DetailPembatasanCairanModel extends Model
         $query = $this->db->table($this->table)
         ->selectSum('detail_asupanhari','asupan')
         ->where('detail_pasien',$idpasien)
-        ->where('detail_tanggal','2025-05-13')
+        ->where('detail_tanggal',$date)
         ->groupBy('detail_idpembatasan')
         ->get()->getResultArray();
         return $query;

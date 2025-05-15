@@ -18,14 +18,25 @@ class CatatanDietController extends BaseController
         $idpasien = session()->get('userNama');
         $level = session()->get('userLevel');
         $check = $model->where('dietidpasien', $idpasien)->where('diettanggal', date('Y-m-d'))->find();
-        $waktu = $detail->where('detail_idpasien', $idpasien)->where('detail_diettanggal', date('Y-m-d'))->orderBy('id','DESC')->limit(1)->find();
-        // dd($check[0]['dietprogram']);
+        $waktu = $detail->where('detail_idpasien', $idpasien)->where('detail_diettanggal', date('Y-m-d'))->orderBy('id', 'DESC')->limit(1)->find();
+        if (empty($check)) {
+            $program = '';
+        } else {
+            $program = $check[0]['dietprogram'];
+        }
+        if (empty($waktu)) {
+            $wktu = '';
+        } else {
+            $wktu = $waktu[0]['detail_ketwaktu'];
+        }
+        // dd($waktu[0]['detail_ketwaktu']);
         if ($level == 3) {
             $data = [
                 'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->where('dietidpasien', $idpasien)->findAll(),
                 'notif' => $check,
-                'program' => $check[0]['dietprogram'],
-                'waktu' => $waktu,
+                'program' => $program,
+                'waktu' => $wktu,
+                'waktu' => $wktu,
                 'dataprogramdiet' => $model->getProgramDiet(),
                 'datapasien' => $mpasien->findAll(),
                 'validation' => \Config\Services::validation()
@@ -119,13 +130,13 @@ class CatatanDietController extends BaseController
         $model = new CatatanDietModel();
         $detail = new DetailCatatanDietModel();
         $check = $model->where('dietidpasien', session()->get('userNama'))->find();
-
+        // dd($check[0]['iddiet']);
         $data = array(
-            'detail_iddiet' => $check['iddiet'],
+            'detail_iddiet' => $check[0]['iddiet'],
             'detail_idpasien' => $this->request->getPost('idpasien'),
             'detail_diettanggal' => $this->request->getPost('tanggal'),
-            'detail_waktu' => $this->request->getPost('protein'),
-            'detail_porsi' => $this->request->getPost('protein')
+            'detail_ketwaktu' => $this->request->getPost('cbwaktu'),
+            'detail_porsi' => $this->request->getPost('cbporsi')
         );
 
         $detail->insert($data);

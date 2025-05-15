@@ -66,7 +66,9 @@ $level = session()->get('userLevel');
                                     <?php if ($level != 3) { ?>
                                         <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Diet</button>
                                     <?php } else { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModalP">Input Rekap Porsi </button>
+                                        <?php if (!empty($program)) { ?>
+                                            <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModalP">Input Rekap Porsi </button>
+                                        <?php } ?>
                                     <?php } ?>
                                     <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
@@ -219,7 +221,7 @@ $level = session()->get('userLevel');
                                 <div class="form-group">
                                     <label>Diet Waktu</label>
                                     <select name="cbwaktu" id="cbwaktu" class="form-control">
-                                        <option value="">-Pilih Waktu-</option>
+                                        <option value="-">-Pilih Waktu-</option>
                                         <option value="Pagi">Pagi</option>
                                         <option value="Siang">Siang</option>
                                         <option value="Malam">Malam</option>
@@ -229,7 +231,7 @@ $level = session()->get('userLevel');
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Diet Porsi</label>
-                                    <select name="cbwaktu" id="cbwaktu" class="form-control">
+                                    <select name="cbporsi" id="cbporsi" class="form-control">
                                         <option value="">-Pilih Waktu-</option>
                                         <option value="1 Porsi">1 Porsi</option>
                                         <option value="1/2 Porsi">1/2 Porsi</option>
@@ -386,13 +388,25 @@ $level = session()->get('userLevel');
 </div>
 
 <?php if ($level == 3 && empty($notif)) { ?>
-    <script>
-        Swal.fire({
-            title: "Catatan Diet",
-            html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Catatan Diet Hari Ini !",
-            icon: "warning"
-        });
-    </script>
+    <?php if (empty($program)) { ?>
+        <script>
+            Swal.fire({
+                title: "Catatan Diet",
+                html: "<strong>Perawat HD</strong> Belum Menginputkan Data Diet <?= session()->get('nama') ?> Hari Ini !",
+                icon: "warning"
+            });
+        </script>
+    <?php } else { ?>
+        <script>
+            Swal.fire({
+                title: "Catatan Diet",
+                html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Catatan Diet Hari Ini !",
+                icon: "warning"
+            });
+        </script>
+    <?php } ?>
+
+
 <?php } else if ($level == 3 && !empty($notif)) { ?>
     <?php if (empty($waktu)) { ?>
         <script>
@@ -402,7 +416,7 @@ $level = session()->get('userLevel');
                 icon: "warning"
             });
         </script>
-    <?php } else if ($waktu != "Pagi") { ?>
+    <?php } else if ($waktu == "Pagi") { ?>
         <script>
             Swal.fire({
                 title: "Catatan Diet",
@@ -410,11 +424,11 @@ $level = session()->get('userLevel');
                 icon: "warning"
             });
         </script>
-    <?php } else if ($waktu != "Pagi") { ?>
+    <?php } else if ($waktu == "Siang") { ?>
         <script>
             Swal.fire({
                 title: "Catatan Diet",
-                html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Porsi Makan Pada Siang Hari !",
+                html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Porsi Makan Pada Malam Hari !",
                 icon: "warning"
             });
         </script>

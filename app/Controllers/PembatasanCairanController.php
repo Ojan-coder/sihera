@@ -29,6 +29,7 @@ class PembatasanCairanController extends BaseController
         }else{
             $datamax = $max[0]['targetmaksimal'];
         }
+        // dd($dataasupan);
         if ($level == 3) {
             $data = [
                 'databb' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('id', $idpasien)->findAll(),

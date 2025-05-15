@@ -63,7 +63,7 @@
                             </div>
                             <div class="col-sm-12 mb-2">
                                 <div class="card">
-                                    <button class="btn btn-outline-primary" onclick="location.href=('<?= base_url('diet') ?>')">
+                                    <button class="btn btn-outline-primary" onclick="location.href=('<?= base_url('cairan') ?>')">
                                         <img width="30" height="30" src="https://img.icons8.com/ios/50/technical-fluid.png" alt="technical-fluid"/>
                                         <span>Catatan Asupan Cairan</span>
                                     </button>
