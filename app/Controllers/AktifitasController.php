@@ -17,13 +17,25 @@ class AktifitasController extends BaseController
         $mpasien = new PasienModel();
         $idpasien = session()->get('userNama');
         $level = session()->get('userLevel');
-        $data = [
-            'dataaktifitas' => $model->join('tbl_master_aktifitas', 'fisikjenisaktifitas=idjenis')
-                ->join('tbl_pasien', 'fisikidpasien=id')->findAll(),
-            'jenis' => $mjenis->findAll(),
-            'datapasien' => $mpasien->findAll(),
-            'validation' => \Config\Services::validation()
-        ];
+        $check = $model->where('fisikidpasien', $idpasien)->where('fisiktanggal', date('Y-m-d'))->find();
+        if ($level == 3) {
+            $data = [
+                'dataaktifitas' => $model->join('tbl_master_aktifitas', 'fisikjenisaktifitas=idjenis')
+                    ->join('tbl_pasien', 'fisikidpasien=id')->where('fisikidpasien', $idpasien)->find(),
+                'jenis' => $mjenis->findAll(),
+                'notif' => $check,
+                'datapasien' => $mpasien->findAll(),
+                'validation' => \Config\Services::validation()
+            ];
+        } else {
+            $data = [
+                'dataaktifitas' => $model->join('tbl_master_aktifitas', 'fisikjenisaktifitas=idjenis')
+                    ->join('tbl_pasien', 'fisikidpasien=id')->findAll(),
+                'jenis' => $mjenis->findAll(),
+                'datapasien' => $mpasien->findAll(),
+                'validation' => \Config\Services::validation()
+            ];
+        }
         echo view('view_aktifitas', $data);
     }
 
@@ -45,9 +57,10 @@ class AktifitasController extends BaseController
             $data = array(
                 'idaktifitas' => $model->generateKode(),
                 'fisikidpasien' => $this->request->getPost('idpasien'),
+                'fisiktanggal' => $this->request->getPost('tanggal'),
                 'fisikjenisaktifitas' => $this->request->getPost('cbjenis'),
                 'fisikdurasi' => $this->request->getPost('durasi'),
-                'created_at' => date('d-m-y H:i:s')
+                'created_at' => date('Y-m-d H:i:s')
             );
 
             $model->insert($data);
@@ -75,9 +88,10 @@ class AktifitasController extends BaseController
             $model = new AktifitasFisikModel();
             $data = array(
                 'fisikidpasien' => $this->request->getPost('idpasien'),
+                'fisiktanggal' => $this->request->getPost('tanggal'),
                 'fisikjenisaktifitas' => $this->request->getPost('cbjenis'),
                 'fisikdurasi' => $this->request->getPost('durasi'),
-                'updated_at' => date('d-m-y H:i:s')
+                'updated_at' => date('Y-m-d H:i:s')
             );
             $model->update($id, $data);
             // dd($data,$id);

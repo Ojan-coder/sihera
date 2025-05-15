@@ -62,9 +62,9 @@ $level = session()->get('userLevel'); ?>
                                             <?php } ?>
                                         </div>
                                     </div>
-                                    <?php if ($level != 3) { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Aktifitas Fisik</button>
-                                        <?php } ?>
+
+                                    <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Aktifitas Fisik</button>
+
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
@@ -83,7 +83,6 @@ $level = session()->get('userLevel'); ?>
                                             <tbody>
                                                 <?php $no = 0;
                                                 foreach ($dataaktifitas as $row) : $no++;
-
                                                 ?>
                                                     <tr>
                                                         <td width="8%"><?= $no; ?></td>
@@ -136,15 +135,25 @@ $level = session()->get('userLevel'); ?>
                             <div class="form-group">
                                 <label for="basic-url">Nama Pasien</label>
                                 <div class="input-group mb-3">
-                                    <input type="hidden" name="idpasien" id="idpasien">
-                                    <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                                            <i class="feather icon-search"></i>
-                                        </button>
-                                    </div>
+                                    <?php if ($level == 3): ?>
+                                        <input type="hidden" value="<?= session()->get('userNama') ?>" name="idpasien" id="idpasien">
+                                        <input type="text" name="nama" id="nama" value="<?= session()->get('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                    <?php endif;
+                                    if ($level != 3): ?>
+                                        <input type="hidden" name="idpasien" id="idpasien">
+                                        <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                                                <i class="feather icon-search"></i>
+                                            </button>
+                                        </div>
+                                    <?php endif ?>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <label>Tanggal</label>
+                            <input type="date" name="tanggal" id="tanggal" class="form-control">
                         </div>
                         <div class="col-lg-12">
                             <div class="form-group">
@@ -160,6 +169,7 @@ $level = session()->get('userLevel'); ?>
                                 </div>
                             </div>
                         </div>
+
                         <div class="col-lg-12">
                             <label>Durasi (Menit)</label>
                             <input type="text" name="durasi" id="durasi" class="form-control">
@@ -309,6 +319,23 @@ $level = session()->get('userLevel'); ?>
     </div>
 </div>
 
+<?php if ($level == 3 && empty($notif)) { ?>
+    <script>
+        Swal.fire({
+            title: "Catatan Aktifitas",
+            html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Catatan Aktifitas Hari Ini !",
+            icon: "warning"
+        });
+    </script>
+<?php } else if ($level == 3 && !empty($notif)) { ?>
+    <script>
+        Swal.fire({
+            title: "Catatan Aktifitas",
+            html: "<strong><?= session()->get('nama') ?></strong> Terimakasih Telah Menginputkan Catatan Aktifitas Hari Ini !",
+            icon: "success"
+        });
+    </script>
+<?php } ?>
 <script>
     function pilih(kode, nm) {
         $('#idpasien').val(kode);

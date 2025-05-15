@@ -29,7 +29,6 @@
                 </div>
                 <div class="page-body">
                     <div class="row">
-                        <?php if (session()->get('userLevel') == 3): ?>
                             <div class="col-sm-6 mb-2">
                                 <div class="card">
                                     <button class="btn btn-outline-success" onclick="location.href=('<?= base_url('aktifitas') ?>')">
@@ -70,7 +69,6 @@
                                     </button>
                                 </div>
                             </div>
-                        <?php endif ?>
                     </div>
                 </div>
             </div>

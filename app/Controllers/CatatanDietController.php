@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\CatatanDietModel;
+use App\Models\DetailCatatanDietModel;
 use App\Models\PasienModel;
 use CodeIgniter\HTTP\ResponseInterface;
 
@@ -12,14 +13,20 @@ class CatatanDietController extends BaseController
     public function index()
     {
         $model = new CatatanDietModel();
+        $detail = new DetailCatatanDietModel();
         $mpasien = new PasienModel();
         $idpasien = session()->get('userNama');
         $level = session()->get('userLevel');
         $check = $model->where('dietidpasien', $idpasien)->where('diettanggal', date('Y-m-d'))->find();
+        $waktu = $detail->where('detail_idpasien', $idpasien)->where('detail_diettanggal', date('Y-m-d'))->orderBy('id','DESC')->limit(1)->find();
+        // dd($check[0]['dietprogram']);
         if ($level == 3) {
             $data = [
                 'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->where('dietidpasien', $idpasien)->findAll(),
                 'notif' => $check,
+                'program' => $check[0]['dietprogram'],
+                'waktu' => $waktu,
+                'dataprogramdiet' => $model->getProgramDiet(),
                 'datapasien' => $mpasien->findAll(),
                 'validation' => \Config\Services::validation()
             ];
@@ -27,6 +34,7 @@ class CatatanDietController extends BaseController
             $data = [
                 'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->findAll(),
                 'datapasien' => $mpasien->findAll(),
+                'dataprogramdiet' => $model->getProgramDiet(),
                 'validation' => \Config\Services::validation()
             ];
         }
@@ -37,39 +45,26 @@ class CatatanDietController extends BaseController
     public function save()
     {
         $rules = [
-            'protein' => [
+            'idpasien' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Protein harus diisi'
-                ]
-            ],
-            'natrium' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Natrium harus diisi'
-                ]
-            ],
-            'kalsium' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kalsium harus diisi'
+                    'required' => 'Pasien harus diisi'
                 ]
             ]
         ];
 
-
         if ($this->validate($rules)) {
             $model = new CatatanDietModel();
+            $program = $this->request->getPost('cbprogram');
 
             $data = array(
                 'iddiet' => $model->generateKode(),
                 'dietidpasien' => $this->request->getPost('idpasien'),
                 'diettanggal' => $this->request->getPost('tanggal'),
-                'dietprotein' => $this->request->getPost('protein'),
-                'dietnatrium' => $this->request->getPost('natrium'),
-                'dietkalsium' => $this->request->getPost('kalsium'),
+                'dietprogram' => implode(',', $program),
                 'created_at' => date('d-m-y H:i:s')
             );
+            // dd($data);
 
             $model->insert($data);
             session()->setFlashdata('success', 'Berhasil Menyimpan Data');
@@ -83,22 +78,10 @@ class CatatanDietController extends BaseController
     public function edit()
     {
         $rules = [
-            'protein' => [
+            'program' => [
                 'rules' => 'required',
                 'errors' => [
-                    'required' => 'Protein harus diisi'
-                ]
-            ],
-            'natrium' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Natrium harus diisi'
-                ]
-            ],
-            'kalsium' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Kalsium harus diisi'
+                    'required' => 'Program harus diisi'
                 ]
             ]
         ];
@@ -109,9 +92,7 @@ class CatatanDietController extends BaseController
             $data = array(
                 'dietidpasien' => $this->request->getPost('idpasien'),
                 'diettanggal' => $this->request->getPost('tanggal'),
-                'dietprotein' => $this->request->getPost('protein'),
-                'dietnatrium' => $this->request->getPost('natrium'),
-                'dietkalsium' => $this->request->getPost('kalsium'),
+                'dietprogram' => $this->request->getPost('program'),
                 'updated_at' => date('d-m-y H:i:s')
             );
             $model->update($id, $data);
@@ -130,6 +111,25 @@ class CatatanDietController extends BaseController
         $id = $this->request->getPost('id');
         $model->delete($id);
         session()->setFlashdata('success', 'Berhasil Menghapus Data Catatan Diet');
+        return redirect()->to('/diet');
+    }
+
+    public function savep()
+    {
+        $model = new CatatanDietModel();
+        $detail = new DetailCatatanDietModel();
+        $check = $model->where('dietidpasien', session()->get('userNama'))->find();
+
+        $data = array(
+            'detail_iddiet' => $check['iddiet'],
+            'detail_idpasien' => $this->request->getPost('idpasien'),
+            'detail_diettanggal' => $this->request->getPost('tanggal'),
+            'detail_waktu' => $this->request->getPost('protein'),
+            'detail_porsi' => $this->request->getPost('protein')
+        );
+
+        $detail->insert($data);
+        session()->setFlashdata('success', 'Berhasil Menyimpan Data');
         return redirect()->to('/diet');
     }
 

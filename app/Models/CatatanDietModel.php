@@ -12,9 +12,7 @@ class CatatanDietModel extends Model
         'iddiet',
         'dietidpasien',
         'diettanggal',
-        'dietprotein',
-        'dietnatrium',
-        'dietkalsium',
+        'dietprogram',
         'created_at',
         'updated_at'
     ];
@@ -42,5 +40,8 @@ class CatatanDietModel extends Model
     public function getMasterMakanan()
     {
         return $this->db->table('tbl_master_makanan')->get()->getResultArray();
+    }
+    public function getProgramDiet(){
+        return $this->db->table('tbl_master_diet')->get()->getResultArray();
     }
 }

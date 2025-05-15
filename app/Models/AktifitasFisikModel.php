@@ -11,6 +11,7 @@ class AktifitasFisikModel extends Model
     protected $allowedFields    = [
         'idaktifitas',
         'fisikidpasien',
+        'fisiktanggal',
         'fisikjenisaktifitas',
         'fisikdurasi',
         'created_at',

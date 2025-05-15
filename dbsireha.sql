@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v12.5.1 (64 bit)
-MySQL - 8.0.30 : Database - sihera
+MySQL - 8.0.30 : Database - sireha
 *********************************************************************
 */
 
@@ -12,9 +12,9 @@ MySQL - 8.0.30 : Database - sihera
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`sihera` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`sireha` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
-USE `sihera`;
+USE `sireha`;
 
 /*Table structure for table `tbl_aktifitas_fisik` */
 
@@ -24,6 +24,7 @@ CREATE TABLE `tbl_aktifitas_fisik` (
   `idaktifitas` char(20) NOT NULL,
   `fisikidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `fisikjenisaktifitas` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `fisiktanggal` date DEFAULT NULL,
   `fisikdurasi` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -31,6 +32,9 @@ CREATE TABLE `tbl_aktifitas_fisik` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_aktifitas_fisik` */
+
+insert  into `tbl_aktifitas_fisik`(`idaktifitas`,`fisikidpasien`,`fisikjenisaktifitas`,`fisiktanggal`,`fisikdurasi`,`created_at`,`updated_at`) values 
+('AF001','P004','1','2025-05-15',30,'2025-05-15 12:44:25',NULL);
 
 /*Table structure for table `tbl_catatan_bb` */
 
@@ -48,6 +52,10 @@ CREATE TABLE `tbl_catatan_bb` (
 
 /*Data for the table `tbl_catatan_bb` */
 
+insert  into `tbl_catatan_bb`(`idbb`,`bbidpasien`,`bbsebelumhd`,`bbsesudahhd`,`created_at`,`updated_at`) values 
+('BB001','P004',60,55,'2015-05-25 02:01:31',NULL),
+('BB002','P003',22,22,'2015-05-25 02:02:34',NULL);
+
 /*Table structure for table `tbl_catatan_diet` */
 
 DROP TABLE IF EXISTS `tbl_catatan_diet`;
@@ -56,15 +64,16 @@ CREATE TABLE `tbl_catatan_diet` (
   `iddiet` varchar(20) NOT NULL,
   `dietidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `diettanggal` date NOT NULL,
-  `dietprotein` int NOT NULL,
-  `dietnatrium` int NOT NULL,
-  `dietkalsium` int NOT NULL,
+  `dietprogram` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`iddiet`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_catatan_diet` */
+
+insert  into `tbl_catatan_diet`(`iddiet`,`dietidpasien`,`diettanggal`,`dietprogram`,`created_at`,`updated_at`) values 
+('D001','P003','2025-05-15','Diit Penyakit Ginjal Kronis (CKD),Diit Diabetes Mellitus','2015-05-25 16:09:27',NULL);
 
 /*Table structure for table `tbl_catatan_urine` */
 
@@ -82,9 +91,25 @@ CREATE TABLE `tbl_catatan_urine` (
 /*Data for the table `tbl_catatan_urine` */
 
 insert  into `tbl_catatan_urine`(`idurine`,`urineidpasien`,`urinetanggal`,`created_at`,`updated_at`) values 
-('UR13052025003','P003','2025-05-13','2013-05-25',NULL),
+('UR14052025003','P004','2025-05-14','2014-05-25',NULL),
 ('UR30042025001','P004','2025-04-30','2030-04-25',NULL),
 ('UR30042025002','P002','2025-04-30','2030-04-25',NULL);
+
+/*Table structure for table `tbl_detail_catatan_diet` */
+
+DROP TABLE IF EXISTS `tbl_detail_catatan_diet`;
+
+CREATE TABLE `tbl_detail_catatan_diet` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `detail_iddiet` varchar(20) DEFAULT NULL,
+  `detail_idpasien` varchar(20) DEFAULT NULL,
+  `detail_diettanggal` date DEFAULT NULL,
+  `detail_ketwaktu` enum('Pagi','Siang','Malam') DEFAULT NULL,
+  `detail_porsi` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `tbl_detail_catatan_diet` */
 
 /*Table structure for table `tbl_detail_catatan_urine` */
 
@@ -95,17 +120,16 @@ CREATE TABLE `tbl_detail_catatan_urine` (
   `detail_idurine` varchar(20) DEFAULT NULL,
   `detail_idpasien` varchar(20) DEFAULT NULL,
   `detail_urinetanggal` date DEFAULT NULL,
-  `detail_urinevolume` int DEFAULT NULL,
+  `detail_urinevolume` varchar(20) DEFAULT NULL,
   `detail_urinewarna` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_detail_catatan_urine` */
 
 insert  into `tbl_detail_catatan_urine`(`id`,`detail_idurine`,`detail_idpasien`,`detail_urinetanggal`,`detail_urinevolume`,`detail_urinewarna`) values 
-(1,'UR13052025003','P003','2025-05-13',50,'1'),
-(2,'UR13052025003','P003','2025-05-13',45,'3'),
-(3,'UR13052025003','P003','2025-05-13',30,'2');
+(1,'UR14052025003','P004','2025-05-14','20','1'),
+(2,'UR14052025003','P004','2025-05-14','12','1');
 
 /*Table structure for table `tbl_detail_pembatasan_cairan` */
 
@@ -118,15 +142,13 @@ CREATE TABLE `tbl_detail_pembatasan_cairan` (
   `detail_pasien` varchar(20) DEFAULT NULL,
   `detail_asupanhari` int DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_detail_pembatasan_cairan` */
 
 insert  into `tbl_detail_pembatasan_cairan`(`id`,`detail_idpembatasan`,`detail_tanggal`,`detail_pasien`,`detail_asupanhari`) values 
 (1,'PC001','2025-05-12','P002',100),
-(2,'PC001','2025-05-12','P002',50),
-(3,'PC002','2025-05-13','P002',250),
-(4,'PC003','2025-05-14','P004',100);
+(2,'PC001','2025-05-12','P002',50);
 
 /*Table structure for table `tbl_dokter` */
 
@@ -210,15 +232,57 @@ CREATE TABLE `tbl_master_aktifitas` (
   `idjenis` bigint NOT NULL AUTO_INCREMENT,
   `jenisaktifitas` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`idjenis`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_master_aktifitas` */
 
 insert  into `tbl_master_aktifitas`(`idjenis`,`jenisaktifitas`) values 
-(1,'Jalan kaki'),
-(2,'Stretching'),
-(3,'Relaksasi'),
-(4,'Aktivitas Fungsional');
+(1,'Berjalan Kaki ( Walk )'),
+(2,'Sepeda Statis  ( Stationary Bike )'),
+(3,'Yoga Ringan atau Stretching'),
+(4,'Senam Duduk ( Chair Exercise )'),
+(5,'Latihan Pernapasan Dalam');
+
+/*Table structure for table `tbl_master_diet` */
+
+DROP TABLE IF EXISTS `tbl_master_diet`;
+
+CREATE TABLE `tbl_master_diet` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `jenis_diet` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `tbl_master_diet` */
+
+insert  into `tbl_master_diet`(`id`,`jenis_diet`) values 
+(1,'Diit Penyakit Ginjal Kronis (CKD)'),
+(2,'Diit Diabetes Mellitus'),
+(3,'Diit Hipertensi'),
+(4,'Diit Penyakit Jantung'),
+(5,'Diit Dislipidemia'),
+(6,'Diit Asam Urat / Gout'),
+(7,'Diit Penyakit Lambung'),
+(8,'Diit Penyakit Paru Kronis'),
+(9,'Lainnya.....');
+
+/*Table structure for table `tbl_master_makan` */
+
+DROP TABLE IF EXISTS `tbl_master_makan`;
+
+CREATE TABLE `tbl_master_makan` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `jenis_makan` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+/*Data for the table `tbl_master_makan` */
+
+insert  into `tbl_master_makan`(`id`,`jenis_makan`) values 
+(1,'1 Porsi'),
+(2,'1/2 Porsi'),
+(3,'1/4 Porsi'),
+(4,'Tidak Mau Makan');
 
 /*Table structure for table `tbl_master_urine` */
 
@@ -226,7 +290,7 @@ DROP TABLE IF EXISTS `tbl_master_urine`;
 
 CREATE TABLE `tbl_master_urine` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `jenisurine` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `jenisurine` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -282,9 +346,7 @@ CREATE TABLE `tbl_pembatasan_cairan` (
 /*Data for the table `tbl_pembatasan_cairan` */
 
 insert  into `tbl_pembatasan_cairan`(`idpembatasan`,`idpasienpembatasan`,`tglpembatasan`,`targetmaksimal`) values 
-('PC001','P002','2025-05-12','500'),
-('PC002','P002','2025-05-13','400'),
-('PC003','P004','2025-05-14','600');
+('PC001','P002','2025-05-12','500');
 
 /*Table structure for table `tbl_role` */
 
