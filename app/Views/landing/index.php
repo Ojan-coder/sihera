@@ -68,7 +68,7 @@
                       </span>
                     </h1>
                     <p>
-                      when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to
+                      Chronic Kidney Disease (CKD) adalah gangguan fungsi ginjal yang berlangsung dalam jangka waktu yang panjang dan bersifat progresif. Banyak pasien CKD harus menjalani terapi hemodialisa secara rutin untuk menggantikan fungsi ginjalnya.
                     </p>
                     <a href="">
                       Contact Us
@@ -100,7 +100,7 @@
                       </span>
                     </h1>
                     <p>
-                      when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to
+                      SIREHA adalah sistem informasi yang dirancang untuk membantu pasien CKD dalam menjalani hemodialisa secara teratur, memantau asupan cairan, diit dan aktivitas harian secara mandiri serta meningkatkan pemahaman melalui edukasi dan konsultasi dengan tujuan meningkatkan kualitas hidup pasien
                     </p>
                     <a href="">
                       Contact Us
@@ -132,7 +132,11 @@
                       </span>
                     </h1>
                     <p>
-                      when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to
+                      Manfaat menggunakan SIREHA <br>
+                      1. Meningkatkan kepatuhan terhadap terapi hemodialisa <br>
+                      2. Menghindari komplikasi akibat kelebihan volume cairan <br>
+                      3. Memperbaiki kualitas hidup pasien CKD <br>
+                      4. Memfasilitasi komunikasi antara pasien dengan tenaga kesehatan
                     </p>
                     <a href="">
                       Contact Us

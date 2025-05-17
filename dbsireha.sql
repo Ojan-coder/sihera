@@ -34,7 +34,8 @@ CREATE TABLE `tbl_aktifitas_fisik` (
 /*Data for the table `tbl_aktifitas_fisik` */
 
 insert  into `tbl_aktifitas_fisik`(`idaktifitas`,`fisikidpasien`,`fisikjenisaktifitas`,`fisiktanggal`,`fisikdurasi`,`created_at`,`updated_at`) values 
-('AF001','P004','1','2025-05-15',30,'2025-05-15 12:44:25',NULL);
+('AF001','P004','1','2025-05-15',30,'2025-05-15 12:44:25',NULL),
+('AF002','P001','1','2025-05-18',60,'2025-05-18 00:11:50',NULL);
 
 /*Table structure for table `tbl_catatan_bb` */
 
@@ -73,7 +74,8 @@ CREATE TABLE `tbl_catatan_diet` (
 /*Data for the table `tbl_catatan_diet` */
 
 insert  into `tbl_catatan_diet`(`iddiet`,`dietidpasien`,`diettanggal`,`dietprogram`,`created_at`,`updated_at`) values 
-('D001','P003','2025-05-15','Diit Penyakit Ginjal Kronis (CKD),Diit Diabetes Mellitus','2015-05-25 16:09:27',NULL);
+('D001','P003','2025-05-15','Diit Penyakit Ginjal Kronis (CKD),Diit Diabetes Mellitus','2015-05-25 16:09:27',NULL),
+('D002','P001','2025-05-18','Diit Penyakit Ginjal Kronis (CKD),Diit Diabetes Mellitus','2018-05-25 01:56:19',NULL);
 
 /*Table structure for table `tbl_catatan_urine` */
 
@@ -92,6 +94,7 @@ CREATE TABLE `tbl_catatan_urine` (
 
 insert  into `tbl_catatan_urine`(`idurine`,`urineidpasien`,`urinetanggal`,`created_at`,`updated_at`) values 
 ('UR14052025003','P004','2025-05-14','2014-05-25',NULL),
+('UR18052025004','P001','2025-05-18','2018-05-25',NULL),
 ('UR30042025001','P004','2025-04-30','2030-04-25',NULL),
 ('UR30042025002','P002','2025-04-30','2030-04-25',NULL);
 
@@ -104,12 +107,16 @@ CREATE TABLE `tbl_detail_catatan_diet` (
   `detail_iddiet` varchar(20) DEFAULT NULL,
   `detail_idpasien` varchar(20) DEFAULT NULL,
   `detail_diettanggal` date DEFAULT NULL,
-  `detail_ketwaktu` enum('Pagi','Siang','Malam') DEFAULT NULL,
-  `detail_porsi` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `detail_keluhan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `detail_porsi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_detail_catatan_diet` */
+
+insert  into `tbl_detail_catatan_diet`(`id`,`detail_iddiet`,`detail_idpasien`,`detail_diettanggal`,`detail_keluhan`,`detail_porsi`) values 
+(5,'D002','P001','2025-05-18','Tidak Ada','1'),
+(6,'D001','P003','2025-05-15','Mual','1');
 
 /*Table structure for table `tbl_detail_catatan_urine` */
 
@@ -123,13 +130,14 @@ CREATE TABLE `tbl_detail_catatan_urine` (
   `detail_urinevolume` varchar(20) DEFAULT NULL,
   `detail_urinewarna` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_detail_catatan_urine` */
 
 insert  into `tbl_detail_catatan_urine`(`id`,`detail_idurine`,`detail_idpasien`,`detail_urinetanggal`,`detail_urinevolume`,`detail_urinewarna`) values 
 (1,'UR14052025003','P004','2025-05-14','20','1'),
-(2,'UR14052025003','P004','2025-05-14','12','1');
+(2,'UR14052025003','P004','2025-05-14','12','1'),
+(3,'UR18052025004','P001','2025-05-18','20','1');
 
 /*Table structure for table `tbl_detail_pembatasan_cairan` */
 
@@ -178,14 +186,19 @@ DROP TABLE IF EXISTS `tbl_edukasi`;
 CREATE TABLE `tbl_edukasi` (
   `id` bigint unsigned NOT NULL AUTO_INCREMENT,
   `topik` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `kategori` varchar(255) DEFAULT NULL,
   `deskripsi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `sumber` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `sumber` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_edukasi` */
+
+insert  into `tbl_edukasi`(`id`,`topik`,`kategori`,`deskripsi`,`sumber`,`created_at`,`updated_at`) values 
+(1,'adasd','Video','sasd','https://youtu.be/xtp8BLJV3ac?si=OM136hKAc-jbANUg',NULL,NULL),
+(2,'adasd','Doc','dfgkdpofg','1747507730_27b80785bb1b48a9bd48.pdf',NULL,NULL);
 
 /*Table structure for table `tbl_jadwal_hemodialisa` */
 
@@ -279,9 +292,9 @@ CREATE TABLE `tbl_master_makan` (
 /*Data for the table `tbl_master_makan` */
 
 insert  into `tbl_master_makan`(`id`,`jenis_makan`) values 
-(1,'1 Porsi'),
-(2,'1/2 Porsi'),
-(3,'1/4 Porsi'),
+(1,'Selalu Habis 1 Porsi'),
+(2,'Kurang atau Sama dengan 3/4 Porsi'),
+(3,'Kurang atau Sama Dengan 1/2 Porsi'),
 (4,'Tidak Mau Makan');
 
 /*Table structure for table `tbl_master_urine` */

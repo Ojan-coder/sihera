@@ -3,6 +3,11 @@
 <?= $this->section('content');
 $level = session()->get('userLevel');
 $session = \Config\Services::session();
+if (empty($checkdata)) {
+    $ds = '';
+} else {
+    $ds = 'disabled';
+}
 ?>
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
@@ -62,11 +67,13 @@ $session = \Config\Services::session();
                                         </div>
                                     </div>
                                     <?php if ($level != 3) { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Urine</button>
+                                        <!-- <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Urine</button> -->
                                     <?php } else { ?>
-                                        <button class="btn btn-mat btn-sm btn-success" data-toggle="modal" data-target="#showModal">
-                                            Tambah Catatan
-                                        </button>
+                                        <?php if (!empty($check)): ?>
+                                            <button class="btn btn-mat btn-sm btn-success" data-toggle="modal" data-target="#myModalPasien">
+                                                Tambah Catatan
+                                            </button>
+                                        <?php endif ?>
                                     <?php } ?>
                                     <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
@@ -106,6 +113,8 @@ $session = \Config\Services::session();
                                                         <th style="text-align: center;">No</th>
                                                         <th>Nama Pasien</th>
                                                         <th>Tanggal</th>
+                                                        <th>Volume</th>
+                                                        <th>Warna</th>
                                                         <th>Aksi</th>
                                                     </tr>
                                                 </thead>
@@ -118,6 +127,8 @@ $session = \Config\Services::session();
                                                             <td width="8%"><?= $no; ?></td>
                                                             <td> <?= $row['nama']; ?></td>
                                                             <td> <?= date('Y-m-d', strtotime($row['created_at']));  ?></td>
+                                                            <td class="text-center"><?= $row['detail_urinevolume'] ?></td>
+                                                            <td class="text-center"><?= $row['jenisurine'] ?></td>
                                                             <td class="text-center">
                                                                 <?php if ($level != 3) { ?>
                                                                     <button class="btn btn-warning btn-mini" data-toggle="modal" data-target="#editModal<?= $row['idurine']; ?>">
@@ -269,94 +280,85 @@ endif;
 
 <!-- Form Detail Untuk Tambah Data Urine Pasien -->
 <?php
-foreach ($dataurinedetail as $row):
-    if ($level == 3) :
-        if ($level == 3) {
-            $id = session()->get('userNama');
-            $nama = session()->get('nama');
-        } else {
-            $id = '';
-            $nama = '';
-        }
+if ($level == 3) :
+    if ($level == 3) {
+        $id = session()->get('userNama');
+        $nama = session()->get('nama');
+    } else {
+        $id = '';
+        $nama = '';
+    }
 ?>
-        <form action="<?= base_url('urine/savepasien'); ?>" enctype="multipart/form-data" method="POST">
-            <?= csrf_field() ?>
-            <div class="modal" tabindex="-1" id="showModal">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title" id="myModalLabel">Tambah Catatan Urine</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label for="basic-url">Nama Pasien</label>
-                                        <div class="input-group mb-3">
-                                            <input type="hidden" name="idpasien" value="<?= $id ?>" id="idpasien">
-                                            <input type="text" name="nama" id="nama" value="<?= $nama ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" />
-                                            <?php if ($level != 3): ?>
-                                                <div class="input-group-append">
-                                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                                                        <i class="feather icon-search"></i>
-                                                    </button>
-                                                </div>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Tanggal</label>
-                                        <input type="date" name="tanggal" value="<?= old('tanggal') ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" />
-                                        <div class="invalid-feedback">
-                                            <?= $validation->getError('tanggal'); ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Urine Volume</label>
-                                        <input type="text" name="urinevolume" id="urinevolume" class="form-control <?= $session->getFlashdata('error_urinevolume') ? 'is-invalid' : ''; ?>">
-                                        <div class="invalid-feedback">
-                                            <?= $session->getFlashdata('error_urinevolume'); ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Urine Frekuensi</label>
-                                        <input type="text" name="urinefrekuensi" id="urinefrekuensi" class="form-control">
-                                        <div class="invalid-feedback">
-                                            <?= $validation->getError('urinefrekuensi'); ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12">
-                                    <div class="form-group">
-                                        <label>Urine Warna</label>
-                                        <select name="urinewarna" id="urinewarna" class="form-control">
-                                            <option value="">-Pilih Warna Urine-</option>
-                                            <?php foreach ($masterurine as $r): ?>
-                                                <option value="<?= $r['id'] ?>"><?= $r['jenisurine'] ?></option>
-                                            <?php endforeach ?>
-                                        </select>
+    <form action="<?= base_url('urine/save'); ?>" enctype="multipart/form-data" method="POST">
+        <?= csrf_field() ?>
+        <div class="modal fade" id="myModalPasien" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="myModalLabel">Tambah Catatan Urine</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="basic-url">Nama Pasien</label>
+                                    <div class="input-group mb-3">
+                                        <input type="hidden" name="idpasien" value="<?= $id ?>" id="idpasien">
+                                        <input type="text" name="nama" id="nama" value="<?= $nama ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" />
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Tanggal</label>
+                                    <input type="date" name="tanggal" value="<?= old('tanggal') ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" />
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('tanggal'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Urine Volume</label>
+                                    <input type="text" name="urinevolume" id="urinevolume" class="form-control <?= $session->getFlashdata('error_urinevolume') ? 'is-invalid' : ''; ?>">
+                                    <div class="invalid-feedback">
+                                        <?= $session->getFlashdata('error_urinevolume'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Urine Frekuensi</label>
+                                    <input type="text" name="urinefrekuensi" id="urinefrekuensi" class="form-control">
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('urinefrekuensi'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Urine Warna</label>
+                                    <select name="urinewarna" id="urinewarna" class="form-control">
+                                        <option value="">-Pilih Warna Urine-</option>
+                                        <?php foreach ($masterurine as $r): ?>
+                                            <option value="<?= $r['id'] ?>"><?= $r['jenisurine'] ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
-                            <button type="submit" class="btn btn-inverse btn-sm">Tambah</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-inverse btn-sm">Tambah</button>
                     </div>
                 </div>
             </div>
-        </form>
+        </div>
+    </form>
 <?php
-    endif;
-endforeach;
+endif;
 ?>
 
 <!-- Modal Data Pasien  -->
@@ -410,7 +412,7 @@ endforeach;
         </div>
     </div>
 </div>
-<?php if ($level == 3 && empty($checkdata)): ?>
+<?php if ($level == 3 && empty($checkdata)) { ?>
     <script>
         Swal.fire({
             title: "Catatan Urine",
@@ -418,7 +420,15 @@ endforeach;
             icon: "warning"
         });
     </script>
-<?php endif ?>
+<?php } else if ($level == 3 && !empty($checkdata)) { ?>
+    <script>
+        Swal.fire({
+            title: "Catatan Urine",
+            html: "<strong><?= session()->get('nama') ?></strong> Sudah Menginputkan Catatan Urine Hari Ini !",
+            icon: "success"
+        });
+    </script>
+<?php } ?>
 
 <script>
     function pilih(kode, nm) {

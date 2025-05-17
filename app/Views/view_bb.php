@@ -401,7 +401,7 @@ $level = session()->get('userLevel');
             icon: "warning"
         });
     </script>
-<?php } else { ?>
+<?php } else if ($level == 3 && !empty($checkdata)) { ?>
     <script>
         Swal.fire({
             title: "Catatan Berat Badan",

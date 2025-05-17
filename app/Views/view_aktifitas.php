@@ -74,6 +74,7 @@ $level = session()->get('userLevel'); ?>
                                                     <th style="text-align: center;">No</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Jenis Aktifitas</th>
+                                                    <th>Tanggal Aktifitas</th>
                                                     <th>Durasi</th>
                                                     <?php if ($level != 3) { ?>
                                                         <th>Aksi</th>
@@ -88,6 +89,7 @@ $level = session()->get('userLevel'); ?>
                                                         <td width="8%"><?= $no; ?></td>
                                                         <td> <?= $row['nama']; ?></td>
                                                         <td> <?= $row['jenisaktifitas']; ?></td>
+                                                        <td> <?= date('d-m-Y', strtotime($row['fisiktanggal'])); ?></td>
                                                         <td> <?= $row['fisikdurasi']; ?></td>
                                                         <?php if ($level != 3) { ?>
                                                             <td class="text-center">

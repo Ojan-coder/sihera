@@ -79,6 +79,8 @@ $level = session()->get('userLevel');
                                                     <th>Nama Pasien</th>
                                                     <th>Tanggal</th>
                                                     <th>Program Diet</th>
+                                                    <th>Porsi Makan</th>
+                                                    <th>Keluhan Makan</th>
                                                     <?php if ($level != 3) { ?>
                                                         <th>Aksi</th>
                                                     <?php } ?>
@@ -94,6 +96,8 @@ $level = session()->get('userLevel');
                                                         <td> <?= $row['nama']; ?></td>
                                                         <td> <?= date('Y-m-d', strtotime($row['diettanggal']));  ?></td>
                                                         <td> <?= $row['dietprogram']; ?></td>
+                                                        <td> <?= $row['jenis_makan']; ?></td>
+                                                        <td> <?= $row['detail_keluhan']; ?></td>
                                                         <?php if ($level != 3) { ?>
                                                             <td class="text-center">
                                                                 <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['iddiet']; ?>">
@@ -217,28 +221,26 @@ $level = session()->get('userLevel');
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Diet Waktu</label>
+                                    <label>Diet Porsi</label>
                                     <select name="cbwaktu" id="cbwaktu" class="form-control">
-                                        <option value="">-Pilih Waktu-</option>
-                                        <option value="Pagi">Pagi</option>
-                                        <option value="Siang">Siang</option>
-                                        <option value="Malam">Malam</option>
+                                        <option value="">-Pilih Porsi-</option>
+                                        <?php foreach ($datamakanan as $r): ?>
+                                            <option value="<?= $r['id'] ?>"><?= $r['jenis_makan'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Diet Porsi</label>
-                                    <select name="cbwaktu" id="cbwaktu" class="form-control">
-                                        <option value="">-Pilih Waktu-</option>
-                                        <option value="1 Porsi">1 Porsi</option>
-                                        <option value="1/2 Porsi">1/2 Porsi</option>
-                                        <option value="1/4 Porsi">1/4 Porsi</option>
-                                        <option value="Tidak Mau Makan">Tidak Mau Makan</option>
+                                    <label>Keluhan Makan</label>
+                                    <select name="cbkeluhan" id="cbkeluhan" class="form-control">
+                                        <option value="">-Pilih Keluhan-</option>
+                                        <option value="Tidak Ada">Tidak Ada</option>
+                                        <option value="Mual">Mual</option>
+                                        <option value="Tidak Nafsu Makan">Tidak Nafsu Makan</option>
                                     </select>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -385,7 +387,7 @@ $level = session()->get('userLevel');
     </div>
 </div>
 
-<?php if ($level == 3 && empty($notif)) { ?>
+<?php if ($level == 3 && empty($notif) && empty($masternotif)) { ?>
     <script>
         Swal.fire({
             title: "Catatan Diet",
@@ -393,33 +395,7 @@ $level = session()->get('userLevel');
             icon: "warning"
         });
     </script>
-<?php } else if ($level == 3 && !empty($notif)) { ?>
-    <?php if (empty($waktu)) { ?>
-        <script>
-            Swal.fire({
-                title: "Catatan Diet",
-                html: "<strong><?= session()->get('nama') ?></strong> Program Diet Anda : <strong><?= $program ?></strong> <br> Belum Menginputkan Porsi Makan Pada Pagi Hari !",
-                icon: "warning"
-            });
-        </script>
-    <?php } else if ($waktu != "Pagi") { ?>
-        <script>
-            Swal.fire({
-                title: "Catatan Diet",
-                html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Porsi Makan Pada Siang Hari !",
-                icon: "warning"
-            });
-        </script>
-    <?php } else if ($waktu != "Pagi") { ?>
-        <script>
-            Swal.fire({
-                title: "Catatan Diet",
-                html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Porsi Makan Pada Siang Hari !",
-                icon: "warning"
-            });
-        </script>
-    <?php } ?>
-<?php } else if ($level == 3 && !empty($notif) && !empty($waktu)) { ?>
+<?php } else if ($level == 3 && !empty($notif) && !empty($masternotif)) { ?>
     <script>
         Swal.fire({
             title: "Catatan Diet",

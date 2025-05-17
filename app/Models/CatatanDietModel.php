@@ -39,7 +39,7 @@ class CatatanDietModel extends Model
 
     public function getMasterMakanan()
     {
-        return $this->db->table('tbl_master_makanan')->get()->getResultArray();
+        return $this->db->table('tbl_master_makan')->get()->getResultArray();
     }
     public function getProgramDiet(){
         return $this->db->table('tbl_master_diet')->get()->getResultArray();

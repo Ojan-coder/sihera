@@ -3,31 +3,21 @@
 <?= $this->section('content');
 $level = session()->get('userLevel');
 if ($level == 3) { ?>
-    <?php if (!empty($datanotif)) { ?>
-        <?php if ($asupanperhari < $max) {  ?>
-            <script>
-                Swal.fire({
-                    title: "Asupan Cairan Belum Tercukupi !",
-                    html: "Asupan Cairan Anda Hari ini : <strong> <?= $asupanperhari ?> </strong>",
-                    icon: "warning"
-                });
-            </script>
-        <?php } else if ($asupanperhari >= $max) { ?>
-            <script>
-                Swal.fire({
-                    title: "Success",
-                    html: "Asupan Cairan Anda Hari Ini Terpenuhi <strong><?= $asupanperhari ?></strong>",
-                    icon: "success"
-                });
-            </script>
-        <?php } ?>
+    <?php if (empty($datanotif)) { ?>
+        <script>
+            Swal.fire({
+                title: "Asupan Cairan Belum Di Input",
+                html: "Jumlah asupan cairan maksimal 500 + jumlah urine selama 24 jam",
+                icon: "warning"
+            });
+        </script>
 
     <?php } else { ?>
         <script>
             Swal.fire({
-                title: "Info",
-                text: "Hari ini anda belum menginputkan Catatan",
-                icon: "warning"
+                title: "Asupan Cairan Belum Di Input",
+                text: "Hari ini anda belum menginputkan Catatan Asupan Cairan",
+                icon: "success"
             });
         </script>
 <?php }
@@ -92,9 +82,11 @@ if ($level == 3) { ?>
                                         </div>
                                     </div>
                                     <?php if ($level != 3) { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal"> Tambah</button>
+                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah</button>
                                     <?php } else { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myDetail">Tambah</button>
+                                        <?php if (empty($datanotif)): ?>
+                                            <button class="btn btn-mat btn-sm btn-success" data-toggle="modal" data-target="#myDetail">Tambah Asupan</button>
+                                        <?php endif ?>
                                     <?php } ?>
                                     <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
@@ -411,52 +403,52 @@ if ($level == 3) { ?>
 
 <!-- Modal Data Target Asupan  -->
 <?php if ($level == 3): ?>
-<div class="modal fade bd-example-modal-lg" id="detail" tabindex="-1" role="dialog" aria-labelledby="detail" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Data Asupan</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <table id="simpletablemodaltwo" width="100%" class="table table-striped table-bordered nowrap">
-                    <thead>
-                        <tr>
-                            <th style="text-align: center;">No</th>
-                            <th>ID Pasien</th>
-                            <th>Nama Pasien</th>
-                            <th>Target</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php $no = 0;
-                        foreach ($datapasien as $row) : $no++;
-                        ?>
+    <div class="modal fade bd-example-modal-lg" id="detail" tabindex="-1" role="dialog" aria-labelledby="detail" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Data Asupan</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table id="simpletablemodaltwo" width="100%" class="table table-striped table-bordered nowrap">
+                        <thead>
                             <tr>
-                                <td width="8%"><?= $no; ?></td>
-                                <td> <?= $row['nik']; ?></td>
-                                <td> <?= $row['nama']; ?></td>
-                                <td> <?= $row['targetmaksimal']; ?></td>
-
-                                <td class="text-center">
-                                    <button class="btn btn-outline-primary btn-mini" data-toggle="modal" onclick="return pilihdetail('<?= $row['idpembatasan'] ?>','<?= $row['id'] ?>','<?= $row['nama'] ?>')">
-                                        <i class="feather icon-check"></i>
-                                    </button>
-                                </td>
+                                <th style="text-align: center;">No</th>
+                                <th>ID Pasien</th>
+                                <th>Nama Pasien</th>
+                                <th>Target</th>
+                                <th>Aksi</th>
                             </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </thead>
+                        <tbody>
+                            <?php $no = 0;
+                            foreach ($datapasien as $row) : $no++;
+                            ?>
+                                <tr>
+                                    <td width="8%"><?= $no; ?></td>
+                                    <td> <?= $row['nik']; ?></td>
+                                    <td> <?= $row['nama']; ?></td>
+                                    <td> <?= $row['targetmaksimal']; ?></td>
+
+                                    <td class="text-center">
+                                        <button class="btn btn-outline-primary btn-mini" data-toggle="modal" onclick="return pilihdetail('<?= $row['idpembatasan'] ?>','<?= $row['id'] ?>','<?= $row['nama'] ?>')">
+                                            <i class="feather icon-check"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 <?php endif; ?>
 <script>
     function pilih(kode, nm) {

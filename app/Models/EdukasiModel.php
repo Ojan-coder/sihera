@@ -8,10 +8,6 @@ class EdukasiModel extends Model
 {
     protected $table            = 'tbl_edukasi';
     protected $primaryKey       = 'id';
-    protected $useAutoIncrement = true;
-    protected $returnType       = 'array';
-    protected $useSoftDeletes   = false;
-    protected $protectFields    = true;
     protected $allowedFields    = [
         'topik',
         'deskripsi',

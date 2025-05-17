@@ -18,21 +18,36 @@ class CatatanDietController extends BaseController
         $idpasien = session()->get('userNama');
         $level = session()->get('userLevel');
         $check = $model->where('dietidpasien', $idpasien)->where('diettanggal', date('Y-m-d'))->find();
-        $waktu = $detail->where('detail_idpasien', $idpasien)->where('detail_diettanggal', date('Y-m-d'))->orderBy('id','DESC')->limit(1)->find();
-        // dd($check[0]['dietprogram']);
+        $checkdetail = $model->join('tbl_detail_catatan_diet', 'detail_iddiet=iddiet')->where('dietidpasien', $idpasien)->where('diettanggal', date('Y-m-d'))->find();
+        $waktu = $detail->where('detail_idpasien', $idpasien)->where('detail_diettanggal', date('Y-m-d'))->orderBy('id', 'DESC')->limit(1)->find();
+        // dd($check[0]['iddiet']);
+        if (empty($checkdetail)) {
+            $datacheck = '';
+            $iddiet = '';
+        } else {
+            $datacheck = $check[0]['dietprogram'];
+            $iddiet = $check[0]['iddiet'];
+        }
         if ($level == 3) {
             $data = [
-                'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->where('dietidpasien', $idpasien)->findAll(),
-                'notif' => $check,
-                'program' => $check[0]['dietprogram'],
+                'databb' => $model->join('tbl_detail_catatan_diet', 'detail_iddiet=iddiet')
+                    ->join('tbl_master_makan', 'detail_porsi=tbl_master_makan.id')
+                    ->join('tbl_pasien', 'dietidpasien=tbl_pasien.id')
+                    ->where('dietidpasien', $idpasien)->findAll(),
+                'notif' => $checkdetail,
+                'masternotif' => $check,
+                'program' => $datacheck,
                 'waktu' => $waktu,
                 'dataprogramdiet' => $model->getProgramDiet(),
+                'datamakanan' => $model->getMasterMakanan(),
                 'datapasien' => $mpasien->findAll(),
                 'validation' => \Config\Services::validation()
             ];
         } else {
             $data = [
-                'databb' => $model->join('tbl_pasien', 'dietidpasien=id')->findAll(),
+                'databb' => $model->join('tbl_detail_catatan_diet', 'detail_iddiet=iddiet','LEFT')
+                    ->join('tbl_master_makan', 'detail_porsi=tbl_master_makan.id','LEFT')
+                    ->join('tbl_pasien', 'dietidpasien=tbl_pasien.id')->findAll(),
                 'datapasien' => $mpasien->findAll(),
                 'dataprogramdiet' => $model->getProgramDiet(),
                 'validation' => \Config\Services::validation()
@@ -118,14 +133,14 @@ class CatatanDietController extends BaseController
     {
         $model = new CatatanDietModel();
         $detail = new DetailCatatanDietModel();
-        $check = $model->where('dietidpasien', session()->get('userNama'))->find();
-
+        $check = $model->where('dietidpasien', $this->request->getPost('idpasien'))->find();
+        // dd($this->request->getPost('detail_iddiet'));
         $data = array(
-            'detail_iddiet' => $check['iddiet'],
+            'detail_iddiet' => $check[0]['iddiet'],
             'detail_idpasien' => $this->request->getPost('idpasien'),
             'detail_diettanggal' => $this->request->getPost('tanggal'),
-            'detail_waktu' => $this->request->getPost('protein'),
-            'detail_porsi' => $this->request->getPost('protein')
+            'detail_keluhan' => $this->request->getPost('cbkeluhan'),
+            'detail_porsi' => $this->request->getPost('cbwaktu')
         );
 
         $detail->insert($data);

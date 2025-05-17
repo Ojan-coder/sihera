@@ -28,7 +28,10 @@ class CatatanUrineController extends BaseController
             ];
         } else {
             $data = [
-                'dataurine' => $model->join('tbl_pasien', 'urineidpasien=id')->where('urinetanggal', date('Y-m-d'))->findAll(),
+                'dataurine' => $model->join('tbl_detail_catatan_urine', 'detail_idurine=idurine')
+                    ->join('tbl_master_urine', 'detail_urinewarna=tbl_master_urine.id')
+                    ->join('tbl_pasien', 'urineidpasien=tbl_pasien.id')
+                    ->where('urinetanggal', date('Y-m-d'))->findAll(),
                 'dataurinedetail' => $detail->join('tbl_master_urine', 'detail_urinewarna=tbl_master_urine.id')->join('tbl_pasien', 'detail_idpasien=tbl_pasien.id')->where('detail_idpasien', $idpasien)->where('detail_urinetanggal', date('Y-m-d'))->findAll(),
                 'datapasien' => $mpasien->findAll(),
                 'masterurine' => $model->masterurine(),
@@ -65,6 +68,7 @@ class CatatanUrineController extends BaseController
             $check = $model->where('urineidpasien', $this->request->getPost('idpasien'))->where('urinetanggal', date('Y-m-d'))->find();
             // dd($check);
             if (empty($check)) {
+                dd('Data Full');
                 //insert data master dan detail
                 $datadetail = array(
                     'detail_idurine' => $model->generateKode(),
@@ -86,6 +90,7 @@ class CatatanUrineController extends BaseController
                 return redirect()->to('/urine');
             } else {
                 //insert data detail
+                dd('Data detail');
                 $datadetail = array(
                     'detail_idurine' => $check['idurine'],
                     'detail_idpasien' => $this->request->getPost('idpasien'),
@@ -171,7 +176,6 @@ class CatatanUrineController extends BaseController
     //function save dari pasien
     public function savep()
     {
-        $validation = \Config\Services::validation();
         $rules = [
             'urinevolume' => [
                 'rules' => 'required',
@@ -185,19 +189,42 @@ class CatatanUrineController extends BaseController
         if ($this->validate($rules)) {
             $detail = new DetailCatatanUrineModel();
             $model = new CatatanUrineModel();
-            $check = $model->where('urineidpasien', $this->request->getPost('idpasien'))->where('urinetanggal', date('Y-m-d'))->find();
-            // dd($check[0]['idurine']);
-            $datadetail = array(
-                'detail_idurine' => $check[0]['idurine'],
-                'detail_idpasien' => $this->request->getPost('idpasien'),
-                'detail_urinetanggal' => $this->request->getPost('tanggal'),
-                'detail_urinevolume' => $this->request->getPost('urinevolume'),
-                'detail_urinewarna' => $this->request->getPost('urinewarna'),
-            );
+            $check = $model->where('urineidpasien', session()->get('userNama'))->where('urinetanggal', date('Y-m-d'))->find();
+            // dd($check);
+            if (empty($check)) {
+                //insert data master dan detail
+                $datadetail = array(
+                    'detail_idurine' => $model->generateKode(),
+                    'detail_idpasien' => $this->request->getPost('idpasien'),
+                    'detail_urinetanggal' => $this->request->getPost('tanggal'),
+                    'detail_urinevolume' => $this->request->getPost('urinevolume'),
+                    'detail_urinewarna' => $this->request->getPost('urinewarna'),
+                );
 
-            $detail->insert($datadetail);
-            session()->setFlashdata('success', 'Berhasil Menyimpan Data');
-            return redirect()->to('/urine');
+                $data = array(
+                    'idurine' => $model->generateKode(),
+                    'urineidpasien' => $this->request->getPost('idpasien'),
+                    'urinetanggal' => $this->request->getPost('tanggal'),
+                    'created_at' => date('d-m-y H:i:s')
+                );
+                $detail->insert($datadetail);
+                $model->insert($data);
+                session()->setFlashdata('success', 'Berhasil Menyimpan Data');
+                return redirect()->to('/urine');
+            } else {
+                //insert data detail
+                $datadetail = array(
+                    'detail_idurine' => $check['idurine'],
+                    'detail_idpasien' => $this->request->getPost('idpasien'),
+                    'detail_urinetanggal' => $this->request->getPost('tanggal'),
+                    'detail_urinevolume' => $this->request->getPost('urinevolume'),
+                    'detail_urinewarna' => $this->request->getPost('urinewarna'),
+                );
+
+                $detail->insert($datadetail);
+                session()->setFlashdata('success', 'Berhasil Menyimpan Data');
+                return redirect()->to('/urine');
+            }
         } else {
 
             session()->setFlashdata('failed', 'Data Gagal Disimpan, Periksa Data Input Kembali');

@@ -73,17 +73,15 @@ $level = session()->get('userLevel');
                                                         confirmButtonText: 'OK'
                                                     });
                                                 </script>
-                                            <?php } else if (session()->getFlashdata('failed')) { ?>
-                                                <script>
-                                                    Swal.fire({
-                                                        icon: 'failed',
-                                                        title: 'Gagal',
-                                                        text: "<?= session()->getFlashdata('failed') ?>",
-                                                        confirmButtonColor: '#3085d6',
-                                                        confirmButtonText: 'OK'
-                                                    });
-                                                </script>
                                             <?php } ?>
+                                            <?php if (session()->getFlashdata('failed')) : ?>
+                                                <div class="alert alert-danger" role="alert">
+                                                    <strong>Data gagal disimpan!</strong>
+                                                    <ul>
+                                                        <?= session()->getFlashdata('failed') ?>
+                                                    </ul>
+                                                </div>
+                                            <?php endif; ?>
                                         </div>
                                     </div>
                                     <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Edukasi</button>
@@ -117,12 +115,17 @@ $level = session()->get('userLevel');
                                                         <td> <?= $row['deskripsi']; ?></td>
                                                         <td> <?= $kat ?></td>
                                                         <td>
-                                                            <?php if ($row['kategori'] == 'doc') { ?>
+                                                            <?php if ($row['kategori'] == 'Doc') { ?>
                                                                 <a class="btn btn-outline-primary" target="_blank" href="<?= base_url('edukasi/') . $row['sumber'] ?>">
                                                                     <i class="feather icon-eye"></i>
                                                                 </a>
-                                                            <?php } else { ?>
-                                                                <iframe src="<?= base_url('edukasi/') . $row['sumber'] ?>" style="width:400px; height:200px;" frameborder="0"></iframe>
+                                                            <?php } else if ($row['kategori'] == 'Video') { ?>
+                                                                <a target="_blank" href="<?= $row['sumber'] ?>">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-video2" viewBox="0 0 16 16">
+                                                                        <path d="M10 9.05a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5" />
+                                                                        <path d="M2 1a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zM1 3a1 1 0 0 1 1-1h2v2H1zm4 10V2h9a1 1 0 0 1 1 1v9c0 .285-.12.543-.31.725C14.15 11.494 12.822 10 10 10c-3.037 0-4.345 1.73-4.798 3zm-4-2h3v2H2a1 1 0 0 1-1-1zm3-1H1V8h3zm0-3H1V5h3z" />
+                                                                    </svg>
+                                                                </a>
                                                             <?php } ?>
                                                         </td>
                                                         <td class="text-center">
@@ -155,7 +158,7 @@ $level = session()->get('userLevel');
 
 <!-- Form Tambah Data Edukasi -->
 
-<form action="<?= base_url('edukasi/save'); ?>" enctype="multipart/form-data" method="post">
+<form action="<?= base_url('education/save'); ?>" enctype="multipart/form-data" method="post">
     <?= csrf_field(); ?>
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -189,21 +192,28 @@ $level = session()->get('userLevel');
                                 <label>Kategori Sumber</label>
                                 <select name="kategori" id="kategori" class="form-control kategori" required>
                                     <option value="-">-Pilih-</option>
-                                    <option value="doc">Document</option>
-                                    <option value="video">Video</option>
+                                    <option value="Doc">Document</option>
+                                    <option value="Video">Video</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="col-lg-12">
-                            <!-- <div style="display: block;" id="tampilandoc"> -->
+                        <div class="col-lg-12" id="uploadFile" style="display: none;">
                             <div class="form-group">
-                                <label>Foto Dokter</label>
-                                <input type="file" name="fotodokter" class="form-control <?= ($validation->hasError('fotodokter')) ? 'is-invalid' : ''; ?>" required />
+                                <label>Upload Dokumen (PDF/JPG/PNG)</label>
+                                <input type="file" name="fotodokter" class="form-control <?= ($validation->hasError('fotodokter')) ? 'is-invalid' : ''; ?>" />
                                 <div class="invalid-feedback">
                                     <?= $validation->getError('fotodokter'); ?>
                                 </div>
                             </div>
-                            <!-- </div> -->
+                        </div>
+                        <div class="col-lg-12" id="inputVideo" style="display: none;">
+                            <div class="form-group">
+                                <label>Link Video (YouTube / MP4)</label>
+                                <input type="text" name="linkvideo" class="form-control <?= ($validation->hasError('linkvideo')) ? 'is-invalid' : ''; ?>" placeholder="https://..." />
+                                <div class="invalid-feedback">
+                                    <?= $validation->getError('linkvideo'); ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -219,7 +229,7 @@ $level = session()->get('userLevel');
 <!-- Form Edit dan Delete -->
 <?php foreach ($datajadwal as $row) : ?>
 
-    <form action="<?= base_url('edukasi/edit'); ?>" enctype="multipart/form-data" method="POST">
+    <form action="<?= base_url('education/edit'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
         <div class="modal made" tabindex="-1" id="editModal<?= $row['id']; ?>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -283,7 +293,7 @@ $level = session()->get('userLevel');
         </div>
     </form>
 
-    <form action="<?= base_url('edukasi/delete'); ?>" enctype="multipart/form-data" method="POST">
+    <form action="<?= base_url('education/delete'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
         <div class="modal" tabindex="-1" id="deleteModal<?= $row['id']; ?>">
             <div class="modal-dialog">
@@ -308,6 +318,27 @@ $level = session()->get('userLevel');
 <?php endforeach; ?>
 
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const kategori = document.getElementById("kategori");
+        const uploadFile = document.getElementById("uploadFile");
+        const inputVideo = document.getElementById("inputVideo");
+
+        function toggleInput() {
+            if (kategori.value === "Doc") {
+                uploadFile.style.display = "block";
+                inputVideo.style.display = "none";
+            } else if (kategori.value === "Video") {
+                uploadFile.style.display = "none";
+                inputVideo.style.display = "block";
+            } else {
+                uploadFile.style.display = "none";
+                inputVideo.style.display = "none";
+            }
+        }
+
+        kategori.addEventListener("change", toggleInput);
+        toggleInput(); // Panggil saat load awal untuk menyesuaikan jika ada isian lama
+    });
     // $(document).ready(function() {
     //     $(document).on('click', '#kategori', function() {
     //         var jn = $('#kategori option:selected').val();

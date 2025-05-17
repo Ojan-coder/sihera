@@ -36,20 +36,19 @@ class EdukasiController extends BaseController
                 'errors' => [
                     'required' => 'Deskripsi harus diisi'
                 ]
-            ],
-            'fotodokter' => [
-                'rules' => 'mime_in[fotodokter,pdf,image/jpg,image/jpeg,image/gif,image/png,video/mp4]',
-                'errors' => [
-                    'mime_in' => 'File yang dipilih bukan gambar',
-                ]
             ]
         ];
 
         if ($this->validate($rules)) {
-            $fileGambar = $this->request->getFile('fotodokter');
-            $fileName = $fileGambar->getRandomName();
-            // Upload image Room
-            $fileGambar->move('edukasi/', $fileName);
+            $kat = $this->request->getPost('kategori');
+            if ($kat == "Doc") {
+                $fileGambar = $this->request->getFile('fotodokter');
+                $fileName = $fileGambar->getRandomName();
+                // Upload image Room
+                $fileGambar->move('edukasi/', $fileName);
+            } else {
+                $fileName = $this->request->getPost('linkvideo');
+            }
 
             $data = array(
                 'topik' => $this->request->getPost('topik'),
@@ -59,10 +58,10 @@ class EdukasiController extends BaseController
             );
             $mpasien->insert($data);
             session()->setFlashdata('success', 'Berhasil menyimpan data');
-            return redirect()->to('/edukasi');
+            return redirect()->to('/education');
         } else {
-            session()->setFlashdata('failed', 'Data gagal disimpan' . $this->validator->listErrors());
-            return redirect()->to('/edukasi')->withInput();
+            session()->setFlashdata('failed', '' . $this->validator->listErrors());
+            return redirect()->to('/education')->withInput();
         }
     }
 

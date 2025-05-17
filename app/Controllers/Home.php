@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\DocterModel;
+use App\Models\EdukasiModel;
 use App\Models\PasienModel;
 
 class Home extends BaseController
@@ -13,7 +14,11 @@ class Home extends BaseController
     }
 
     public function treatments(){
-        return view('landing/treatment');
+        $model = new EdukasiModel();
+        $data =[
+            'dataedukasi'=>$model->findAll()
+        ];
+        return view('landing/treatment',$data);
     }
     public function abouts(){
         return view('landing/about');
