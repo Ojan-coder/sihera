@@ -12,7 +12,7 @@ if ($level == 3) { ?>
             });
         </script>
 
-    <?php } else { ?>
+    <?php } else if ($level == 3 && empty($datanotif)) { ?>
         <script>
             Swal.fire({
                 title: "Asupan Cairan Belum Di Input",
@@ -98,7 +98,9 @@ if ($level == 3) { ?>
                                                     <th style="text-align: center;">No</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Tanggal</th>
-                                                    <!-- <th>Asupan Cairan (ml)</th> -->
+                                                    <?php if ($level == 3) { ?>
+                                                        <th>Asupan Cairan (ml)</th>
+                                                    <?php } ?>
                                                     <th>Target Maksimal (ml)</th>
                                                     <?php if ($level != 3) { ?>
                                                         <th>Aksi</th>
@@ -114,7 +116,9 @@ if ($level == 3) { ?>
                                                         <td width="8%"><?= $no; ?></td>
                                                         <td> <?= $row['nama']; ?></td>
                                                         <td> <?= date('Y-m-d', strtotime($row['tglpembatasan']));  ?></td>
-
+                                                        <?php if ($level == 3): ?>
+                                                            <td> <?= $asupanperhari ?></td>
+                                                        <?php endif; ?>
                                                         <td> <?= $row['targetmaksimal']; ?></td>
                                                         <?php if ($level != 3) { ?>
                                                             <td class="text-center">

@@ -66,7 +66,9 @@ $level = session()->get('userLevel');
                                     <?php if ($level != 3) { ?>
                                         <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Diet</button>
                                     <?php } else { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModalP">Input Rekap Porsi </button>
+                                        <?php if (!empty($program)) { ?>
+                                            <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModalP">Input Rekap Porsi </button>
+                                        <?php } ?>
                                     <?php } ?>
                                     <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
                                 </div>
@@ -223,21 +225,22 @@ $level = session()->get('userLevel');
                                 <div class="form-group">
                                     <label>Diet Porsi</label>
                                     <select name="cbwaktu" id="cbwaktu" class="form-control">
-                                        <option value="">-Pilih Porsi-</option>
-                                        <?php foreach ($datamakanan as $r): ?>
-                                            <option value="<?= $r['id'] ?>"><?= $r['jenis_makan'] ?></option>
-                                        <?php endforeach; ?>
+                                        <option value="-">-Pilih Waktu-</option>
+                                        <option value="Pagi">Pagi</option>
+                                        <option value="Siang">Siang</option>
+                                        <option value="Malam">Malam</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Keluhan Makan</label>
-                                    <select name="cbkeluhan" id="cbkeluhan" class="form-control">
-                                        <option value="">-Pilih Keluhan-</option>
-                                        <option value="Tidak Ada">Tidak Ada</option>
-                                        <option value="Mual">Mual</option>
-                                        <option value="Tidak Nafsu Makan">Tidak Nafsu Makan</option>
+                                    <label>Diet Porsi</label>
+                                    <select name="cbporsi" id="cbporsi" class="form-control">
+                                        <option value="">-Pilih Waktu-</option>
+                                        <option value="1 Porsi">1 Porsi</option>
+                                        <option value="1/2 Porsi">1/2 Porsi</option>
+                                        <option value="1/4 Porsi">1/4 Porsi</option>
+                                        <option value="Tidak Mau Makan">Tidak Mau Makan</option>
                                     </select>
                                 </div>
                             </div>
