@@ -104,6 +104,7 @@ $routes->get('/diet/add', 'CatatanDietController::add', ['filter' => 'auth']);
 $routes->get('/diet/update/(:segment)', 'CatatanDietController::update/$1', ['filter' => 'auth']);
 $routes->post('/diet/save', 'CatatanDietController::save', ['filter' => 'auth']);
 $routes->post('/diet/savedetail', 'CatatanDietController::savep', ['filter' => 'auth']);
+$routes->post('/diet/editdetail', 'CatatanDietController::editp', ['filter' => 'auth']);
 $routes->post('/diet/edit', 'CatatanDietController::edit', ['filter' => 'auth']);
 $routes->post('/diet/delete', 'CatatanDietController::delete', ['filter' => 'auth']);
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');

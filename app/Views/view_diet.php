@@ -53,7 +53,7 @@ $level = session()->get('userLevel');
                                             <?php } else if (session()->getFlashdata('failed')) { ?>
                                                 <script>
                                                     Swal.fire({
-                                                        icon: 'failed',
+                                                        icon: 'error',
                                                         title: 'Gagal',
                                                         text: "<?= session()->getFlashdata('failed') ?>",
                                                         confirmButtonColor: '#3085d6',
@@ -66,7 +66,7 @@ $level = session()->get('userLevel');
                                     <?php if ($level != 3) { ?>
                                         <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Diet</button>
                                     <?php } else { ?>
-                                        <?php if (!empty($program)) { ?>
+                                        <?php if (!empty($masternotif)) { ?>
                                             <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModalP">Input Rekap Porsi </button>
                                         <?php } ?>
                                     <?php } ?>
@@ -83,9 +83,7 @@ $level = session()->get('userLevel');
                                                     <th>Program Diet</th>
                                                     <th>Porsi Makan</th>
                                                     <th>Keluhan Makan</th>
-                                                    <?php if ($level != 3) { ?>
-                                                        <th>Aksi</th>
-                                                    <?php } ?>
+                                                    <th>Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -100,8 +98,9 @@ $level = session()->get('userLevel');
                                                         <td> <?= $row['dietprogram']; ?></td>
                                                         <td> <?= $row['jenis_makan']; ?></td>
                                                         <td> <?= $row['detail_keluhan']; ?></td>
-                                                        <?php if ($level != 3) { ?>
-                                                            <td class="text-center">
+                                                        <td class="text-center">
+
+                                                            <?php if ($level != 3) { ?>
                                                                 <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['iddiet']; ?>">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                                         <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
@@ -113,8 +112,14 @@ $level = session()->get('userLevel');
                                                                         <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                                                                     </svg>
                                                                 </button>
-                                                            </td>
-                                                        <?php } ?>
+                                                            <?php } else { ?>
+                                                                <button class="btn btn-warning btn-mini" data-toggle="modal" data-target="#editModalP<?= $row['iddiet']; ?>">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                                        <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                                                    </svg>
+                                                                </button>
+                                                            <?php } ?>
+                                                        </td>
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </tbody>
@@ -223,24 +228,26 @@ $level = session()->get('userLevel');
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Diet Porsi</label>
-                                    <select name="cbwaktu" id="cbwaktu" class="form-control">
-                                        <option value="-">-Pilih Waktu-</option>
-                                        <option value="Pagi">Pagi</option>
-                                        <option value="Siang">Siang</option>
-                                        <option value="Malam">Malam</option>
+                                    <label>Keluhan Makan</label>
+                                    <select name="cbkeluhan" id="cbkeluhan" class="form-control">
+                                        <option value="-">-Keluhan Makan-</option>
+                                        <option value="Tidak Nafsu Makan">Tidak Nafsu Makan</option>
+                                        <option value="Mual">Mual</option>
+                                        <option value="Muntah">Muntah</option>
+                                        <option value="Sakit Perut">Sakit Perut</option>
+                                        <option value="Kembung">Kembung</option>
+                                        <option value="Tidak Ada Keluhan">Tidak Ada Keluhan</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Diet Porsi</label>
-                                    <select name="cbporsi" id="cbporsi" class="form-control">
+                                    <label>Porsi Makan</label>
+                                    <select name="cbwaktu" id="cbwaktu" class="form-control">
                                         <option value="">-Pilih Waktu-</option>
-                                        <option value="1 Porsi">1 Porsi</option>
-                                        <option value="1/2 Porsi">1/2 Porsi</option>
-                                        <option value="1/4 Porsi">1/4 Porsi</option>
-                                        <option value="Tidak Mau Makan">Tidak Mau Makan</option>
+                                        <?php foreach ($datamakanan as $r): ?>
+                                            <option value="<?= $r['id'] ?>"><?= $r['jenis_makan'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -257,6 +264,76 @@ $level = session()->get('userLevel');
 <?php endif; ?>
 <!-- Form Edit dan Delete -->
 <?php foreach ($databb as $row) : ?>
+    <form action="<?= base_url('diet/editdetail'); ?>" enctype="multipart/form-data" method="POST">
+        <?= csrf_field(); ?>
+        <div class="modal made" tabindex="-1" id="editModalP<?= $row['iddiet']; ?>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Update Diet</h6>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="text" name="kode" id="kode" value="<?= $row['iddetail']; ?>">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="basic-url">Nama Pasien</label>
+                                    <div class="input-group mb-3">
+                                        <input type="hidden" value="<?= $row['dietidpasien'] ?>" name="idpasien" id="idpasien">
+                                        <input type="text" name="nama" value="<?= $row['nama'] ?>" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" readonly />
+                                        <div class="input-group-append">
+                                            <!-- <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                                                <i class="feather icon-search"></i>
+                                            </button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group" id="datetimepicker1">
+                                    <label>Tanggal</label>
+                                    <input type="date" name="tanggal" value="<?= date('Y-m-d', strtotime($row['diettanggal'])); ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
+                                    <div class="invalid-feedback">
+                                        <?= $validation->getError('tanggal'); ?>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Keluhan Makan</label>
+                                    <select name="cbkeluhan" id="cbkeluhan" class="form-control">
+                                        <option value="-">-Pilih Keluhan Makan-</option>
+                                        <option value="Tidak Nafsu Makan" <?= $row['detail_keluhan'] == 'Tidak Nafsu Makan' ? 'selected' : '' ?>>Tidak Nafsu Makan</option>
+                                        <option value="Mual" <?= $row['detail_keluhan'] == 'Mual' ? 'selected' : '' ?>>Mual</option>
+                                        <option value="Muntah" <?= $row['detail_keluhan'] == 'Muntah' ? 'selected' : '' ?>>Muntah</option>
+                                        <option value="Sakit Perut" <?= $row['detail_keluhan'] == 'Sakit Perut' ? 'selected' : '' ?>>Sakit Perut</option>
+                                        <option value="Kembung" <?= $row['detail_keluhan'] == 'Kembung' ? 'selected' : '' ?>>Kembung</option>
+                                        <option value="Tidak Ada Keluhan" <?= $row['detail_keluhan'] == 'Tidak Ada Keluhan' ? 'selected' : '' ?>>Tidak Ada Keluhan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Porsi Makan</label>
+                                    <select name="cbwaktu" id="cbwaktu" class="form-control">
+                                        <option value="">-Pilih Waktu-</option>
+                                        <?php foreach ($datamakanan as $r): ?>
+                                            <option value="<?= $r['id'] ?>" <?= $row['detail_porsi'] == $r['id'] ? 'selected' : '' ?>><?= $r['jenis_makan'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
+                        <button type="submit" class="btn btn-inverse btn-sm">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <form action="<?= base_url('diet/edit'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
@@ -296,10 +373,21 @@ $level = session()->get('userLevel');
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label>Diet Program</label>
-                                    <input type="text" value="<?= $row['dietprogram'] ?>" name="protein" id="protein" class="form-control">
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('protein'); ?>
-                                    </div>
+                                    <?php
+                                    // $programs = explode(',', $row['dietprogram']);
+                                    $selectedDiet = explode(',', $row['dietprogram']); // ubah jadi array
+                                    ?>
+                                    <select name="cbprogram[]" id="cbprogram" class="form-control" multiple>
+                                        <option value="">-Pilih Waktu-</option>
+                                        <?php foreach ($dataprogramdiet as $diet): ?>
+                                            <?php if (!empty($diet['jenis_diet'])): ?>
+                                                <option value="<?= $diet['jenis_diet'] ?>"
+                                                    <?= in_array($diet['jenis_diet'], $selectedDiet) ? 'selected' : '' ?>>
+                                                    <?= $diet['jenis_diet'] ?>
+                                                </option>
+                                            <?php endif; ?>
+                                        <?php endforeach; ?>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -390,19 +478,19 @@ $level = session()->get('userLevel');
     </div>
 </div>
 
-<?php if ($level == 3 && empty($notif) && empty($masternotif)) { ?>
+<?php if ($level == 3 && empty($detail)) { ?>
     <script>
         Swal.fire({
             title: "Catatan Diet",
-            html: "<strong><?= session()->get('nama') ?></strong> Belum Menginputkan Catatan Diet Hari Ini !",
+            html: "Progarm Diet Anda Hari ini : <strong><?= $program ?> !</strong><br><strong><?= session()->get('nama') ?></strong> Belum Menginputkan Catatan Diet Hari Ini !",
             icon: "warning"
         });
     </script>
-<?php } else if ($level == 3 && !empty($notif) && !empty($masternotif)) { ?>
+<?php } else if ($level == 3 && !empty($masternotif) && !empty($detail)) { ?>
     <script>
         Swal.fire({
             title: "Catatan Diet",
-            html: "<strong><?= session()->get('nama') ?></strong> Terimakasih Telah Menginputkan Catatan Diet Hari Ini !",
+            html: "Progarm Diet Anda Hari ini : <strong><?= $program ?> !</strong><br><strong><?= session()->get('nama') ?></strong> Terimakasih Telah Menginputkan Catatan Diet Hari Ini !",
             icon: "success"
         });
     </script>

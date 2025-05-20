@@ -393,7 +393,7 @@ $level = session()->get('userLevel');
     </div>
 </form>
 
-<?php if ($level == 3 && empty($checkdata)) { ?>
+<?php if ($level == 3 && empty($check)) { ?>
     <script>
         Swal.fire({
             title: "Catatan Berat Badan",
@@ -401,7 +401,7 @@ $level = session()->get('userLevel');
             icon: "warning"
         });
     </script>
-<?php } else if ($level == 3 && !empty($checkdata)) { ?>
+<?php } else if ($level == 3 && !empty($check)) { ?>
     <script>
         Swal.fire({
             title: "Catatan Berat Badan",

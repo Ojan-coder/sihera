@@ -270,7 +270,7 @@ if ($level == 3) { ?>
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h6 class="modal-title">Update Jadwal</h6>
+                        <h6 class="modal-title">Update Asupan Cairan</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
@@ -301,16 +301,7 @@ if ($level == 3) { ?>
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Asupan Cairan</label>
-                                    <input type="text" name="asupan" value="" id="asupan" class="form-control">
-                                    <div class="invalid-feedback">
-                                        <?= $validation->getError('asupan'); ?>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-12">
-                                <div class="form-group">
-                                    <label>Target Maksimal Cairan</label>
+                                    <label>Jumlah Asupan Cairan</label>
                                     <input type="text" name="target" value="<?= $row['targetmaksimal'] ?>" id="target" class="form-control">
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('target'); ?>

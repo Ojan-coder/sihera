@@ -19,22 +19,22 @@ class PembatasanCairanController extends BaseController
         $asupan = $detail->getSumAsupanHari($idpasien);
         $max = $model->getTargetMax($idpasien);
         $level = session()->get('userLevel');
-        if(empty($asupan)){
-            $dataasupan='0';
-        }else{
+        if (empty($asupan)) {
+            $dataasupan = '0';
+        } else {
             $dataasupan = $asupan[0]['asupan'];
         }
-        if(empty($max)){
+        if (empty($max)) {
             $datamax = '0';
-        }else{
+        } else {
             $datamax = $max[0]['targetmaksimal'];
         }
         // dd($dataasupan);
         if ($level == 3) {
             $data = [
                 'databb' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('id', $idpasien)->findAll(),
-                'datanotif' => $detail->where('detail_pasien',$idpasien)->where('detail_tanggal',date('Y-m-d'))->find(),
-                'datapasien' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('tglpembatasan',date('Y-m-d'))->where('id', $idpasien)->findAll(),
+                'datanotif' => $detail->where('detail_pasien', $idpasien)->where('detail_tanggal', date('Y-m-d'))->find(),
+                'datapasien' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('tglpembatasan', date('Y-m-d'))->where('id', $idpasien)->findAll(),
                 'asupanperhari' => $dataasupan,
                 'max' => $datamax,
                 'validation' => \Config\Services::validation()
@@ -97,12 +97,6 @@ class PembatasanCairanController extends BaseController
                 'rules' => 'required',
                 'errors' => [
                     'required' => 'Tanggal harus diisi'
-                ]
-            ],
-            'asupan' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Asupan harus diisi'
                 ]
             ],
             'target' => [

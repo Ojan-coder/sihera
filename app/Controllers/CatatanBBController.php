@@ -15,11 +15,11 @@ class CatatanBBController extends BaseController
         $mpasien = new PasienModel();
         $idpasien = session()->get('userNama');
         $level = session()->get('userLevel');
-        $check = $model->where('bbidpasien', $idpasien)->find();
+        $check = $model->where('bbidpasien', $idpasien)->where('DATE(created_at)',date('Y-m-d'))->find();
         // dd($check);
         if ($level == 3) {
             $data = [
-                'databb' => $model->join('tbl_pasien', 'bbidpasien=id')->where('bbidpasien', $idpasien)->where('DATE(created_at)', date('Y-m-d h:i:s'))->findAll(),
+                'databb' => $model->join('tbl_pasien', 'bbidpasien=id')->where('bbidpasien', $idpasien)->where('DATE(created_at)', date('Y-m-d'))->findAll(),
                 'datapasien' => $mpasien->findAll(),
                 'check' => $check,
                 'validation' => \Config\Services::validation()
@@ -51,6 +51,7 @@ class CatatanBBController extends BaseController
                 ]
             ]
         ];
+        
 
 
         if ($this->validate($rules)) {
@@ -61,8 +62,9 @@ class CatatanBBController extends BaseController
                 'bbidpasien' => $this->request->getPost('idpasien'),
                 'bbsebelumhd' => $this->request->getPost('bbsebelumhd'),
                 'bbsesudahhd' => $this->request->getPost('bbsesudahhd'),
-                'created_at' => date('d-m-y H:i:s')
+                'created_at' => date('Y-m-d H:i:s')
             );
+            // dd($data);
 
             $model->insert($data);
             session()->setFlashdata('success', 'Berhasil Menyimpan Data');
@@ -97,7 +99,7 @@ class CatatanBBController extends BaseController
                 'bbidpasien' => $this->request->getPost('idpasien'),
                 'bbsebelumhd' => $this->request->getPost('bbsebelumhd'),
                 'bbsesudahhd' => $this->request->getPost('bbsesudahhd'),
-                'updated_at' => date('d-m-y H:i:s')
+                'updated_at' => date('Y-m-d H:i:s')
             );
             $model->update($id, $data);
             // dd($data,$id);

@@ -23,12 +23,18 @@
             </div>
             <div class="detail-box">
               <h4>
-                Nephrologist Care
+                <?= $row['topik'] ?>
               </h4>
               <p>
-                alteration in some form, by injected humour, or randomised words which don't look even slightly e sure there isn't anything
+                <?= $row['deskripsi'] ?>
+
+                <?php if ($row['kategori'] == 'Doc') {
+                  $path = base_url() . 'edukasi/' . $row['sumber'];
+                } else {
+                  $path = $row['sumber'];
+                } ?>
               </p>
-              <a href="">
+              <a href="<?= $path ?>">
                 Read More
               </a>
             </div>

@@ -19,24 +19,25 @@ class CatatanDietController extends BaseController
         $level = session()->get('userLevel');
         $check = $model->where('dietidpasien', $idpasien)->where('diettanggal', date('Y-m-d'))->find();
         $checkdetail = $model->join('tbl_detail_catatan_diet', 'detail_iddiet=iddiet')->where('dietidpasien', $idpasien)->where('diettanggal', date('Y-m-d'))->find();
-        $waktu = $detail->where('detail_idpasien', $idpasien)->where('detail_diettanggal', date('Y-m-d'))->orderBy('id', 'DESC')->limit(1)->find();
-        // dd($check[0]['iddiet']);
-        if (empty($checkdetail)) {
-            $datacheck = '';
-            $iddiet = '';
+        $waktu = $detail->where('detail_idpasien', $idpasien)
+            ->where('detail_diettanggal', date('Y-m-d'))->orderBy('iddetail', 'DESC')
+            ->limit(1)->find();
+        // dd($checkdetail);
+        if (empty($check)) {
+            $dataprogram = '';
         } else {
-            $datacheck = $check[0]['dietprogram'];
-            $iddiet = $check[0]['iddiet'];
+            $dataprogram = $check[0]['dietprogram'];
         }
+
         if ($level == 3) {
             $data = [
                 'databb' => $model->join('tbl_detail_catatan_diet', 'detail_iddiet=iddiet')
                     ->join('tbl_master_makan', 'detail_porsi=tbl_master_makan.id')
                     ->join('tbl_pasien', 'dietidpasien=tbl_pasien.id')
                     ->where('dietidpasien', $idpasien)->findAll(),
-                'notif' => $checkdetail,
-                'masternotif' => $check,
-                'program' => $datacheck,
+                'masternotif' => $check, //datamaster
+                'detail' => $checkdetail, //datadetail
+                'program' => $dataprogram,
                 'waktu' => $waktu,
                 'dataprogramdiet' => $model->getProgramDiet(),
                 'datamakanan' => $model->getMasterMakanan(),
@@ -45,14 +46,17 @@ class CatatanDietController extends BaseController
             ];
         } else {
             $data = [
-                'databb' => $model->join('tbl_detail_catatan_diet', 'detail_iddiet=iddiet','LEFT')
-                    ->join('tbl_master_makan', 'detail_porsi=tbl_master_makan.id','LEFT')
+                'databb' => $model->join('tbl_detail_catatan_diet', 'detail_iddiet=iddiet', 'LEFT')
+                    ->join('tbl_master_makan', 'detail_porsi=tbl_master_makan.id', 'LEFT')
                     ->join('tbl_pasien', 'dietidpasien=tbl_pasien.id')->findAll(),
                 'datapasien' => $mpasien->findAll(),
+                // 'program' => $dataprogram,
                 'dataprogramdiet' => $model->getProgramDiet(),
+                'datamakanan' => $model->getMasterMakanan(),
                 'validation' => \Config\Services::validation()
             ];
         }
+        // dd($model->getProgramDiet());
 
         echo view('view_diet', $data);
     }
@@ -92,32 +96,30 @@ class CatatanDietController extends BaseController
 
     public function edit()
     {
-        $rules = [
-            'program' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Program harus diisi'
-                ]
-            ]
-        ];
+        $dietProgram = $this->request->getPost('cbprogram');
+        // dd($dietProgram);
+
 
         $id = $this->request->getPost('kode');
-        if ($this->validate($rules)) {
-            $model = new CatatanDietModel();
-            $data = array(
-                'dietidpasien' => $this->request->getPost('idpasien'),
-                'diettanggal' => $this->request->getPost('tanggal'),
-                'dietprogram' => $this->request->getPost('program'),
-                'updated_at' => date('d-m-y H:i:s')
-            );
-            $model->update($id, $data);
-            // dd($data,$id);
-            session()->setFlashdata('success', 'Berhasil Mengupdate Data Catatan Diet');
-            return redirect()->to('/diet');
-        } else {
-            session()->setFlashdata('failed', 'Data Catatan Diet Gagal Di Update' . $this->validator->listErrors());
-            return redirect()->to('/diet' . $id);
+        // Cek jika kosong
+        if ($dietProgram == NULL || !$dietProgram || count($dietProgram) == 0) {
+            return redirect()->back()->with('failed', 'Minimal pilih satu program diet.');
         }
+
+        // Gabungkan jadi string, misalnya: "Diit Hipertensi,Diit Diabetes Mellitus"
+        $dietProgramStr = implode(',', $dietProgram);
+
+        $model = new CatatanDietModel();
+        $data = array(
+            'dietidpasien' => $this->request->getPost('idpasien'),
+            'diettanggal' => $this->request->getPost('tanggal'),
+            'dietprogram' => $dietProgramStr,
+            'updated_at' => date('d-m-y H:i:s')
+        );
+        $model->update($id, $data);
+        // dd($data,$id);
+        session()->setFlashdata('success', 'Berhasil Mengupdate Data Catatan Diet');
+        return redirect()->to('/diet');
     }
 
     public function delete()
@@ -129,12 +131,32 @@ class CatatanDietController extends BaseController
         return redirect()->to('/diet');
     }
 
+    public function editp()
+    {
+        $model = new CatatanDietModel();
+        $detail = new DetailCatatanDietModel();
+        $check = $model->where('dietidpasien', $this->request->getPost('idpasien'))->orderBy('iddiet', 'DESC')->limit(1)->find();
+        // dd($check);
+        $id = $this->request->getPost('kode');
+        $data = array(
+            'detail_iddiet' => $check[0]['iddiet'],
+            'detail_idpasien' => $this->request->getPost('idpasien'),
+            'detail_diettanggal' => $this->request->getPost('tanggal'),
+            'detail_keluhan' => $this->request->getPost('cbkeluhan'),
+            'detail_porsi' => $this->request->getPost('cbwaktu')
+        );
+
+        $detail->update($id, $data);
+        session()->setFlashdata('success', 'Berhasil Menyimpan Data');
+        return redirect()->to('/diet');
+    }
+
     public function savep()
     {
         $model = new CatatanDietModel();
         $detail = new DetailCatatanDietModel();
-        $check = $model->where('dietidpasien', $this->request->getPost('idpasien'))->find();
-        // dd($this->request->getPost('detail_iddiet'));
+        $check = $model->where('dietidpasien', $this->request->getPost('idpasien'))->orderBy('iddiet', 'DESC')->limit(1)->find();
+        // dd($check);
         $data = array(
             'detail_iddiet' => $check[0]['iddiet'],
             'detail_idpasien' => $this->request->getPost('idpasien'),

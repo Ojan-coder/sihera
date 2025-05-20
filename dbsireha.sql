@@ -1,5 +1,5 @@
 /*
-SQLyog Ultimate v12.5.1 (64 bit)
+SQLyog Ultimate v13.1.1 (64 bit)
 MySQL - 8.0.30 : Database - sireha
 *********************************************************************
 */
@@ -35,7 +35,8 @@ CREATE TABLE `tbl_aktifitas_fisik` (
 
 insert  into `tbl_aktifitas_fisik`(`idaktifitas`,`fisikidpasien`,`fisikjenisaktifitas`,`fisiktanggal`,`fisikdurasi`,`created_at`,`updated_at`) values 
 ('AF001','P004','1','2025-05-15',30,'2025-05-15 12:44:25',NULL),
-('AF002','P001','1','2025-05-18',60,'2025-05-18 00:11:50',NULL);
+('AF002','P001','1','2025-05-18',60,'2025-05-18 00:11:50',NULL),
+('AF003','P003','1','2025-05-20',11,'2025-05-20 21:51:06',NULL);
 
 /*Table structure for table `tbl_catatan_bb` */
 
@@ -46,7 +47,7 @@ CREATE TABLE `tbl_catatan_bb` (
   `bbidpasien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `bbsebelumhd` int NOT NULL,
   `bbsesudahhd` int NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`idbb`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -54,8 +55,7 @@ CREATE TABLE `tbl_catatan_bb` (
 /*Data for the table `tbl_catatan_bb` */
 
 insert  into `tbl_catatan_bb`(`idbb`,`bbidpasien`,`bbsebelumhd`,`bbsesudahhd`,`created_at`,`updated_at`) values 
-('BB001','P004',60,55,'2015-05-25 02:01:31',NULL),
-('BB002','P003',22,22,'2015-05-25 02:02:34',NULL);
+('BB001','P003',22,0,'2025-05-20 22:21:25',NULL);
 
 /*Table structure for table `tbl_catatan_diet` */
 
@@ -75,7 +75,11 @@ CREATE TABLE `tbl_catatan_diet` (
 
 insert  into `tbl_catatan_diet`(`iddiet`,`dietidpasien`,`diettanggal`,`dietprogram`,`created_at`,`updated_at`) values 
 ('D001','P003','2025-05-15','Diit Penyakit Ginjal Kronis (CKD),Diit Diabetes Mellitus','2015-05-25 16:09:27',NULL),
-('D002','P001','2025-05-18','Diit Penyakit Ginjal Kronis (CKD),Diit Diabetes Mellitus','2018-05-25 01:56:19',NULL);
+('D002','P001','2025-05-18','','2018-05-25 01:56:19','2020-05-25 21:38:10'),
+('D003','P003','2025-05-20','Diit Penyakit Ginjal Kronis (CKD),Diit Diabetes Mellitus','2020-05-25 22:55:41',NULL),
+('D004','P003','2025-05-21','Diit Asam Urat / Gout,Diit Penyakit Lambung','2021-05-25 00:07:33',NULL),
+('D005','P001','2025-05-21','Lainnya.....','2021-05-25 00:16:40',NULL),
+('D006','P004','2025-05-21','Diit Hipertensi','2021-05-25 00:21:58',NULL);
 
 /*Table structure for table `tbl_catatan_urine` */
 
@@ -103,20 +107,23 @@ insert  into `tbl_catatan_urine`(`idurine`,`urineidpasien`,`urinetanggal`,`creat
 DROP TABLE IF EXISTS `tbl_detail_catatan_diet`;
 
 CREATE TABLE `tbl_detail_catatan_diet` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `iddetail` int NOT NULL AUTO_INCREMENT,
   `detail_iddiet` varchar(20) DEFAULT NULL,
   `detail_idpasien` varchar(20) DEFAULT NULL,
   `detail_diettanggal` date DEFAULT NULL,
   `detail_keluhan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `detail_porsi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`iddetail`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_detail_catatan_diet` */
 
-insert  into `tbl_detail_catatan_diet`(`id`,`detail_iddiet`,`detail_idpasien`,`detail_diettanggal`,`detail_keluhan`,`detail_porsi`) values 
-(5,'D002','P001','2025-05-18','Tidak Ada','1'),
-(6,'D001','P003','2025-05-15','Mual','1');
+insert  into `tbl_detail_catatan_diet`(`iddetail`,`detail_iddiet`,`detail_idpasien`,`detail_diettanggal`,`detail_keluhan`,`detail_porsi`) values 
+(5,'D002','P001','2025-05-18','Tidak Nafsu Makan','1'),
+(6,'D001','P003','2025-05-15','Mual','1'),
+(10,'D003','P003','2025-05-20','Tidak Ada Keluhan','1'),
+(11,'D004','P003','2025-05-21','Muntah','2'),
+(12,'D005','P001','2025-05-21','Tidak Ada Keluhan','1');
 
 /*Table structure for table `tbl_detail_catatan_urine` */
 
@@ -192,13 +199,14 @@ CREATE TABLE `tbl_edukasi` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_edukasi` */
 
 insert  into `tbl_edukasi`(`id`,`topik`,`kategori`,`deskripsi`,`sumber`,`created_at`,`updated_at`) values 
 (1,'adasd','Video','sasd','https://youtu.be/xtp8BLJV3ac?si=OM136hKAc-jbANUg',NULL,NULL),
-(2,'adasd','Doc','dfgkdpofg','1747507730_27b80785bb1b48a9bd48.pdf',NULL,NULL);
+(2,'adasd','Doc','dfgkdpofg','1747507730_27b80785bb1b48a9bd48.pdf',NULL,NULL),
+(3,'Judul','Doc','asdasd','1747748261_be8a0f3b1e82735ee7ca.pdf',NULL,NULL);
 
 /*Table structure for table `tbl_jadwal_hemodialisa` */
 
@@ -216,7 +224,8 @@ CREATE TABLE `tbl_jadwal_hemodialisa` (
 
 insert  into `tbl_jadwal_hemodialisa`(`idjadwal`,`idpasien`,`jadwal`,`waktu`) values 
 ('JH01052025002','P001','2025-05-07','11:00:00'),
-('JH12052025003','P001','2025-05-14','08:00:00');
+('JH12052025003','P001','2025-05-14','08:00:00'),
+('JH18052025004','P003','2025-05-18','08:00:00');
 
 /*Table structure for table `tbl_konsultasi` */
 
@@ -287,7 +296,7 @@ CREATE TABLE `tbl_master_makan` (
   `id` int NOT NULL AUTO_INCREMENT,
   `jenis_makan` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_master_makan` */
 
@@ -295,7 +304,8 @@ insert  into `tbl_master_makan`(`id`,`jenis_makan`) values
 (1,'Selalu Habis 1 Porsi'),
 (2,'Kurang atau Sama dengan 3/4 Porsi'),
 (3,'Kurang atau Sama Dengan 1/2 Porsi'),
-(4,'Tidak Mau Makan');
+(4,'Kurang atau Sama Dengan 1/4 Porsi'),
+(5,'Tidak Mau Makan');
 
 /*Table structure for table `tbl_master_urine` */
 
@@ -359,7 +369,7 @@ CREATE TABLE `tbl_pembatasan_cairan` (
 /*Data for the table `tbl_pembatasan_cairan` */
 
 insert  into `tbl_pembatasan_cairan`(`idpembatasan`,`idpasienpembatasan`,`tglpembatasan`,`targetmaksimal`) values 
-('PC001','P002','2025-05-12','500');
+('PC001','P002','2025-05-12','450');
 
 /*Table structure for table `tbl_role` */
 
