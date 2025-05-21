@@ -32,7 +32,7 @@ class PembatasanCairanController extends BaseController
         // dd($dataasupan);
         if ($level == 3) {
             $data = [
-                'databb' => $model->join('tbl_detail_pembatasan_cairan','detail_idpembatasan=idpembatasan','LEFT')->join('tbl_pasien', 'idpasienpembatasan=id')->where('id', $idpasien)->where('tglpembatasan',date('Y-m-d'))->findAll(),
+                'databb' => $model->join('tbl_detail_pembatasan_cairan', 'detail_idpembatasan=idpembatasan', 'LEFT')->join('tbl_pasien', 'idpasienpembatasan=id')->where('id', $idpasien)->where('tglpembatasan', date('Y-m-d'))->findAll(),
                 'datanotif' => $detail->where('detail_pasien', $idpasien)->where('detail_tanggal', date('Y-m-d'))->find(),
                 'datapasien' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('tglpembatasan', date('Y-m-d'))->where('id', $idpasien)->findAll(),
                 'asupanperhari' => $dataasupan,
@@ -132,6 +132,7 @@ class PembatasanCairanController extends BaseController
                 return redirect()->to('/cairan');
             }
         } else {
+            $id = $this->request->getPost('kode');
             session()->setFlashdata('failed', 'Data Catatan Pembatasan Cairan Gagal Di Update' . $this->validator->listErrors());
             return redirect()->to('/cairan' . $id);
         }
