@@ -32,7 +32,7 @@ class PembatasanCairanController extends BaseController
         // dd($dataasupan);
         if ($level == 3) {
             $data = [
-                'databb' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('id', $idpasien)->findAll(),
+                'databb' => $model->join('tbl_detail_pembatasan_cairan','detail_idpembatasan=idpembatasan','LEFT')->join('tbl_pasien', 'idpasienpembatasan=id')->where('id', $idpasien)->where('tglpembatasan',date('Y-m-d'))->findAll(),
                 'datanotif' => $detail->where('detail_pasien', $idpasien)->where('detail_tanggal', date('Y-m-d'))->find(),
                 'datapasien' => $model->join('tbl_pasien', 'idpasienpembatasan=id')->where('tglpembatasan', date('Y-m-d'))->where('id', $idpasien)->findAll(),
                 'asupanperhari' => $dataasupan,
@@ -98,28 +98,39 @@ class PembatasanCairanController extends BaseController
                 'errors' => [
                     'required' => 'Tanggal harus diisi'
                 ]
-            ],
-            'target' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Target harus diisi'
-                ]
             ]
         ];
 
-        $id = $this->request->getPost('kode');
         if ($this->validate($rules)) {
             $model = new PembatasanCairanModel();
-            $data = array(
-                'idpasienpembatasan' => $this->request->getPost('idpasien'),
-                'tglpembatasan' => $this->request->getPost('tanggal'),
-                'asupancairan' => $this->request->getPost('asupan'),
-                'targetmaksimal' => $this->request->getPost('target'),
-            );
-            $model->update($id, $data);
-            // dd($data,$id);
-            session()->setFlashdata('success', 'Berhasil Mengupdate Data Catatan Pembatasan Cairan');
-            return redirect()->to('/cairan');
+            $detail = new DetailPembatasanCairanModel();
+            if (session()->get('userLevel') == '3') {
+                $id = $this->request->getPost('kode');
+                $data = array(
+                    'idpasienpembatasan' => $this->request->getPost('idpasien'),
+                    'tglpembatasan' => $this->request->getPost('tanggal'),
+                    'asupancairan' => $this->request->getPost('asupan'),
+                    'targetmaksimal' => $this->request->getPost('target'),
+                );
+
+                $detail->update($id, $data);
+                // dd($data,$id);
+                session()->setFlashdata('success', 'Berhasil Mengupdate Data Catatan Pembatasan Cairan');
+                return redirect()->to('/cairan');
+            } else {
+                $id = $this->request->getPost('kode');
+                $data = array(
+                    'idpasienpembatasan' => $this->request->getPost('idpasien'),
+                    'tglpembatasan' => $this->request->getPost('tanggal'),
+                    'asupancairan' => $this->request->getPost('asupan'),
+                    'targetmaksimal' => $this->request->getPost('target'),
+                );
+
+                $model->update($id, $data);
+                // dd($data,$id);
+                session()->setFlashdata('success', 'Berhasil Mengupdate Data Catatan Pembatasan Cairan');
+                return redirect()->to('/cairan');
+            }
         } else {
             session()->setFlashdata('failed', 'Data Catatan Pembatasan Cairan Gagal Di Update' . $this->validator->listErrors());
             return redirect()->to('/cairan' . $id);

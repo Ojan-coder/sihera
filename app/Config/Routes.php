@@ -117,6 +117,7 @@ $routes->get('/urine/update/(:segment)', 'CatatanUrineController::update/$1', ['
 $routes->post('/urine/save', 'CatatanUrineController::save', ['filter' => 'auth']);
 $routes->post('/urine/savepasien', 'CatatanUrineController::savep', ['filter' => 'auth']);
 $routes->post('/urine/edit', 'CatatanUrineController::edit', ['filter' => 'auth']);
+$routes->post('/urine/editdetail', 'CatatanUrineController::editp', ['filter' => 'auth']);
 $routes->post('/urine/delete', 'CatatanUrineController::delete', ['filter' => 'auth']);
 // $routes->get('image/deleteImage/(:any)', 'ImageController::deleteImage/$1');
 $routes->get('/urine/report', 'CatatanUrineController::report', ['filter' => 'auth']);

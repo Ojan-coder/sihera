@@ -1,5 +1,5 @@
 /*
-SQLyog Ultimate v13.1.1 (64 bit)
+SQLyog Ultimate v12.5.1 (64 bit)
 MySQL - 8.0.30 : Database - sireha
 *********************************************************************
 */
@@ -79,7 +79,8 @@ insert  into `tbl_catatan_diet`(`iddiet`,`dietidpasien`,`diettanggal`,`dietprogr
 ('D003','P003','2025-05-20','Diit Penyakit Ginjal Kronis (CKD),Diit Diabetes Mellitus','2020-05-25 22:55:41',NULL),
 ('D004','P003','2025-05-21','Diit Asam Urat / Gout,Diit Penyakit Lambung','2021-05-25 00:07:33',NULL),
 ('D005','P001','2025-05-21','Lainnya.....','2021-05-25 00:16:40',NULL),
-('D006','P004','2025-05-21','Diit Hipertensi','2021-05-25 00:21:58',NULL);
+('D006','P004','2025-05-21','Diit Hipertensi','2021-05-25 00:21:58',NULL),
+('D007','P003','2025-05-22','Diit Diabetes Mellitus,Diit Hipertensi','2022-05-25 00:21:43',NULL);
 
 /*Table structure for table `tbl_catatan_urine` */
 
@@ -99,6 +100,7 @@ CREATE TABLE `tbl_catatan_urine` (
 insert  into `tbl_catatan_urine`(`idurine`,`urineidpasien`,`urinetanggal`,`created_at`,`updated_at`) values 
 ('UR14052025003','P004','2025-05-14','2014-05-25',NULL),
 ('UR18052025004','P001','2025-05-18','2018-05-25',NULL),
+('UR21052025005','P003','2025-05-21','2021-05-25',NULL),
 ('UR30042025001','P004','2025-04-30','2030-04-25',NULL),
 ('UR30042025002','P002','2025-04-30','2030-04-25',NULL);
 
@@ -130,38 +132,39 @@ insert  into `tbl_detail_catatan_diet`(`iddetail`,`detail_iddiet`,`detail_idpasi
 DROP TABLE IF EXISTS `tbl_detail_catatan_urine`;
 
 CREATE TABLE `tbl_detail_catatan_urine` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `iddetail` int NOT NULL AUTO_INCREMENT,
   `detail_idurine` varchar(20) DEFAULT NULL,
   `detail_idpasien` varchar(20) DEFAULT NULL,
   `detail_urinetanggal` date DEFAULT NULL,
   `detail_urinevolume` varchar(20) DEFAULT NULL,
   `detail_urinewarna` varchar(20) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`iddetail`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_detail_catatan_urine` */
 
-insert  into `tbl_detail_catatan_urine`(`id`,`detail_idurine`,`detail_idpasien`,`detail_urinetanggal`,`detail_urinevolume`,`detail_urinewarna`) values 
+insert  into `tbl_detail_catatan_urine`(`iddetail`,`detail_idurine`,`detail_idpasien`,`detail_urinetanggal`,`detail_urinevolume`,`detail_urinewarna`) values 
 (1,'UR14052025003','P004','2025-05-14','20','1'),
 (2,'UR14052025003','P004','2025-05-14','12','1'),
-(3,'UR18052025004','P001','2025-05-18','20','1');
+(3,'UR18052025004','P001','2025-05-18','20','1'),
+(4,'UR21052025005','P003','2025-05-21','40','3');
 
 /*Table structure for table `tbl_detail_pembatasan_cairan` */
 
 DROP TABLE IF EXISTS `tbl_detail_pembatasan_cairan`;
 
 CREATE TABLE `tbl_detail_pembatasan_cairan` (
-  `id` int NOT NULL AUTO_INCREMENT,
+  `iddetail` int NOT NULL AUTO_INCREMENT,
   `detail_idpembatasan` varchar(20) DEFAULT NULL,
   `detail_tanggal` date DEFAULT NULL,
   `detail_pasien` varchar(20) DEFAULT NULL,
   `detail_asupanhari` int DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`iddetail`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 /*Data for the table `tbl_detail_pembatasan_cairan` */
 
-insert  into `tbl_detail_pembatasan_cairan`(`id`,`detail_idpembatasan`,`detail_tanggal`,`detail_pasien`,`detail_asupanhari`) values 
+insert  into `tbl_detail_pembatasan_cairan`(`iddetail`,`detail_idpembatasan`,`detail_tanggal`,`detail_pasien`,`detail_asupanhari`) values 
 (1,'PC001','2025-05-12','P002',100),
 (2,'PC001','2025-05-12','P002',50);
 
@@ -369,7 +372,9 @@ CREATE TABLE `tbl_pembatasan_cairan` (
 /*Data for the table `tbl_pembatasan_cairan` */
 
 insert  into `tbl_pembatasan_cairan`(`idpembatasan`,`idpasienpembatasan`,`tglpembatasan`,`targetmaksimal`) values 
-('PC001','P002','2025-05-12','450');
+('PC001','P002','2025-05-12','450'),
+('PC002','P003','2025-05-21','600'),
+('PC003','P003','2025-05-22','500');
 
 /*Table structure for table `tbl_role` */
 

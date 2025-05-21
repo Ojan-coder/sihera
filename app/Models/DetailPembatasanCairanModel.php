@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class DetailPembatasanCairanModel extends Model
 {
     protected $table            = 'tbl_detail_pembatasan_cairan';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'iddetail';
     protected $allowedFields    = [
         'detail_idpembatasan',
         'detail_tanggal',

@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class DetailCatatanUrineModel extends Model
 {
     protected $table            = 'tbl_detail_catatan_urine';
-    protected $primaryKey       = 'id';
+    protected $primaryKey       = 'iddetail';
     protected $allowedFields    = [
         'detail_idurine',
         'detail_idpasien',

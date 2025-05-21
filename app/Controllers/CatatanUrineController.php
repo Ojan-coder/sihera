@@ -68,7 +68,7 @@ class CatatanUrineController extends BaseController
             $check = $model->where('urineidpasien', $this->request->getPost('idpasien'))->where('urinetanggal', date('Y-m-d'))->find();
             // dd($check);
             if (empty($check)) {
-                dd('Data Full');
+                // dd('Data Full');
                 //insert data master dan detail
                 $datadetail = array(
                     'detail_idurine' => $model->generateKode(),
@@ -162,6 +162,21 @@ class CatatanUrineController extends BaseController
             session()->setFlashdata('failed', 'Data Catatan Urine Gagal Di Update' . $this->validator->listErrors());
             return redirect()->to('/urine' . $id);
         }
+    }
+    function editp()
+    {
+        $detail = new DetailCatatanUrineModel();
+        $id = $this->request->getPost('id');
+        $datadetail = array(
+            'detail_idurine' => $this->request->getPost('idurine'),
+            'detail_idpasien' => $this->request->getPost('idpasien'),
+            'detail_urinetanggal' => $this->request->getPost('tanggal'),
+            'detail_urinevolume' => $this->request->getPost('urinevolume'),
+            'detail_urinewarna' => $this->request->getPost('urinewarna'),
+        );
+        $detail->update($id, $datadetail);
+        session()->setFlashdata('success', 'Berhasil Update Data');
+        return redirect()->to('/urine');
     }
 
     public function delete()
