@@ -141,7 +141,7 @@ $level = session()->get('userLevel'); ?>
                                     <?php endif;
                                     if ($level != 3): ?>
                                         <input type="hidden" name="idpasien" id="idpasien">
-                                        <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                        <input type="text" readonly name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
                                         <div class="input-group-append">
                                             <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
                                                 <i class="feather icon-search"></i>
@@ -213,6 +213,10 @@ $level = session()->get('userLevel'); ?>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <label>Tanggal</label>
+                                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= $row['fisiktanggal'] ?>">
                             </div>
                             <div class="col-lg-12">
                                 <div class="form-group">

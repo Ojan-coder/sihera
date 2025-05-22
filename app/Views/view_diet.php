@@ -153,7 +153,7 @@ $level = session()->get('userLevel');
                                 <label for="basic-url">Nama Pasien</label>
                                 <div class="input-group mb-3">
                                     <input type="hidden" name="idpasien" id="idpasien">
-                                    <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                    <input type="text" readonly name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
                                             <i class="feather icon-search"></i>
@@ -212,7 +212,7 @@ $level = session()->get('userLevel');
                                     <label for="basic-url">Nama Pasien</label>
                                     <div class="input-group mb-3">
                                         <input type="hidden" value="<?= session()->get('userNama') ?>" name="idpasien" id="idpasien">
-                                        <input type="text" name="nama" id="nama" value="<?= session()->get('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                        <input type="text" readonly name="nama" id="nama" value="<?= session()->get('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
 
                                     </div>
                                 </div>
@@ -274,14 +274,14 @@ $level = session()->get('userLevel');
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     </div>
                     <div class="modal-body">
-                        <input type="text" name="kode" id="kode" value="<?= $row['iddetail']; ?>">
+                        <input type="hidden" name="kode" id="kode" value="<?= $row['iddetail']; ?>">
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="basic-url">Nama Pasien</label>
                                     <div class="input-group mb-3">
                                         <input type="hidden" value="<?= $row['dietidpasien'] ?>" name="idpasien" id="idpasien">
-                                        <input type="text" name="nama" value="<?= $row['nama'] ?>" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" readonly />
+                                        <input type="text" readonly name="nama" value="<?= $row['nama'] ?>" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" readonly />
                                         <div class="input-group-append">
                                             <!-- <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
                                                 <i class="feather icon-search"></i>

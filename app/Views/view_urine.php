@@ -67,7 +67,7 @@ if (empty($checkdata)) {
                                         </div>
                                     </div>
                                     <?php if ($level != 3) { ?>
-                                        <!-- <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Urine</button> -->
+                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah Catatan Urine</button>
                                     <?php } else { ?>
                                         <?php if (empty($check)): ?>
                                             <button class="btn btn-mat btn-sm btn-success" data-toggle="modal" data-target="#myModalPasien">
@@ -362,7 +362,7 @@ if ($level == 3) :
                                     <label for="basic-url">Nama Pasien</label>
                                     <div class="input-group mb-3">
                                         <input type="hidden" name="idpasien" value="<?= $id ?>" id="idpasien">
-                                        <input type="text" name="nama" id="nama" value="<?= $nama ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" />
+                                        <input type="text" readonly name="nama" id="nama" value="<?= $nama ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" />
                                     </div>
                                 </div>
                             </div>

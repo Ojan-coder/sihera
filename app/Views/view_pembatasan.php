@@ -2,26 +2,24 @@
 
 <?= $this->section('content');
 $level = session()->get('userLevel');
-if ($level == 3) { ?>
-    <?php if (empty($datanotif)) { ?>
-        <script>
-            Swal.fire({
-                title: "Asupan Cairan Belum Di Input",
-                html: "Jumlah asupan cairan maksimal 500 + jumlah urine selama 24 jam",
-                icon: "warning"
-            });
-        </script>
+if ($level == 3 && empty($databbb) && $max < 500) { ?>
+    <script>
+        Swal.fire({
+            title: "Asupan Cairan Belum Di Input",
+            html: "Jumlah asupan cairan maksimal 500 + jumlah urine selama 24 jam",
+            icon: "warning"
+        });
+    </script>
 
-    <?php } else if ($level == 3 && empty($datanotif)) { ?>
-        <script>
-            Swal.fire({
-                title: "Asupan Cairan Belum Di Input",
-                text: "Hari ini anda belum menginputkan Catatan Asupan Cairan",
-                icon: "success"
-            });
-        </script>
-<?php }
-} ?>
+<?php } else if ($level == 3 && $max == 500) { ?>
+    <script>
+        Swal.fire({
+            title: "Asupan Cairan",
+            text: "Hari ini anda Sudah Mencapai Target Asupan Cairan",
+            icon: "success"
+        });
+    </script>
+<?php } ?>
 <div class="pcoded-content">
     <div class="pcoded-inner-content">
         <div class="main-body">
@@ -81,14 +79,7 @@ if ($level == 3) { ?>
                                             <?php } ?>
                                         </div>
                                     </div>
-                                    <?php if ($level != 3) { ?>
-                                        <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah</button>
-                                    <?php } else { ?>
-                                        <?php if (!empty($databb)): ?>
-                                            <button class="btn btn-mat btn-sm btn-success" data-toggle="modal" data-target="#myDetail">Tambah Asupan</button>
-                                        <?php endif ?>
-                                    <?php } ?>
-                                    <!--<a class="btn btn-mat btn-sm btn-success" href="<?= base_url('galeri/report'); ?>" target="__blank">Laporan Komentar</a>-->
+                                    <button class="btn btn-mat btn-sm btn-inverse" data-toggle="modal" data-target="#myModal">Tambah</button>
                                 </div>
                                 <div class="card-block">
                                     <div class="dt-responsive table-responsive">
@@ -98,9 +89,6 @@ if ($level == 3) { ?>
                                                     <th style="text-align: center;">No</th>
                                                     <th>Nama Pasien</th>
                                                     <th>Tanggal</th>
-                                                    <?php if ($level == 3) { ?>
-                                                        <th>Asupan Cairan (ml)</th>
-                                                    <?php } ?>
                                                     <th>Asupan Cairan (ml)</th>
                                                     <th>Aksi</th>
                                                 </tr>
@@ -113,10 +101,7 @@ if ($level == 3) { ?>
                                                         <td width="8%"><?= $no; ?></td>
                                                         <td> <?= $row['nama']; ?></td>
                                                         <td> <?= date('Y-m-d', strtotime($row['tglpembatasan']));  ?></td>
-                                                        <?php if ($level == 3): ?>
-                                                            <td> <?= $asupanperhari ?></td>
-                                                        <?php endif; ?>
-                                                        <td> <?= $row['targetmaksimal']; ?></td>
+                                                        <td> <?= $row['targetmaksimal'] ?></td>
                                                         <td class="text-center">
                                                             <button class="btn btn-inverse btn-mini" data-toggle="modal" data-target="#editModal<?= $row['idpembatasan']; ?>">
                                                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
@@ -164,13 +149,18 @@ if ($level == 3) { ?>
                             <div class="form-group">
                                 <label for="basic-url">Nama Pasien</label>
                                 <div class="input-group mb-3">
-                                    <input type="hidden" name="idpasien" id="idpasien">
-                                    <input type="text" name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
-                                            <i class="feather icon-search"></i>
-                                        </button>
-                                    </div>
+                                    <?php if ($level == 3) { ?>
+                                        <input type="hidden" value="<?= session()->get('userNama') ?>" name="idpasien" id="idpasien">
+                                        <input type="text" readonly name="nama" id="nama" value="<?= session()->get('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                    <?php } else { ?>
+                                        <input type="hidden" name="idpasien" id="idpasien">
+                                        <input type="text" readonly name="nama" id="nama" value="<?= old('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModal">
+                                                <i class="feather icon-search"></i>
+                                            </button>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
@@ -203,64 +193,11 @@ if ($level == 3) { ?>
     </div>
 </form>
 
-<form action="<?= base_url('cairan/detailsave'); ?>" enctype="multipart/form-data" method="post">
-    <?= csrf_field(); ?>
-    <div class="modal fade" id="myDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h6 class="modal-title" id="myModalLabel">Tambah Catatan Asupan Cairan <?= $asupanperhari ?></h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label for="basic-url">Nama Pasien</label>
-                                <div class="input-group mb-3">
-                                    <input type="hidden" name="idpembatasan" id="idpembatasan">
-                                    <input type="text" value="<?= session()->get('userNama') ?>" name="idp" id="idp">
-                                    <input type="text" name="namaa" id="namaa" value="<?= session()->get('nama') ?>" class="form-control <?= ($validation->hasError('nama')) ? 'is-invalid' : ''; ?>" placeholder="Masukan Nama" required />
-                                    <div class="input-group-append">
-                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#detail">
-                                            <i class="feather icon-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Tanggal</label>
-                                <input type="date" name="tanggal" value="<?= old('tanggal') ?>" class="form-control <?= ($validation->hasError('tanggal')) ? 'is-invalid' : ''; ?>" placeholder="Masukan nik" required />
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('tanggal'); ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="form-group">
-                                <label>Asupan Cairan</label>
-                                <input type="text" name="asupan" id="asupan" class="form-control">
-                                <div class="invalid-feedback">
-                                    <?= $validation->getError('asupan'); ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Tutup</button>
-                    <button type="submit" class="btn btn-inverse btn-sm">Tambah</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
+
+
 
 <!-- Form Edit dan Delete -->
 <?php foreach ($databb as $row) : ?>
-
     <form action="<?= base_url('cairan/edit'); ?>" enctype="multipart/form-data" method="POST">
         <?= csrf_field(); ?>
         <div class="modal made" tabindex="-1" id="editModal<?= $row['idpembatasan']; ?>" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -296,15 +233,10 @@ if ($level == 3) { ?>
                                     </div>
                                 </div>
                             </div>
-                            <?php if (session()->get('userLevel') == 3) {
-                                $asupan = $asupanperhari;
-                            } else {
-                                $asupan = $row['targetmaksimal'];
-                            } ?>
                             <div class="col-lg-12">
                                 <div class="form-group">
-                                    <label>Jumlah Asupan Cairan</label>
-                                    <input type="text" name="target" value="<?= $asupan ?>" id="target" class="form-control">
+                                    <label>Asupan Cairan</label>
+                                    <input type="text" name="target" value="<?= $row['targetmaksimal'] ?>" id="target" class="form-control">
                                     <div class="invalid-feedback">
                                         <?= $validation->getError('target'); ?>
                                     </div>
